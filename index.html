@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RPI Computer Department</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#38bdf8',
+            darkBg: '#050b16',
+            panel: 'rgba(12, 19, 35, 0.78)',
+            line: 'rgba(56, 189, 248, 0.18)'
+          },
+          boxShadow: {
+            glow: '0 0 0 1px rgba(56,189,248,.15), 0 10px 30px rgba(2,8,23,.55)',
+            soft: '0 10px 40px rgba(0,0,0,.35)'
+          },
+          backgroundImage: {
+            heroOverlay: "linear-gradient(to right, rgba(2,6,23,.92), rgba(2,6,23,.72), rgba(2,6,23,.55))",
+            gridGlow: "radial-gradient(circle at top left, rgba(56,189,248,.12), transparent 30%), radial-gradient(circle at bottom right, rgba(59,130,246,.08), transparent 25%)"
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-darkBg text-white selection:bg-sky-400 selection:text-slate-950">
+  <!-- Background decorative layer -->
+  <div class="fixed inset-0 -z-10 bg-[linear-gradient(to_bottom,#030712,#071225,#030712)]"></div>
+  <div class="fixed inset-0 -z-10 bg-gridGlow opacity-100"></div>
+
+  <!-- Navbar -->
+  <header class="sticky top-0 z-50 border-b border-white/10 bg-slate-950/70 backdrop-blur-xl">
+    <div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 lg:px-8">
+      <div class="flex items-center gap-3">
+        <div class="flex h-11 w-11 items-center justify-center rounded-xl border border-sky-400/20 bg-sky-400/10 text-sky-400 shadow-glow">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 14l9-5-9-5-9 5 9 5z" />
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 14l6.16-3.422A12.083 12.083 0 0120 17.944L12 22l-8-4.056a12.083 12.083 0 011.84-7.366L12 14z" />
+          </svg>
+        </div>
+        <div>
+          <p class="text-lg font-semibold tracking-wide">RPI Computer Department</p>
+          <p class="text-xs text-slate-400">Rajshahi Polytechnic Institute</p>
+        </div>
+      </div>
+
+      <nav class="hidden items-center gap-8 text-sm text-slate-200 lg:flex">
+        <a href="#home" class="text-sky-400">Home</a>
+        <a href="#about" class="transition hover:text-sky-400">About</a>
+        <a href="#department" class="transition hover:text-sky-400">Department</a>
+        <a href="#notices" class="transition hover:text-sky-400">Notices</a>
+        <a href="#teachers" class="transition hover:text-sky-400">Teachers</a>
+        <a href="#contact" class="transition hover:text-sky-400">Contact</a>
+      </nav>
+
+      <a href="login.html" class="rounded-xl border border-sky-400/30 bg-sky-400/10 px-5 py-2 text-sm font-medium text-sky-300 transition hover:bg-sky-400/20 hover:text-white">
+        Login
+      </a>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+
+  <section id="home" class="relative overflow-hidden">
+    <div class="absolute inset-0">
+      <div class="absolute inset-0 bg-heroOverlay"></div>
+      <img src="./assets/Hero.png" alt="Institute building" class="h-full w-full object-cover opacity-35" />
+    </div>
+
+    <div class="relative mx-auto grid min-h-[85vh] max-w-7xl items-center gap-10 px-6 py-20 lg:grid-cols-2 lg:px-8">
+      <div>
+        <p class="mb-4 inline-flex rounded-full border border-sky-400/20 bg-sky-400/10 px-4 py-1 text-sm text-sky-300 shadow-glow">
+          Welcome to Rajshahi Polytechnic Institute
+        </p>
+        <h1 class="max-w-3xl text-4xl font-bold leading-tight sm:text-5xl lg:text-6xl">
+          <span class="block text-white">Computer Department</span>
+          <span class="mt-2 block text-sky-400">Empowering Digital Pioneers</span>
+        </h1>
+        <p class="mt-6 max-w-2xl text-base leading-7 text-slate-300 sm:text-lg">
+          A modern academic portal for students, teachers, and administrators of RPI Computer Department. Access notices, routines, results, department information, and role-based dashboards in one place.
+        </p>
+
+    
+
+        <div class="mt-10 flex flex-wrap gap-4">
+          <div class="rounded-2xl border border-white/10 bg-slate-900/50 px-5 py-4 shadow-soft backdrop-blur-md">
+            <p class="text-2xl font-bold text-sky-400">3+</p>
+            <p class="text-sm text-slate-300">Lab Facilities</p>
+          </div>
+          <div class="rounded-2xl border border-white/10 bg-slate-900/50 px-5 py-4 shadow-soft backdrop-blur-md">
+            <p class="text-2xl font-bold text-sky-400">3</p>
+            <p class="text-sm text-slate-300">User Roles</p>
+          </div>
+          <div class="rounded-2xl border border-white/10 bg-slate-900/50 px-5 py-4 shadow-soft backdrop-blur-md">
+            <p class="text-2xl font-bold text-sky-400">24/7</p>
+            <p class="text-sm text-slate-300">Notice Access</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid gap-5">
+        <div class="rounded-3xl border border-white/10 bg-panel p-6 shadow-soft backdrop-blur-xl">
+          <div class="mb-4 flex items-center justify-between">
+            <h3 class="text-xl font-semibold">Quick Access</h3>
+            <span class="rounded-full bg-sky-400/10 px-3 py-1 text-xs text-sky-300">Portal</span>
+          </div>
+          <div class="grid gap-4 sm:grid-cols-2">
+            <a href="#about" class="rounded-2xl border border-white/10 bg-slate-900/70 p-4 transition hover:border-sky-400/30 hover:bg-slate-900">
+              <p class="font-medium">About Institute</p>
+              <p class="mt-1 text-sm text-slate-400">Overview, mission, contact details</p>
+            </a>
+            <a href="#department" class="rounded-2xl border border-white/10 bg-slate-900/70 p-4 transition hover:border-sky-400/30 hover:bg-slate-900">
+              <p class="font-medium">Department Info</p>
+              <p class="mt-1 text-sm text-slate-400">Labs, semester info, highlights</p>
+            </a>
+            <a href="#notices" class="rounded-2xl border border-white/10 bg-slate-900/70 p-4 transition hover:border-sky-400/30 hover:bg-slate-900">
+              <p class="font-medium">Latest Notices</p>
+              <p class="mt-1 text-sm text-slate-400">Announcements and updates</p>
+            </a>
+            <a href="login.html" class="rounded-2xl border border-white/10 bg-slate-900/70 p-4 transition hover:border-sky-400/30 hover:bg-slate-900">
+              <p class="font-medium">Role-based Login</p>
+              <p class="mt-1 text-sm text-slate-400">Student, Teacher, Admin</p>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Feature Cards -->
+  <section class="mx-auto max-w-7xl px-6 py-6 lg:px-8">
+    <div class="grid gap-6 md:grid-cols-3">
+      <div class="rounded-3xl border border-white/10 bg-panel p-6 shadow-soft backdrop-blur-xl">
+        <h3 class="text-2xl font-semibold">About RPI</h3>
+        <p class="mt-3 text-slate-300">Learn more about Rajshahi Polytechnic Institute, its goals, and academic environment.</p>
+        <a href="#about" class="mt-5 inline-block rounded-xl border border-sky-400/25 px-4 py-2 text-sm text-sky-300 transition hover:bg-sky-400/10">Read More</a>
+      </div>
+      <div class="rounded-3xl border border-white/10 bg-panel p-6 shadow-soft backdrop-blur-xl">
+        <h3 class="text-2xl font-semibold text-sky-400">Computer Department</h3>
+        <p class="mt-3 text-slate-300">Explore courses, lab facilities, semester information, and department activities.</p>
+        <a href="#department" class="mt-5 inline-block rounded-xl border border-sky-400/25 px-4 py-2 text-sm text-sky-300 transition hover:bg-sky-400/10">Discover</a>
+      </div>
+      <div class="rounded-3xl border border-white/10 bg-panel p-6 shadow-soft backdrop-blur-xl">
+        <h3 class="text-2xl font-semibold">Latest Notices</h3>
+        <ul class="mt-3 space-y-2 text-slate-300">
+          <li>• Exam schedule updated</li>
+          <li>• New semester enrollment</li>
+          <li>• Lab maintenance notice</li>
+        </ul>
+        <a href="#notices" class="mt-5 inline-block rounded-xl border border-sky-400/25 px-4 py-2 text-sm text-sky-300 transition hover:bg-sky-400/10">View All</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Announcements -->
+  <section id="notices" class="mx-auto max-w-7xl px-6 py-12 lg:px-8">
+    <div class="rounded-[2rem] border border-white/10 bg-panel p-8 shadow-soft backdrop-blur-xl">
+      <div class="mb-8 flex items-center justify-between gap-4">
+        <div>
+          <p class="text-sm uppercase tracking-[0.25em] text-sky-300">Updates</p>
+          <h2 class="mt-2 text-3xl font-bold">Important Announcements</h2>
+        </div>
+        <span class="hidden rounded-full border border-white/10 px-4 py-2 text-sm text-slate-300 md:inline-flex">Latest 3 notices</span>
+      </div>
+
+      <div class="space-y-4">
+        <div class="flex items-start gap-4 rounded-2xl border border-white/10 bg-slate-900/60 p-5">
+          <div class="mt-1 h-3 w-3 rounded-full bg-sky-400"></div>
+          <div>
+            <p class="font-medium">Admission for the new semester is now open.</p>
+            <p class="mt-1 text-sm text-slate-400">Students are requested to complete registration within the announced deadline.</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-4 rounded-2xl border border-white/10 bg-slate-900/60 p-5">
+          <div class="mt-1 h-3 w-3 rounded-full bg-sky-400"></div>
+          <div>
+            <p class="font-medium">Workshop on Web Development will be held next week.</p>
+            <p class="mt-1 text-sm text-slate-400">The Computer Department invites all interested students to participate.</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-4 rounded-2xl border border-white/10 bg-slate-900/60 p-5">
+          <div class="mt-1 h-3 w-3 rounded-full bg-sky-400"></div>
+          <div>
+            <p class="font-medium">Class routine for the current semester has been published.</p>
+            <p class="mt-1 text-sm text-slate-400">Please check the updated routine from the dashboard after login.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Faculty -->
+  <section id="teachers" class="mx-auto max-w-7xl px-6 py-12 lg:px-8">
+    <div class="mb-10 text-center">
+      <p class="text-sm uppercase tracking-[0.25em] text-sky-300">Faculty</p>
+      <h2 class="mt-2 text-3xl font-bold">Meet Our Teachers</h2>
+    </div>
+
+    <div class="grid gap-6 sm:grid-cols-2 xl:grid-cols-4">
+      <div class="overflow-hidden rounded-3xl border border-white/10 bg-panel shadow-soft">
+        <img src="./assets/Lufi.jpg" alt="Teacher 1" class="h-72 w-full object-cover" />
+        <div class="p-5">
+          <h3 class="text-xl font-semibold">Instr. Lufi</h3>
+          <p class="mt-1 text-slate-400">Senior Lecturer</p>
+          <button class="mt-4 rounded-xl border border-sky-400/25 px-4 py-2 text-sm text-sky-300 transition hover:bg-sky-400/10">View Profile</button>
+        </div>
+      </div>
+
+      <div class="overflow-hidden rounded-3xl border border-white/10 bg-panel shadow-soft">
+        <img src="./assets/naruto.jfif" alt="Teacher 2" class="h-72 w-full object-cover" />
+        <div class="p-5">
+          <h3 class="text-xl font-semibold">Instr. Naruto</h3>
+          <p class="mt-1 text-slate-400">Senior Lecturer</p>
+          <button class="mt-4 rounded-xl border border-sky-400/25 px-4 py-2 text-sm text-sky-300 transition hover:bg-sky-400/10">View Profile</button>
+        </div>
+      </div>
+
+      <div class="overflow-hidden rounded-3xl border border-white/10 bg-panel shadow-soft">
+        <img src="./assets/saitama.jfif" alt="Teacher 3" class="h-72 w-full object-cover" />
+        <div class="p-5">
+          <h3 class="text-xl font-semibold">Instr. Saitama</h3>
+          <p class="mt-1 text-slate-400">Lab Instructor</p>
+          <button class="mt-4 rounded-xl border border-sky-400/25 px-4 py-2 text-sm text-sky-300 transition hover:bg-sky-400/10">View Profile</button>
+        </div>
+      </div>
+
+      <div class="overflow-hidden rounded-3xl border border-white/10 bg-panel shadow-soft">
+        <img src="./assets/Mikasa.webp" alt="Teacher 4" class="h-72 w-full object-cover" />
+        <div class="p-5">
+          <h3 class="text-xl font-semibold">Instr. Mikasa</h3>
+          <p class="mt-1 text-slate-400">Lab Instructor</p>
+          <button class="mt-4 rounded-xl border border-sky-400/25 px-4 py-2 text-sm text-sky-300 transition hover:bg-sky-400/10">View Profile</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About + Department -->
+  <section id="about" class="mx-auto max-w-7xl px-6 py-12 lg:px-8">
+    <div class="grid gap-6 lg:grid-cols-2">
+      <div class="rounded-[2rem] border border-white/10 bg-panel p-8 shadow-soft backdrop-blur-xl">
+        <p class="text-sm uppercase tracking-[0.25em] text-sky-300">About Institute</p>
+        <h2 class="mt-3 text-3xl font-bold">Rajshahi Polytechnic Institute</h2>
+        <p class="mt-5 leading-8 text-slate-300">
+          Rajshahi Polytechnic Institute is one of the leading technical education institutes in Bangladesh. It provides diploma-level education with a focus on practical skills, discipline, and professional growth.
+        </p>
+      </div>
+
+      <div id="department" class="rounded-[2rem] border border-white/10 bg-panel p-8 shadow-soft backdrop-blur-xl">
+        <p class="text-sm uppercase tracking-[0.25em] text-sky-300">Department Highlight</p>
+        <h2 class="mt-3 text-3xl font-bold">Computer Technology Department</h2>
+        <ul class="mt-5 space-y-3 text-slate-300">
+          <li>• Semester-wise course structure</li>
+          <li>• Programming and networking lab access</li>
+          <li>• Project-based learning environment</li>
+          <li>• Skilled teachers and lab instructors</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer id="contact" class="border-t border-white/10 bg-slate-950/60">
+    <div class="mx-auto grid max-w-7xl gap-10 px-6 py-12 lg:grid-cols-2 lg:px-8">
+      <div>
+        <h3 class="text-2xl font-semibold">Contact Us</h3>
+        <div class="mt-5 space-y-3 text-slate-300">
+          <p>Rajshahi Polytechnic Institute</p>
+          <p>Talimari, Rajshahi, Bangladesh</p>
+          <p>+880-1234-567890</p>
+          <p>info@rpicomputer.ac.bd</p>
+        </div>
+      </div>
+
+      <div>
+        <h3 class="text-2xl font-semibold">Quick Links</h3>
+        <ul class="mt-5 space-y-3 text-slate-300">
+          <li><a href="#about" class="transition hover:text-sky-400">About Us</a></li>
+          <li><a href="#department" class="transition hover:text-sky-400">Admissions</a></li>
+          <li><a href="#notices" class="transition hover:text-sky-400">Academic Calendar</a></li>
+          <li><a href="login.html" class="transition hover:text-sky-400">Student Portal</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
