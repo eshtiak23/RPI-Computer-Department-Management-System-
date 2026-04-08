@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RPI Portal Login</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#38bdf8',
+            darkBg: '#050b16',
+            panel: 'rgba(12, 19, 35, 0.82)'
+          },
+          boxShadow: {
+            glow: '0 0 0 1px rgba(56,189,248,.18), 0 15px 40px rgba(2,8,23,.65)',
+            soft: '0 10px 45px rgba(0,0,0,.35)'
+          },
+          backgroundImage: {
+            heroGlow: 'radial-gradient(circle at top left, rgba(56,189,248,.18), transparent 28%), radial-gradient(circle at bottom right, rgba(59,130,246,.12), transparent 22%)'
+          }
+        }
+      }
+    }
+  </script>
+
+</head>
+<body class="min-h-screen bg-darkBg text-white">
+  <div class="fixed inset-0 -z-20 bg-[linear-gradient(to_bottom,#030712,#071225,#030712)]"></div>
+  <div class="fixed inset-0 -z-10 bg-heroGlow"></div>
+
+  <div class="grid min-h-screen lg:grid-cols-2">
+    <!-- Left Side -->
+
+    <section class="relative hidden overflow-hidden lg:flex lg:flex-col lg:justify-between">
+      <img src="./assets/Hero.png" alt="Computer department students" class="absolute inset-0 h-full w-full object-cover opacity-30" />
+      <div class="absolute inset-0 bg-gradient-to-br from-slate-950 via-slate-950/85 to-sky-950/60"></div>
+
+      <div class="relative p-10 xl:p-14">
+        <a href="index.html" class="inline-flex items-center gap-3">
+          <div class="flex h-12 w-12 items-center justify-center rounded-xl border border-sky-400/20 bg-sky-400/10 text-sky-400 shadow-glow">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 14l9-5-9-5-9 5 9 5z" />
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 14l6.16-3.422A12.083 12.083 0 0120 17.944L12 22l-8-4.056a12.083 12.083 0 011.84-7.366L12 14z" />
+            </svg>
+          </div>
+          <div>
+            <p class="text-lg font-semibold tracking-wide">RPI Computer Department</p>
+            <p class="text-sm text-slate-400">Rajshahi Polytechnic Institute</p>
+          </div>
+        </a>
+      </div>
+
+      <div class="relative px-10 pb-14 xl:px-14">
+        <p class="mb-4 inline-flex rounded-full border border-sky-400/20 bg-sky-400/10 px-4 py-1 text-sm text-sky-300 shadow-glow">
+          Secure Academic Portal
+        </p>
+        <h1 class="max-w-xl text-4xl font-bold leading-tight xl:text-5xl">
+          Login to access your <span class="text-sky-400">Student, Teacher, or Admin Dashboard</span>
+        </h1>
+        <p class="mt-6 max-w-xl text-base leading-8 text-slate-300 xl:text-lg">
+          Manage attendance, results, routines, notices, and department information through one modern institute portal.
+        </p>
+
+        <!-- <div class="mt-10 grid gap-4 sm:grid-cols-3">
+          <div class="rounded-2xl border border-white/10 bg-slate-900/55 p-4 backdrop-blur-md">
+            <p class="text-2xl font-bold text-sky-400">01</p>
+            <p class="mt-1 text-sm text-slate-300">Student Access</p>
+          </div>
+          <div class="rounded-2xl border border-white/10 bg-slate-900/55 p-4 backdrop-blur-md">
+            <p class="text-2xl font-bold text-sky-400">02</p>
+            <p class="mt-1 text-sm text-slate-300">Teacher Access</p>
+          </div>
+          <div class="rounded-2xl border border-white/10 bg-slate-900/55 p-4 backdrop-blur-md">
+            <p class="text-2xl font-bold text-sky-400">03</p>
+            <p class="mt-1 text-sm text-slate-300">Admin Access</p>
+          </div>
+        </div> -->
+      </div>
+    </section>
+
+    <!-- Right Side -->
+    <section class="flex items-center justify-center px-6 py-12 sm:px-10">
+      <div class="w-full max-w-md rounded-[2rem] border border-white/10 bg-panel p-8 shadow-soft backdrop-blur-xl sm:p-10">
+        <div class="mb-8 text-center lg:text-left">
+          <p class="text-sm uppercase tracking-[0.25em] text-sky-300">Portal Login</p>
+          <h2 class="mt-3 text-3xl font-bold">Welcome Back</h2>
+          <p class="mt-3 text-sm leading-6 text-slate-400">
+            Select your role and login to continue to your dashboard.
+          </p>
+        </div>
+
+        <form id="loginForm" class="space-y-5">
+          <div>
+            <label for="role" class="mb-2 block text-sm font-medium text-slate-300">Login Role</label>
+            <select id="role" class="w-full rounded-xl border border-white/10 bg-slate-900/80 px-4 py-3 text-white outline-none transition focus:border-sky-400/40 focus:ring-2 focus:ring-sky-400/20">
+              <option value="student">Student</option>
+              <option value="teacher">Teacher</option>
+              <option value="admin">Admin</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="userId" class="mb-2 block text-sm font-medium text-slate-300">User ID</label>
+            <input id="userId" type="text" placeholder="Enter your ID" class="w-full rounded-xl border border-white/10 bg-slate-900/80 px-4 py-3 text-white placeholder:text-slate-500 outline-none transition focus:border-sky-400/40 focus:ring-2 focus:ring-sky-400/20" />
+          </div>
+
+          <div>
+            <label for="password" class="mb-2 block text-sm font-medium text-slate-300">Password</label>
+            <div class="relative">
+              <input id="password" type="password" placeholder="Enter your password" class="w-full rounded-xl border border-white/10 bg-slate-900/80 px-4 py-3 pr-12 text-white placeholder:text-slate-500 outline-none transition focus:border-sky-400/40 focus:ring-2 focus:ring-sky-400/20" />
+              <button type="button" id="togglePassword" class="absolute inset-y-0 right-3 my-auto text-sm text-slate-400 transition hover:text-sky-400">Show</button>
+            </div>
+          </div>
+
+          <div class="flex items-center justify-between text-sm">
+            <label class="flex items-center gap-2 text-slate-400">
+              <input type="checkbox" class="rounded border-white/20 bg-slate-900 text-sky-400 focus:ring-sky-400/30" />
+              Remember me
+            </label>
+            <a href="#" class="text-sky-300 transition hover:text-sky-400">Forgot password?</a>
+          </div>
+
+          <button type="submit" class="w-full rounded-xl bg-sky-400 px-4 py-3 font-semibold text-slate-950 transition hover:bg-sky-300">
+            Login to Dashboard
+          </button>
+        </form>
+
+        <div id="messageBox" class="mt-5 hidden rounded-xl border border-emerald-400/20 bg-emerald-400/10 px-4 py-3 text-sm text-emerald-300"></div>
+
+        <div class="my-8 h-px bg-white/10"></div>
+
+        <div class="grid gap-3 sm:grid-cols-3">
+          <div class="rounded-2xl border border-white/10 bg-slate-900/60 p-4 text-center">
+            <p class="text-sm font-medium text-white">Student</p>
+            <p class="mt-1 text-xs text-slate-400">Attendance, result, routine</p>
+          </div>
+          <div class="rounded-2xl border border-white/10 bg-slate-900/60 p-4 text-center">
+            <p class="text-sm font-medium text-white">Teacher</p>
+            <p class="mt-1 text-xs text-slate-400">Classes, notices, results</p>
+          </div>
+          <div class="rounded-2xl border border-white/10 bg-slate-900/60 p-4 text-center">
+            <p class="text-sm font-medium text-white">Admin</p>
+            <p class="mt-1 text-xs text-slate-400">Control, reports, users</p>
+          </div>
+        </div>
+
+        <p class="mt-8 text-center text-sm text-slate-500 lg:text-left">
+          Back to
+          <a href="index.html" class="text-sky-300 transition hover:text-sky-400">Homepage</a>
+        </p>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    const loginForm = document.getElementById('loginForm');
+    const role = document.getElementById('role');
+    const userId = document.getElementById('userId');
+    const password = document.getElementById('password');
+    const messageBox = document.getElementById('messageBox');
+    const togglePassword = document.getElementById('togglePassword');
+
+    togglePassword.addEventListener('click', () => {
+      const isPassword = password.type === 'password';
+      password.type = isPassword ? 'text' : 'password';
+      togglePassword.textContent = isPassword ? 'Hide' : 'Show';
+    });
+
+    loginForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      if (!userId.value.trim() || !password.value.trim()) {
+        messageBox.classList.remove('hidden');
+        messageBox.className = 'mt-5 rounded-xl border border-rose-400/20 bg-rose-400/10 px-4 py-3 text-sm text-rose-300';
+        messageBox.textContent = 'Please enter both User ID and Password.';
+        return;
+      }
+
+      messageBox.classList.remove('hidden');
+      messageBox.className = 'mt-5 rounded-xl border border-emerald-400/20 bg-emerald-400/10 px-4 py-3 text-sm text-emerald-300';
+      messageBox.textContent = `Login successful as ${role.value}. Redirect logic can be connected here.`;
+
+      setTimeout(() => {
+        if (role.value === 'student') {
+          window.location.href = 'student-dashboard.html';
+        } else if (role.value === 'teacher') {
+          window.location.href = 'teacher-dashboard.html';
+        } else {
+          window.location.href = 'admin-dashboard.html';
+        }
+      }, 800);
+    });
+  </script>
+</body>
+</html>
