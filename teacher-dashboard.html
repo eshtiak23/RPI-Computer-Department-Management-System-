@@ -20,7 +20,8 @@
             soft: '0 10px 45px rgba(0,0,0,.35)'
           },
           backgroundImage: {
-            heroGlow: 'radial-gradient(circle at top left, rgba(56,189,248,.18), transparent 28%), radial-gradient(circle at bottom right, rgba(59,130,246,.12), transparent 22%)'
+            heroGlow:
+              'radial-gradient(circle at top left, rgba(56,189,248,.18), transparent 28%), radial-gradient(circle at bottom right, rgba(59,130,246,.12), transparent 22%)'
           }
         }
       }
@@ -50,21 +51,41 @@
       </div>
 
       <nav class="flex-1 space-y-2 p-4 text-sm">
-        <a href="#dashboard" class="flex items-center gap-3 rounded-2xl border border-sky-400/20 bg-sky-400/10 px-4 py-3 text-sky-300">Dashboard</a>
-        <a href="#profile" class="flex items-center gap-3 rounded-2xl px-4 py-3 text-slate-300 transition hover:bg-white/5 hover:text-sky-300">My Profile</a>
-        <a href="#classes" class="flex items-center gap-3 rounded-2xl px-4 py-3 text-slate-300 transition hover:bg-white/5 hover:text-sky-300">Assigned Classes</a>
-        <a href="#attendance" class="flex items-center gap-3 rounded-2xl px-4 py-3 text-slate-300 transition hover:bg-white/5 hover:text-sky-300">Take Attendance</a>
-        <a href="#students" class="flex items-center gap-3 rounded-2xl px-4 py-3 text-slate-300 transition hover:bg-white/5 hover:text-sky-300">Student List</a>
-        <a href="#results" class="flex items-center gap-3 rounded-2xl px-4 py-3 text-slate-300 transition hover:bg-white/5 hover:text-sky-300">Upload Results</a>
-        <a href="#notices" class="flex items-center gap-3 rounded-2xl px-4 py-3 text-slate-300 transition hover:bg-white/5 hover:text-sky-300">Post Notices</a>
-        <a href="#routine" class="flex items-center gap-3 rounded-2xl px-4 py-3 text-slate-300 transition hover:bg-white/5 hover:text-sky-300">Class Routine</a>
-        <a href="login.html" class="flex items-center gap-3 rounded-2xl px-4 py-3 text-rose-300 transition hover:bg-rose-500/10">Logout</a>
+        <a href="#dashboard" class="flex items-center gap-3 rounded-2xl border border-sky-400/20 bg-sky-400/10 px-4 py-3 text-sky-300">
+          Dashboard
+        </a>
+        <a href="#profile" class="flex items-center gap-3 rounded-2xl px-4 py-3 text-slate-300 transition hover:bg-white/5 hover:text-sky-300">
+          My Profile
+        </a>
+        <a href="#classes" class="flex items-center gap-3 rounded-2xl px-4 py-3 text-slate-300 transition hover:bg-white/5 hover:text-sky-300">
+          Assigned Classes
+        </a>
+        <a href="attendance.html" class="flex items-center gap-3 rounded-2xl border border-sky-400/20 bg-sky-400/10 px-4 py-3 text-sky-300 transition hover:bg-sky-400/20">
+          Attendance
+        </a>
+        <a href="#students" class="flex items-center gap-3 rounded-2xl px-4 py-3 text-slate-300 transition hover:bg-white/5 hover:text-sky-300">
+          Student List
+        </a>
+        <a href="#results" class="flex items-center gap-3 rounded-2xl px-4 py-3 text-slate-300 transition hover:bg-white/5 hover:text-sky-300">
+          Upload Results
+        </a>
+        <a href="#notices" class="flex items-center gap-3 rounded-2xl px-4 py-3 text-slate-300 transition hover:bg-white/5 hover:text-sky-300">
+          Post Notices
+        </a>
+        <a href="#routine" class="flex items-center gap-3 rounded-2xl px-4 py-3 text-slate-300 transition hover:bg-white/5 hover:text-sky-300">
+          Class Routine
+        </a>
+        <a href="login.html" class="flex items-center gap-3 rounded-2xl px-4 py-3 text-rose-300 transition hover:bg-rose-500/10">
+          Logout
+        </a>
       </nav>
 
       <div class="border-t border-white/10 p-4">
         <div class="rounded-2xl border border-white/10 bg-panel p-4">
           <p class="text-sm font-medium text-white">Teacher Access</p>
-          <p class="mt-1 text-xs leading-5 text-slate-400">Manage classes, attendance, notices, and results from one place.</p>
+          <p class="mt-1 text-xs leading-5 text-slate-400">
+            Manage classes, attendance, notices, and results from one place.
+          </p>
         </div>
       </div>
     </aside>
@@ -73,19 +94,29 @@
     <main class="flex-1">
       <!-- Topbar -->
       <header class="border-b border-white/10 bg-slate-950/50 backdrop-blur-xl">
-        <div class="flex flex-col gap-4 px-6 py-5 sm:flex-row sm:items-center sm:justify-between lg:px-8">
+        <div class="flex flex-col gap-4 px-4 py-5 sm:px-6 sm:flex-row sm:items-center sm:justify-between lg:px-8">
           <div>
             <p class="text-sm uppercase tracking-[0.25em] text-sky-300">Teacher Dashboard</p>
-            <h1 id="dashboard" class="mt-2 text-3xl font-bold">Welcome back, <span class="text-sky-400">Mr. Hossain</span></h1>
+            <h1 id="dashboard" class="mt-2 text-2xl font-bold sm:text-3xl">
+              Welcome back, <span class="text-sky-400">Mr. Hossain</span>
+            </h1>
           </div>
+
           <div class="flex flex-wrap items-center gap-3">
-            <button class="rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-sm text-slate-300 transition hover:border-sky-400/30 hover:text-sky-300">Notifications</button>
-            <a href="index.html" class="rounded-xl border border-sky-400/25 bg-sky-400/10 px-4 py-2 text-sm text-sky-300 transition hover:bg-sky-400/20">View Website</a>
+            <button class="rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-sm text-slate-300 transition hover:border-sky-400/30 hover:text-sky-300">
+              Notifications
+            </button>
+            <a href="attendance.html" class="rounded-xl border border-sky-400/25 bg-sky-400/10 px-4 py-2 text-sm text-sky-300 transition hover:bg-sky-400/20">
+              Take Attendance
+            </a>
+            <a href="index.html" class="rounded-xl border border-sky-400/25 bg-sky-400/10 px-4 py-2 text-sm text-sky-300 transition hover:bg-sky-400/20">
+              View Website
+            </a>
           </div>
         </div>
       </header>
 
-      <div class="space-y-8 px-6 py-8 lg:px-8">
+      <div class="space-y-8 px-4 py-8 sm:px-6 lg:px-8">
         <!-- Stats -->
         <section class="grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
           <div class="rounded-3xl border border-white/10 bg-panel p-6 shadow-soft backdrop-blur-xl">
@@ -93,16 +124,19 @@
             <h2 class="mt-3 text-3xl font-bold text-sky-400">06</h2>
             <p class="mt-2 text-sm text-slate-300">This semester</p>
           </div>
+
           <div class="rounded-3xl border border-white/10 bg-panel p-6 shadow-soft backdrop-blur-xl">
             <p class="text-sm text-slate-400">Today's Attendance</p>
             <h2 class="mt-3 text-3xl font-bold text-sky-400">92%</h2>
             <p class="mt-2 text-sm text-slate-300">Average class presence</p>
           </div>
+
           <div class="rounded-3xl border border-white/10 bg-panel p-6 shadow-soft backdrop-blur-xl">
             <p class="text-sm text-slate-400">Pending Results</p>
             <h2 class="mt-3 text-3xl font-bold text-sky-400">03</h2>
             <p class="mt-2 text-sm text-slate-300">Need final upload</p>
           </div>
+
           <div class="rounded-3xl border border-white/10 bg-panel p-6 shadow-soft backdrop-blur-xl">
             <p class="text-sm text-slate-400">New Notices</p>
             <h2 class="mt-3 text-3xl font-bold text-sky-400">04</h2>
@@ -113,8 +147,12 @@
         <!-- Profile + Quick Actions -->
         <section class="grid gap-6 xl:grid-cols-3">
           <div id="profile" class="rounded-[2rem] border border-white/10 bg-panel p-6 shadow-soft backdrop-blur-xl xl:col-span-1">
-            <div class="flex items-center gap-4">
-              <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=400&q=80" alt="Teacher profile" class="h-20 w-20 rounded-2xl object-cover" />
+            <div class="flex flex-col gap-4 sm:flex-row sm:items-center">
+              <img
+                src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=400&q=80"
+                alt="Teacher profile"
+                class="h-20 w-20 rounded-2xl object-cover"
+              />
               <div>
                 <h2 class="text-2xl font-bold">Mr. M. Hossain</h2>
                 <p class="text-sm text-sky-300">Lab Instructor</p>
@@ -142,26 +180,31 @@
             </div>
 
             <div class="mt-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-              <button class="rounded-2xl border border-white/10 bg-slate-900/70 p-5 text-left transition hover:border-sky-400/30 hover:bg-slate-900">
-                <p class="text-lg font-semibold">Take Attendance</p>
-                <p class="mt-2 text-sm text-slate-400">Record present and absent students</p>
-              </button>
+              <a href="attendance.html" class="rounded-2xl border border-sky-400/20 bg-sky-400/10 p-5 text-left transition hover:border-sky-400/40 hover:bg-sky-400/15">
+                <p class="text-lg font-semibold text-sky-300">Take Attendance</p>
+                <p class="mt-2 text-sm text-slate-300">Open full attendance page with student image, note and status</p>
+              </a>
+
               <button class="rounded-2xl border border-white/10 bg-slate-900/70 p-5 text-left transition hover:border-sky-400/30 hover:bg-slate-900">
                 <p class="text-lg font-semibold">Upload Results</p>
                 <p class="mt-2 text-sm text-slate-400">Publish marks and grade sheets</p>
               </button>
+
               <button class="rounded-2xl border border-white/10 bg-slate-900/70 p-5 text-left transition hover:border-sky-400/30 hover:bg-slate-900">
                 <p class="text-lg font-semibold">Post Notice</p>
                 <p class="mt-2 text-sm text-slate-400">Share announcements with students</p>
               </button>
+
               <button class="rounded-2xl border border-white/10 bg-slate-900/70 p-5 text-left transition hover:border-sky-400/30 hover:bg-slate-900">
                 <p class="text-lg font-semibold">Student List</p>
                 <p class="mt-2 text-sm text-slate-400">Check enrolled student details</p>
               </button>
+
               <button class="rounded-2xl border border-white/10 bg-slate-900/70 p-5 text-left transition hover:border-sky-400/30 hover:bg-slate-900">
                 <p class="text-lg font-semibold">Routine</p>
                 <p class="mt-2 text-sm text-slate-400">View weekly class schedule</p>
               </button>
+
               <button class="rounded-2xl border border-white/10 bg-slate-900/70 p-5 text-left transition hover:border-sky-400/30 hover:bg-slate-900">
                 <p class="text-lg font-semibold">Generate Report</p>
                 <p class="mt-2 text-sm text-slate-400">Attendance and result summary</p>
@@ -170,15 +213,17 @@
           </div>
         </section>
 
-        <!-- Classes + Attendance -->
+        <!-- Classes + Attendance Overview -->
         <section class="grid gap-6 xl:grid-cols-5">
           <div id="classes" class="rounded-[2rem] border border-white/10 bg-panel p-6 shadow-soft backdrop-blur-xl xl:col-span-3">
-            <div class="flex items-center justify-between">
+            <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
               <div>
                 <p class="text-sm uppercase tracking-[0.25em] text-sky-300">Assigned Classes</p>
                 <h2 class="mt-2 text-2xl font-bold">Today's Schedule</h2>
               </div>
-              <button class="rounded-xl border border-white/10 px-4 py-2 text-sm text-slate-300 transition hover:border-sky-400/30 hover:text-sky-300">View Full Routine</button>
+              <button class="rounded-xl border border-white/10 px-4 py-2 text-sm text-slate-300 transition hover:border-sky-400/30 hover:text-sky-300">
+                View Full Routine
+              </button>
             </div>
 
             <div class="mt-6 overflow-x-auto">
@@ -198,78 +243,66 @@
                     <td class="py-4 pr-4">4th</td>
                     <td class="py-4 pr-4">09:00 AM</td>
                     <td class="py-4 pr-4">Lab-2</td>
-                    <td class="py-4"><span class="rounded-full bg-emerald-400/10 px-3 py-1 text-xs text-emerald-300">Upcoming</span></td>
+                    <td class="py-4">
+                      <span class="rounded-full bg-emerald-400/10 px-3 py-1 text-xs text-emerald-300">Upcoming</span>
+                    </td>
                   </tr>
                   <tr>
                     <td class="py-4 pr-4">Database Management</td>
                     <td class="py-4 pr-4">5th</td>
                     <td class="py-4 pr-4">11:00 AM</td>
                     <td class="py-4 pr-4">Room-304</td>
-                    <td class="py-4"><span class="rounded-full bg-sky-400/10 px-3 py-1 text-xs text-sky-300">In Progress</span></td>
+                    <td class="py-4">
+                      <span class="rounded-full bg-sky-400/10 px-3 py-1 text-xs text-sky-300">In Progress</span>
+                    </td>
                   </tr>
                   <tr>
                     <td class="py-4 pr-4">Computer Networking</td>
                     <td class="py-4 pr-4">6th</td>
                     <td class="py-4 pr-4">02:00 PM</td>
                     <td class="py-4 pr-4">Lab-1</td>
-                    <td class="py-4"><span class="rounded-full bg-amber-400/10 px-3 py-1 text-xs text-amber-300">Pending</span></td>
+                    <td class="py-4">
+                      <span class="rounded-full bg-amber-400/10 px-3 py-1 text-xs text-amber-300">Pending</span>
+                    </td>
                   </tr>
                 </tbody>
               </table>
             </div>
           </div>
 
-          <div id="attendance" class="rounded-[2rem] border border-white/10 bg-panel p-6 shadow-soft backdrop-blur-xl xl:col-span-2">
+          <div class="rounded-[2rem] border border-white/10 bg-panel p-6 shadow-soft backdrop-blur-xl xl:col-span-2">
             <p class="text-sm uppercase tracking-[0.25em] text-sky-300">Attendance</p>
-            <h2 class="mt-2 text-2xl font-bold">Quick Attendance Entry</h2>
+            <h2 class="mt-2 text-2xl font-bold">Attendance Overview</h2>
 
-            <div class="mt-6 space-y-4">
+            <div class="mt-6 grid gap-4 sm:grid-cols-3 xl:grid-cols-1">
               <div class="rounded-2xl border border-white/10 bg-slate-900/70 p-4">
-                <div class="flex items-center justify-between">
-                  <div>
-                    <p class="font-medium">Shakib Hasan</p>
-                    <p class="text-xs text-slate-400">Roll: 504321</p>
-                  </div>
-                  <select class="rounded-xl border border-white/10 bg-slate-950 px-3 py-2 text-sm outline-none focus:border-sky-400/40">
-                    <option>Present</option>
-                    <option>Absent</option>
-                    <option>Late</option>
-                  </select>
-                </div>
+                <p class="text-sm text-slate-400">Present</p>
+                <h3 class="mt-2 text-2xl font-bold text-emerald-400">34</h3>
               </div>
 
               <div class="rounded-2xl border border-white/10 bg-slate-900/70 p-4">
-                <div class="flex items-center justify-between">
-                  <div>
-                    <p class="font-medium">Nusrat Jahan</p>
-                    <p class="text-xs text-slate-400">Roll: 504322</p>
-                  </div>
-                  <select class="rounded-xl border border-white/10 bg-slate-950 px-3 py-2 text-sm outline-none focus:border-sky-400/40">
-                    <option>Present</option>
-                    <option>Absent</option>
-                    <option>Late</option>
-                  </select>
-                </div>
+                <p class="text-sm text-slate-400">Late</p>
+                <h3 class="mt-2 text-2xl font-bold text-amber-400">05</h3>
               </div>
 
               <div class="rounded-2xl border border-white/10 bg-slate-900/70 p-4">
-                <div class="flex items-center justify-between">
-                  <div>
-                    <p class="font-medium">Arif Mahmud</p>
-                    <p class="text-xs text-slate-400">Roll: 504323</p>
-                  </div>
-                  <select class="rounded-xl border border-white/10 bg-slate-950 px-3 py-2 text-sm outline-none focus:border-sky-400/40">
-                    <option>Present</option>
-                    <option>Absent</option>
-                    <option>Late</option>
-                  </select>
-                </div>
+                <p class="text-sm text-slate-400">Absent</p>
+                <h3 class="mt-2 text-2xl font-bold text-rose-400">03</h3>
               </div>
             </div>
 
-            <button class="mt-6 w-full rounded-xl bg-sky-400 px-4 py-3 font-semibold text-slate-950 transition hover:bg-sky-300">
-              Save Attendance
-            </button>
+            <div class="mt-6 rounded-2xl border border-sky-400/20 bg-sky-400/10 p-4">
+              <p class="text-sm text-sky-200">
+                Open the full attendance page to mark students with
+                <span class="font-semibold">photo, present, late, absent</span>
+                and add a
+                <span class="font-semibold">short note</span>.
+              </p>
+            </div>
+
+            <a href="attendance.html" class="mt-6 block w-full rounded-xl bg-sky-400 px-4 py-3 text-center font-semibold text-slate-950 transition hover:bg-sky-300">
+              Open Attendance Page
+            </a>
           </div>
         </section>
 
@@ -278,6 +311,7 @@
           <div id="students" class="rounded-[2rem] border border-white/10 bg-panel p-6 shadow-soft backdrop-blur-xl">
             <p class="text-sm uppercase tracking-[0.25em] text-sky-300">Students</p>
             <h2 class="mt-2 text-2xl font-bold">Student List</h2>
+
             <div class="mt-5 space-y-4">
               <div class="rounded-2xl border border-white/10 bg-slate-900/70 p-4">
                 <p class="font-medium">4th Semester A</p>
@@ -297,6 +331,7 @@
           <div id="results" class="rounded-[2rem] border border-white/10 bg-panel p-6 shadow-soft backdrop-blur-xl">
             <p class="text-sm uppercase tracking-[0.25em] text-sky-300">Results</p>
             <h2 class="mt-2 text-2xl font-bold">Result Upload</h2>
+
             <form class="mt-5 space-y-4">
               <input type="text" placeholder="Course name" class="w-full rounded-xl border border-white/10 bg-slate-900/80 px-4 py-3 text-white placeholder:text-slate-500 outline-none focus:border-sky-400/40" />
               <select class="w-full rounded-xl border border-white/10 bg-slate-900/80 px-4 py-3 text-white outline-none focus:border-sky-400/40">
@@ -306,17 +341,22 @@
                 <option>6th Semester</option>
               </select>
               <input type="file" class="w-full rounded-xl border border-white/10 bg-slate-900/80 px-4 py-3 text-sm text-slate-400 outline-none file:mr-4 file:rounded-lg file:border-0 file:bg-sky-400 file:px-4 file:py-2 file:text-slate-950" />
-              <button type="button" class="w-full rounded-xl bg-sky-400 px-4 py-3 font-semibold text-slate-950 transition hover:bg-sky-300">Upload Result Sheet</button>
+              <button type="button" class="w-full rounded-xl bg-sky-400 px-4 py-3 font-semibold text-slate-950 transition hover:bg-sky-300">
+                Upload Result Sheet
+              </button>
             </form>
           </div>
 
           <div id="notices" class="rounded-[2rem] border border-white/10 bg-panel p-6 shadow-soft backdrop-blur-xl">
             <p class="text-sm uppercase tracking-[0.25em] text-sky-300">Notice Board</p>
             <h2 class="mt-2 text-2xl font-bold">Post Notice</h2>
+
             <form class="mt-5 space-y-4">
               <input type="text" placeholder="Notice title" class="w-full rounded-xl border border-white/10 bg-slate-900/80 px-4 py-3 text-white placeholder:text-slate-500 outline-none focus:border-sky-400/40" />
               <textarea rows="5" placeholder="Write notice details..." class="w-full rounded-xl border border-white/10 bg-slate-900/80 px-4 py-3 text-white placeholder:text-slate-500 outline-none focus:border-sky-400/40"></textarea>
-              <button type="button" class="w-full rounded-xl border border-sky-400/25 bg-sky-400/10 px-4 py-3 font-medium text-sky-300 transition hover:bg-sky-400/20">Publish Notice</button>
+              <button type="button" class="w-full rounded-xl border border-sky-400/25 bg-sky-400/10 px-4 py-3 font-medium text-sky-300 transition hover:bg-sky-400/20">
+                Publish Notice
+              </button>
             </form>
           </div>
         </section>
@@ -328,7 +368,10 @@
               <p class="text-sm uppercase tracking-[0.25em] text-sky-300">Weekly Routine</p>
               <h2 class="mt-2 text-2xl font-bold">Class Routine Overview</h2>
             </div>
-            <button class="rounded-xl border border-white/10 px-4 py-2 text-sm text-slate-300 transition hover:border-sky-400/30 hover:text-sky-300">Download PDF</button>
+
+            <button class="rounded-xl border border-white/10 px-4 py-2 text-sm text-slate-300 transition hover:border-sky-400/30 hover:text-sky-300">
+              Download PDF
+            </button>
           </div>
 
           <div class="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-5">

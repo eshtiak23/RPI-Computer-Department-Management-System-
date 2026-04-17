@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Student Dashboard - RPI Smart App</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#2f80ed',
+            softBg: '#f4f7fb',
+            card: '#ffffff',
+            textDark: '#1f2937',
+            textSoft: '#6b7280'
+          },
+          boxShadow: {
+            panel: '0 12px 30px rgba(15, 23, 42, 0.08)',
+            soft: '0 8px 20px rgba(15, 23, 42, 0.06)'
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-softBg text-textDark">
+  <div class="min-h-screen lg:flex">
+    <!-- Sidebar -->
+    <aside class="w-full border-b border-slate-200 bg-white lg:min-h-screen lg:w-72 lg:border-b-0 lg:border-r">
+      <div class="flex items-center justify-between px-6 py-5 lg:block">
+        <div>
+          <h1 class="text-xl font-bold text-primary">RPI Student</h1>
+          <p class="text-sm text-textSoft">Computer Department</p>
+        </div>
+        <a href="login.html" class="rounded-xl bg-primary px-4 py-2 text-sm font-medium text-white lg:hidden">Logout</a>
+      </div>
+
+      <nav class="px-4 pb-6">
+        <p class="px-3 pb-3 pt-2 text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">Main Menu</p>
+        <div class="space-y-2 text-sm">
+          <a href="#" class="flex items-center gap-3 rounded-2xl px-4 py-3 text-textSoft transition hover:bg-slate-50 hover:text-primary">Dashboard</a>
+          <a href="#" class="flex items-center gap-3 rounded-2xl bg-primary px-4 py-3 font-medium text-white shadow-soft">My Workspace</a>
+          <a href="#profile" class="flex items-center gap-3 rounded-2xl px-4 py-3 text-textSoft transition hover:bg-slate-50 hover:text-primary">Student Info</a>
+          <a href="#routine" class="flex items-center gap-3 rounded-2xl px-4 py-3 text-textSoft transition hover:bg-slate-50 hover:text-primary">Class Routine</a>
+          <a href="#results" class="flex items-center gap-3 rounded-2xl px-4 py-3 text-textSoft transition hover:bg-slate-50 hover:text-primary">Results</a>
+          <a href="#attendance" class="flex items-center gap-3 rounded-2xl px-4 py-3 text-textSoft transition hover:bg-slate-50 hover:text-primary">Attendance</a>
+          <a href="#notices" class="flex items-center gap-3 rounded-2xl px-4 py-3 text-textSoft transition hover:bg-slate-50 hover:text-primary">Notices</a>
+          <a href="#teachers" class="flex items-center gap-3 rounded-2xl px-4 py-3 text-textSoft transition hover:bg-slate-50 hover:text-primary">Teachers</a>
+          <a href="#leave" class="flex items-center gap-3 rounded-2xl px-4 py-3 text-textSoft transition hover:bg-slate-50 hover:text-primary">Leave Request</a>
+        </div>
+
+        <div class="mt-8 hidden px-2 lg:block">
+          <a href="login.html" class="block rounded-2xl border border-slate-200 px-4 py-3 text-center text-sm font-medium text-rose-500 transition hover:bg-rose-50">Log out</a>
+        </div>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 p-4 sm:p-6 lg:p-8">
+      <!-- Topbar -->
+      <div class="mb-6 flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
+        <div>
+          <p class="text-sm font-medium text-slate-400">Student Dashboard</p>
+          <h2 class="mt-1 text-3xl font-bold">Academic Overview</h2>
+        </div>
+
+        <div class="flex flex-col gap-3 sm:flex-row sm:items-center">
+          <div class="rounded-2xl bg-white px-4 py-3 shadow-panel">
+            <p class="text-xs text-slate-400">Live Time</p>
+            <p id="liveTime" class="text-sm font-semibold text-textDark">--:--</p>
+          </div>
+          <div class="rounded-2xl bg-white px-4 py-3 shadow-panel">
+            <p class="text-xs text-slate-400">Attendance Status</p>
+            <p id="attendanceStatusTop" class="text-sm font-semibold text-primary">Loading...</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Student Header Card -->
+      <section id="profile" class="rounded-[28px] bg-white p-6 shadow-panel">
+        <div class="flex flex-col gap-6 xl:flex-row xl:items-start xl:justify-between">
+          <div class="flex flex-col gap-5 sm:flex-row sm:items-center">
+            <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=300&q=80" alt="Student" class="h-20 w-20 rounded-2xl object-cover" />
+            <div>
+              <h3 id="studentName" class="text-2xl font-bold">MD Eshtiak Ahmed</h3>
+              <div class="mt-2 flex flex-wrap gap-4 text-sm text-textSoft">
+                <p>Roll: <span id="studentRoll" class="font-medium text-textDark"></span></p>
+                <p>Semester: <span id="studentSemester" class="font-medium text-textDark"></span></p>
+                <p>Session: <span id="studentSession" class="font-medium text-textDark"></span></p>
+                <p>Email: <span id="studentEmail" class="font-medium text-textDark"></span></p>
+              </div>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-2 gap-3 sm:grid-cols-4 xl:w-[430px]">
+            <div class="rounded-2xl bg-slate-50 p-4">
+              <p class="text-xs text-textSoft">Days in Semester</p>
+              <p id="totalDays" class="mt-2 text-2xl font-bold text-textDark">--</p>
+            </div>
+            <div class="rounded-2xl bg-slate-50 p-4">
+              <p class="text-xs text-textSoft">Days Attended</p>
+              <p id="presentDays" class="mt-2 text-2xl font-bold text-emerald-500">--</p>
+            </div>
+            <div class="rounded-2xl bg-slate-50 p-4">
+              <p class="text-xs text-textSoft">Absence Days</p>
+              <p id="absentDays" class="mt-2 text-2xl font-bold text-amber-500">--</p>
+            </div>
+            <div class="rounded-2xl bg-slate-50 p-4">
+              <p class="text-xs text-textSoft">Unread Notices</p>
+              <p id="noticeCount" class="mt-2 text-2xl font-bold text-primary">--</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Summary Cards -->
+      <section class="mt-6 grid gap-6 xl:grid-cols-3">
+        <div class="rounded-[28px] bg-white p-6 shadow-panel">
+          <div class="flex items-start justify-between">
+            <div>
+              <p class="text-sm font-medium text-textSoft">Class Days</p>
+              <h3 id="classDays" class="mt-2 text-4xl font-bold text-textDark">--</h3>
+              <p class="mt-2 text-sm text-slate-400">Based on recent academic records</p>
+            </div>
+            <div class="rounded-2xl bg-blue-50 px-3 py-2 text-xs font-semibold text-primary">Monthly</div>
+          </div>
+        </div>
+
+        <div id="attendance" class="rounded-[28px] bg-white p-6 shadow-panel">
+          <p class="text-sm font-medium text-textSoft">Attendance Rate</p>
+          <div class="mt-4 flex items-end gap-3">
+            <h3 id="attendanceRate" class="text-5xl font-bold text-textDark">--</h3>
+            <span class="pb-2 text-sm text-slate-400">this month</span>
+          </div>
+          <div class="mt-6 grid grid-cols-3 gap-3">
+            <div class="rounded-2xl bg-blue-500 p-4 text-white">
+              <p class="text-xs opacity-80">Present</p>
+              <p id="presentPercent" class="mt-2 text-2xl font-bold">--</p>
+            </div>
+            <div class="rounded-2xl bg-amber-400 p-4 text-white">
+              <p class="text-xs opacity-80">Late</p>
+              <p id="latePercent" class="mt-2 text-2xl font-bold">--</p>
+            </div>
+            <div class="rounded-2xl bg-emerald-400 p-4 text-white">
+              <p class="text-xs opacity-80">Target</p>
+              <p class="mt-2 text-2xl font-bold">75%</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="rounded-[28px] bg-white p-6 shadow-panel">
+          <p class="text-sm font-medium text-textSoft">Summary - <span id="summaryName">Student</span></p>
+          <div class="mt-5 grid grid-cols-2 gap-3">
+            <div class="rounded-2xl bg-blue-500 p-4 text-white">
+              <p class="text-xs opacity-80">Subjects</p>
+              <p id="subjectCount" class="mt-2 text-3xl font-bold">--</p>
+            </div>
+            <div class="rounded-2xl bg-lime-500 p-4 text-white">
+              <p class="text-xs opacity-80">Current GPA</p>
+              <p id="gpaValue" class="mt-2 text-3xl font-bold">--</p>
+            </div>
+            <div class="rounded-2xl bg-amber-100 p-4 text-amber-700">
+              <p class="text-xs">Next Class</p>
+              <p id="nextClassShort" class="mt-2 text-lg font-bold">--</p>
+            </div>
+            <div class="rounded-2xl bg-rose-100 p-4 text-rose-700">
+              <p class="text-xs">Focus Subject</p>
+              <p id="weakSubjectShort" class="mt-2 text-lg font-bold">--</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Results and Notices -->
+      <section class="mt-6 grid gap-6 xl:grid-cols-3">
+        <div id="results" class="rounded-[28px] bg-white p-6 shadow-panel xl:col-span-2">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-sm font-medium text-textSoft">Academic Results</p>
+              <h3 class="mt-1 text-2xl font-bold">Subject Performance</h3>
+            </div>
+            <div id="resultStatus" class="rounded-2xl bg-slate-100 px-4 py-2 text-sm font-medium text-slate-600">Loading...</div>
+          </div>
+
+          <div class="mt-6 overflow-x-auto">
+            <table class="min-w-full text-left text-sm">
+              <thead>
+                <tr class="border-b border-slate-200 text-slate-400">
+                  <th class="pb-3 pr-4 font-medium">Subject</th>
+                  <th class="pb-3 pr-4 font-medium">Marks</th>
+                  <th class="pb-3 pr-4 font-medium">Grade</th>
+                  <th class="pb-3 font-medium">Status</th>
+                </tr>
+              </thead>
+              <tbody id="resultTable" class="divide-y divide-slate-100 text-textDark"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div id="notices" class="rounded-[28px] bg-white p-6 shadow-panel">
+          <p class="text-sm font-medium text-textSoft">Latest Notices</p>
+          <h3 class="mt-1 text-2xl font-bold">Department Updates</h3>
+          <div id="noticeList" class="mt-6 space-y-4"></div>
+        </div>
+      </section>
+
+      <!-- Routine and Teachers -->
+      <section class="mt-6 grid gap-6 xl:grid-cols-3">
+        <div id="routine" class="rounded-[28px] bg-white p-6 shadow-panel xl:col-span-2">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-sm font-medium text-textSoft">Routine</p>
+              <h3 class="mt-1 text-2xl font-bold">Today's Classes</h3>
+            </div>
+            <div class="rounded-2xl bg-slate-100 px-4 py-2 text-sm font-medium text-slate-600">Live Schedule</div>
+          </div>
+          <div id="routineList" class="mt-6 space-y-4"></div>
+        </div>
+
+        <div id="teachers" class="rounded-[28px] bg-white p-6 shadow-panel">
+          <p class="text-sm font-medium text-textSoft">Teachers</p>
+          <h3 class="mt-1 text-2xl font-bold">Course Instructors</h3>
+          <div id="teacherList" class="mt-6 space-y-4"></div>
+        </div>
+      </section>
+
+      <!-- Leave Request -->
+      <section id="leave" class="mt-6 rounded-[28px] bg-white p-6 shadow-panel">
+        <div class="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
+          <div>
+            <p class="text-sm font-medium text-textSoft">Leave Request</p>
+            <h3 class="mt-1 text-2xl font-bold">Submit Academic Leave Application</h3>
+          </div>
+          <div class="rounded-2xl bg-slate-100 px-4 py-2 text-sm font-medium text-slate-600">Student Self Service</div>
+        </div>
+
+        <form id="leaveForm" class="mt-6 grid gap-4 lg:grid-cols-3">
+          <input type="date" class="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 outline-none focus:border-primary" required>
+          <select class="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 outline-none focus:border-primary" required>
+            <option value="">Select reason</option>
+            <option>Medical Reason</option>
+            <option>Family Emergency</option>
+            <option>Academic Program</option>
+            <option>Personal Issue</option>
+          </select>
+          <input type="text" placeholder="Class / Subject" class="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 outline-none focus:border-primary" required>
+          <textarea rows="5" placeholder="Write your leave details..." class="lg:col-span-3 rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 outline-none focus:border-primary" required></textarea>
+          <div class="lg:col-span-3 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <div id="leaveMessage" class="hidden rounded-2xl bg-emerald-50 px-4 py-3 text-sm text-emerald-600"></div>
+            <button type="submit" class="rounded-2xl bg-primary px-6 py-3 font-semibold text-white transition hover:opacity-90">Submit Request</button>
+          </div>
+        </form>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    const studentData = {
+      profile: {
+        name: 'MD Eshtiak Ahmed',
+        roll: '721491',
+        semester: '5th Semester',
+        session: '2023-24',
+        email: 'eshtiak721491@student.rpi.edu.bd'
+      },
+      attendance: [
+        { subject: 'Database Management System', status: 'Present', date: '2026-04-10' },
+        { subject: 'Data Communication', status: 'Present', date: '2026-04-11' },
+        { subject: 'Web Design', status: 'Late', date: '2026-04-12' },
+        { subject: 'Operating System', status: 'Present', date: '2026-04-13' },
+        { subject: 'Mathematics-IV', status: 'Absent', date: '2026-04-14' },
+        { subject: 'Database Management System', status: 'Present', date: '2026-04-15' },
+        { subject: 'Data Communication', status: 'Present', date: '2026-04-16' },
+        { subject: 'Web Design', status: 'Present', date: '2026-04-17' },
+        { subject: 'Operating System', status: 'Late', date: '2026-04-18' },
+        { subject: 'Mathematics-IV', status: 'Present', date: '2026-04-19' }
+      ],
+      results: [
+        { subject: 'Database Management System', marks: 82, grade: 'A+' },
+        { subject: 'Data Communication', marks: 76, grade: 'A' },
+        { subject: 'Web Design', marks: 88, grade: 'A+' },
+        { subject: 'Operating System', marks: 71, grade: 'A-' },
+        { subject: 'Mathematics-IV', marks: 67, grade: 'B+' }
+      ],
+      notices: [
+        { title: 'Mid-term exam routine has been published', type: 'Exam', priority: 'High', date: '2026-04-17' },
+        { title: 'Database lab report submission deadline extended', type: 'Academic', priority: 'Medium', date: '2026-04-16' },
+        { title: 'Seminar on modern web development next week', type: 'Event', priority: 'General', date: '2026-04-15' }
+      ],
+      routine: [
+        { subject: 'Database Management System', time: '09:00 AM - 09:50 AM', room: 'Room 304', teacher: 'Instr. Lufi' },
+        { subject: 'Data Communication', time: '10:00 AM - 10:50 AM', room: 'Lab 2', teacher: 'Instr. Naruto' },
+        { subject: 'Web Design', time: '11:10 AM - 12:00 PM', room: 'Lab 3', teacher: 'Instr. Saitama' },
+        { subject: 'Operating System', time: '01:00 PM - 01:50 PM', room: 'Room 305', teacher: 'Instr. Mikasa' }
+      ],
+      teachers: [
+        { name: 'Instr. Lufi', subject: 'Database Management System', room: 'Room 304' },
+        { name: 'Instr. Naruto', subject: 'Data Communication', room: 'Lab 2' },
+        { name: 'Instr. Saitama', subject: 'Web Design', room: 'Lab 3' },
+        { name: 'Instr. Mikasa', subject: 'Operating System', room: 'Room 305' }
+      ]
+    };
+
+    function calculateAttendance(attendance) {
+      const total = attendance.length;
+      let attended = 0;
+
+      attendance.forEach(a => {
+        if (a.status === 'Present') attended += 1;
+        if (a.status === 'Late') attended += 0.5;
+      });
+
+      return Number(((attended / total) * 100).toFixed(1));
+    }
+
+    function calculateGPA(results) {
+      let total = 0;
+      results.forEach(r => {
+        if (r.marks >= 80) total += 4.0;
+        else if (r.marks >= 75) total += 3.75;
+        else if (r.marks >= 70) total += 3.5;
+        else if (r.marks >= 65) total += 3.25;
+        else total += 3.0;
+      });
+      return (total / results.length).toFixed(2);
+    }
+
+    function getWeakSubject(results) {
+      return [...results].sort((a, b) => a.marks - b.marks)[0];
+    }
+
+    function getGradeStatus(marks, weakest) {
+      if (marks === weakest) return ['Needs Focus', 'bg-amber-100 text-amber-700'];
+      if (marks >= 80) return ['Excellent', 'bg-emerald-100 text-emerald-700'];
+      if (marks >= 70) return ['Good', 'bg-blue-100 text-blue-700'];
+      return ['Average', 'bg-slate-100 text-slate-700'];
+    }
+
+    function renderProfile() {
+      document.getElementById('studentName').textContent = studentData.profile.name;
+      document.getElementById('summaryName').textContent = studentData.profile.name.split(' ')[1] || studentData.profile.name;
+      document.getElementById('studentRoll').textContent = studentData.profile.roll;
+      document.getElementById('studentSemester').textContent = studentData.profile.semester;
+      document.getElementById('studentSession').textContent = studentData.profile.session;
+      document.getElementById('studentEmail').textContent = studentData.profile.email;
+    }
+
+    function renderSummary() {
+      const attendanceRate = calculateAttendance(studentData.attendance);
+      const gpa = calculateGPA(studentData.results);
+      const presentDays = studentData.attendance.filter(a => a.status === 'Present').length;
+      const absentDays = studentData.attendance.filter(a => a.status === 'Absent').length;
+      const lateDays = studentData.attendance.filter(a => a.status === 'Late').length;
+      const weakSubject = getWeakSubject(studentData.results);
+      const nextClass = studentData.routine[0];
+
+      document.getElementById('totalDays').textContent = studentData.attendance.length;
+      document.getElementById('presentDays').textContent = presentDays;
+      document.getElementById('absentDays').textContent = absentDays;
+      document.getElementById('noticeCount').textContent = studentData.notices.length;
+      document.getElementById('classDays').textContent = studentData.attendance.length;
+      document.getElementById('attendanceRate').textContent = attendanceRate + '%';
+      document.getElementById('presentPercent').textContent = Math.round((presentDays / studentData.attendance.length) * 100) + '%';
+      document.getElementById('latePercent').textContent = Math.round((lateDays / studentData.attendance.length) * 100) + '%';
+      document.getElementById('subjectCount').textContent = studentData.results.length;
+      document.getElementById('gpaValue').textContent = gpa;
+      document.getElementById('nextClassShort').textContent = nextClass.subject;
+      document.getElementById('weakSubjectShort').textContent = weakSubject.subject;
+      document.getElementById('attendanceStatusTop').textContent = attendanceRate < 75 ? 'Needs Improvement' : 'In Safe Range';
+      document.getElementById('resultStatus').textContent = `Estimated GPA ${gpa}`;
+    }
+
+    function renderResults() {
+      const weakSubjectMarks = getWeakSubject(studentData.results).marks;
+      const tbody = document.getElementById('resultTable');
+
+      tbody.innerHTML = studentData.results.map(item => {
+        const [label, cls] = getGradeStatus(item.marks, weakSubjectMarks);
+        return `
+          <tr>
+            <td class="py-4 pr-4">${item.subject}</td>
+            <td class="py-4 pr-4">${item.marks}</td>
+            <td class="py-4 pr-4">${item.grade}</td>
+            <td class="py-4"><span class="rounded-full px-3 py-1 text-xs font-medium ${cls}">${label}</span></td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function renderNotices() {
+      const list = document.getElementById('noticeList');
+      list.innerHTML = studentData.notices.map(item => {
+        const cls = item.priority === 'High'
+          ? 'bg-rose-100 text-rose-700'
+          : item.priority === 'Medium'
+          ? 'bg-amber-100 text-amber-700'
+          : 'bg-blue-100 text-blue-700';
+
+        return `
+          <div class="rounded-2xl border border-slate-100 bg-slate-50 p-4">
+            <div class="flex items-start justify-between gap-3">
+              <div>
+                <p class="font-semibold text-textDark">${item.title}</p>
+                <p class="mt-1 text-xs text-slate-500">${item.date} • ${item.type}</p>
+              </div>
+              <span class="rounded-full px-3 py-1 text-xs font-medium ${cls}">${item.priority}</span>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function renderRoutine() {
+      const list = document.getElementById('routineList');
+      list.innerHTML = studentData.routine.map(item => `
+        <div class="flex flex-col gap-3 rounded-2xl border border-slate-100 bg-slate-50 p-4 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <p class="font-semibold text-textDark">${item.subject}</p>
+            <p class="mt-1 text-sm text-slate-500">${item.teacher}</p>
+          </div>
+          <div class="text-sm text-slate-500">${item.time}</div>
+          <div class="text-sm font-medium text-primary">${item.room}</div>
+        </div>
+      `).join('');
+    }
+
+    function renderTeachers() {
+      const list = document.getElementById('teacherList');
+      list.innerHTML = studentData.teachers.map(item => `
+        <div class="rounded-2xl border border-slate-100 bg-slate-50 p-4">
+          <p class="font-semibold text-textDark">${item.name}</p>
+          <p class="mt-1 text-sm text-slate-500">${item.subject}</p>
+          <p class="mt-1 text-xs text-primary">Room: ${item.room}</p>
+        </div>
+      `).join('');
+    }
+
+    function startClock() {
+      function update() {
+        const now = new Date();
+        document.getElementById('liveTime').textContent = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+      }
+      update();
+      setInterval(update, 1000);
+    }
+
+    document.getElementById('leaveForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const box = document.getElementById('leaveMessage');
+      box.classList.remove('hidden');
+      box.textContent = 'Leave request submitted successfully for review.';
+      this.reset();
+    });
+
+    renderProfile();
+    renderSummary();
+    renderResults();
+    renderNotices();
+    renderRoutine();
+    renderTeachers();
+    startClock();
+  </script>
+</body>
+</html>
