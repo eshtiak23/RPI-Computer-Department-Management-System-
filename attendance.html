@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Take Attendance - RPI Teacher Panel</title>
+
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -12,8 +13,7 @@
           colors: {
             primary: '#38bdf8',
             darkBg: '#050b16',
-            panel: 'rgba(12, 19, 35, 0.82)',
-            panelLight: 'rgba(15, 23, 42, 0.92)'
+            panel: 'rgba(12, 19, 35, 0.82)'
           },
           boxShadow: {
             glow: '0 0 0 1px rgba(56,189,248,.18), 0 15px 40px rgba(2,8,23,.65)',
@@ -24,7 +24,14 @@
           }
         }
       }
-    }
+    };
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+    const supabaseUrl = 'https://cdeulhheleboruiffbtg.supabase.co';
+    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNkZXVsaGhlbGVib3J1aWZmYnRnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYzNzc3MTcsImV4cCI6MjA5MTk1MzcxN30.5_dNfxHPSKP86kYXQLmTmcjQu_YQT2zu9ScLJ_Lwn5E';
+    const supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
   </script>
 </head>
 <body class="min-h-screen bg-darkBg text-white">
@@ -32,7 +39,6 @@
   <div class="fixed inset-0 -z-10 bg-heroGlow"></div>
 
   <div class="flex min-h-screen">
-    <!-- Sidebar -->
     <aside class="hidden w-72 border-r border-white/10 bg-slate-950/70 backdrop-blur-xl lg:flex lg:flex-col">
       <div class="border-b border-white/10 p-6">
         <a href="teacher-dashboard.html" class="flex items-center gap-3">
@@ -69,7 +75,6 @@
       </div>
     </aside>
 
-    <!-- Main Content -->
     <main class="flex-1">
       <header class="border-b border-white/10 bg-slate-950/50 backdrop-blur-xl">
         <div class="flex flex-col gap-4 px-6 py-5 sm:flex-row sm:items-center sm:justify-between lg:px-8">
@@ -78,6 +83,7 @@
             <h1 class="mt-2 text-3xl font-bold">Take Attendance</h1>
             <p id="classInfo" class="mt-2 text-sm text-slate-400">Loading class information...</p>
           </div>
+
           <div class="flex flex-wrap items-center gap-3">
             <div class="rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-sm text-slate-300">
               Student <span id="progressText" class="text-sky-300">1 / 1</span>
@@ -110,9 +116,9 @@
                 <div class="rounded-3xl border border-white/10 bg-slate-900/70 p-5">
                   <p class="text-sm text-slate-400">Attendance Options</p>
                   <div class="mt-4 grid gap-4 sm:grid-cols-3">
-                    <button id="presentBtn" class="rounded-2xl border border-emerald-400/20 bg-emerald-400/10 px-4 py-4 text-lg font-semibold text-emerald-300 transition hover:bg-emerald-400/20">Present</button>
-                    <button id="lateBtn" class="rounded-2xl border border-amber-400/20 bg-amber-400/10 px-4 py-4 text-lg font-semibold text-amber-300 transition hover:bg-amber-400/20">Late</button>
-                    <button id="absentBtn" class="rounded-2xl border border-rose-400/20 bg-rose-400/10 px-4 py-4 text-lg font-semibold text-rose-300 transition hover:bg-rose-400/20">Absent</button>
+                    <button id="presentBtn" type="button" class="rounded-2xl border border-emerald-400/20 bg-emerald-400/10 px-4 py-4 text-lg font-semibold text-emerald-300 transition hover:bg-emerald-400/20">Present</button>
+                    <button id="lateBtn" type="button" class="rounded-2xl border border-amber-400/20 bg-amber-400/10 px-4 py-4 text-lg font-semibold text-amber-300 transition hover:bg-amber-400/20">Late</button>
+                    <button id="absentBtn" type="button" class="rounded-2xl border border-rose-400/20 bg-rose-400/10 px-4 py-4 text-lg font-semibold text-rose-300 transition hover:bg-rose-400/20">Absent</button>
                   </div>
                 </div>
 
@@ -122,8 +128,8 @@
                 </div>
 
                 <div class="flex flex-wrap gap-4">
-                  <button id="saveNextBtn" class="rounded-2xl bg-sky-400 px-6 py-3 font-semibold text-slate-950 transition hover:bg-sky-300">Save & Next Student</button>
-                  <button id="skipBtn" class="rounded-2xl border border-white/10 bg-white/5 px-6 py-3 font-medium text-slate-300 transition hover:border-sky-400/30 hover:text-sky-300">Skip</button>
+                  <button id="saveNextBtn" type="button" class="rounded-2xl bg-sky-400 px-6 py-3 font-semibold text-slate-950 transition hover:bg-sky-300">Save & Next Student</button>
+                  <button id="skipBtn" type="button" class="rounded-2xl border border-white/10 bg-white/5 px-6 py-3 font-medium text-slate-300 transition hover:border-sky-400/30 hover:text-sky-300">Skip</button>
                 </div>
 
                 <div id="messageBox" class="hidden rounded-2xl border border-emerald-400/20 bg-emerald-400/10 px-4 py-3 text-sm text-emerald-300"></div>
@@ -233,19 +239,23 @@
         return;
       }
 
-      recentEntries.innerHTML = attendanceResults.slice(-4).reverse().map(item => {
-        let colorClass = 'text-emerald-300';
-        if (item.status === 'Late') colorClass = 'text-amber-300';
-        if (item.status === 'Absent') colorClass = 'text-rose-300';
+      recentEntries.innerHTML = attendanceResults
+        .slice(-4)
+        .reverse()
+        .map(item => {
+          let colorClass = 'text-emerald-300';
+          if (item.status === 'Late') colorClass = 'text-amber-300';
+          if (item.status === 'Absent') colorClass = 'text-rose-300';
 
-        return `
-          <div class="rounded-xl border border-white/10 bg-slate-950/60 p-3">
-            <p class="font-medium">${item.name}</p>
-            <p class="mt-1 ${colorClass}">${item.status}</p>
-            ${item.note ? `<p class="mt-1 text-xs text-slate-400">Note: ${item.note}</p>` : ''}
-          </div>
-        `;
-      }).join('');
+          return `
+            <div class="rounded-xl border border-white/10 bg-slate-950/60 p-3">
+              <p class="font-medium">${item.name}</p>
+              <p class="mt-1 ${colorClass}">${item.status}</p>
+              ${item.note ? `<p class="mt-1 text-xs text-slate-400">Note: ${item.note}</p>` : ''}
+            </div>
+          `;
+        })
+        .join('');
     }
 
     function clearStatusSelection() {
@@ -259,7 +269,6 @@
     }
 
     function setSelectedStatus(status) {
-      selectedStatus = status;
       clearStatusSelection();
       selectedStatus = status;
 
@@ -287,11 +296,14 @@
         progressText.textContent = `${attendanceSession.students.length} / ${attendanceSession.students.length}`;
         teacherNote.value = '';
         clearStatusSelection();
+
         saveNextBtn.disabled = true;
         saveNextBtn.textContent = 'Attendance Completed';
         saveNextBtn.classList.add('opacity-60', 'cursor-not-allowed');
+
         skipBtn.disabled = true;
         skipBtn.classList.add('opacity-60', 'cursor-not-allowed');
+
         messageBox.classList.remove('hidden');
         messageBox.className = 'rounded-2xl border border-emerald-400/20 bg-emerald-400/10 px-4 py-3 text-sm text-emerald-300';
         messageBox.textContent = 'Great job. Attendance for this class has been completed.';
@@ -309,7 +321,7 @@
       messageBox.classList.add('hidden');
     }
 
-    function saveAttendance(goNext = true, skipped = false) {
+    async function saveAttendance(skipped = false) {
       if (currentStudentIndex >= attendanceSession.students.length) return;
 
       const student = attendanceSession.students[currentStudentIndex];
@@ -322,12 +334,25 @@
       }
 
       if (!skipped) {
-        attendanceResults.push({
+        const payload = {
           name: student.name,
           roll: student.roll,
           status: selectedStatus,
-          note: teacherNote.value.trim()
-        });
+          note: teacherNote.value.trim(),
+          date: new Date().toISOString().split('T')[0]
+        };
+
+        const { error } = await supabaseClient.from('attendance').insert([payload]);
+
+        if (error) {
+          messageBox.classList.remove('hidden');
+          messageBox.className = 'rounded-2xl border border-rose-400/20 bg-rose-400/10 px-4 py-3 text-sm text-rose-300';
+          messageBox.textContent = 'Error: ' + error.message;
+          console.error('Supabase insert error:', error);
+          return;
+        }
+
+        attendanceResults.push(payload);
       }
 
       updateSummaryCounts();
@@ -342,8 +367,14 @@
     presentBtn.addEventListener('click', () => setSelectedStatus('Present'));
     lateBtn.addEventListener('click', () => setSelectedStatus('Late'));
     absentBtn.addEventListener('click', () => setSelectedStatus('Absent'));
-    saveNextBtn.addEventListener('click', () => saveAttendance(true, false));
-    skipBtn.addEventListener('click', () => saveAttendance(true, true));
+
+    saveNextBtn.addEventListener('click', async () => {
+      await saveAttendance(false);
+    });
+
+    skipBtn.addEventListener('click', async () => {
+      await saveAttendance(true);
+    });
 
     renderStudent();
     updateSummaryCounts();
