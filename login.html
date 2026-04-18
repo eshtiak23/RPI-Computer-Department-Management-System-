@@ -4,98 +4,249 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>RPI Portal Login</title>
+
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
       theme: {
         extend: {
           colors: {
-            primary: '#38bdf8',
-            darkBg: '#050b16',
-            panel: 'rgba(12, 19, 35, 0.82)'
+            primary: '#4cc2ff',
+            darkBg: '#020817',
+            panel: 'rgba(11, 21, 40, 0.72)',
+            softPanel: 'rgba(20, 33, 61, 0.72)',
           },
           boxShadow: {
-            glow: '0 0 0 1px rgba(56,189,248,.18), 0 15px 40px rgba(2,8,23,.65)',
-            soft: '0 10px 45px rgba(0,0,0,.35)'
+            glow: '0 10px 40px rgba(56,189,248,.18), 0 0 0 1px rgba(255,255,255,.05)',
+            soft: '0 15px 45px rgba(0,0,0,.35)',
+            blue: '0 0 30px rgba(76,194,255,.18)'
           },
           backgroundImage: {
-            heroGlow: 'radial-gradient(circle at top left, rgba(56,189,248,.18), transparent 28%), radial-gradient(circle at bottom right, rgba(59,130,246,.12), transparent 22%)'
+            heroGlow:
+              'radial-gradient(circle at top left, rgba(56,189,248,.18), transparent 28%), radial-gradient(circle at bottom right, rgba(59,130,246,.12), transparent 22%)',
+            mainBg:
+              'linear-gradient(to bottom, #020817, #071225 42%, #030712)',
+            glassLine:
+              'linear-gradient(135deg, rgba(255,255,255,.24), rgba(255,255,255,.05), rgba(56,189,248,.14))'
+          },
+          keyframes: {
+            floatSlow: {
+              '0%, 100%': { transform: 'translateY(0px)' },
+              '50%': { transform: 'translateY(-10px)' }
+            },
+            toastIn: {
+              '0%': { opacity: '0', transform: 'translateY(18px) scale(.96)' },
+              '100%': { opacity: '1', transform: 'translateY(0) scale(1)' }
+            },
+            toastOut: {
+              '0%': { opacity: '1', transform: 'translateY(0) scale(1)' },
+              '100%': { opacity: '0', transform: 'translateY(18px) scale(.96)' }
+            },
+            blinkLine: {
+              '0%': { transform: 'scaleX(0)', opacity: '0' },
+              '100%': { transform: 'scaleX(1)', opacity: '1' }
+            }
+          },
+          animation: {
+            floatSlow: 'floatSlow 5s ease-in-out infinite',
+            toastIn: 'toastIn .35s ease forwards',
+            toastOut: 'toastOut .3s ease forwards',
+            blinkLine: 'blinkLine .22s ease forwards'
           }
         }
       }
     }
   </script>
 
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background:
+        radial-gradient(circle at top center, rgba(56,189,248,.15), transparent 25%),
+        linear-gradient(to bottom, #020817, #071225 42%, #030712);
+    }
+
+    .glass-border {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .glass-border::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      padding: 1px;
+      background: linear-gradient(
+        135deg,
+        rgba(255,255,255,0.22),
+        rgba(255,255,255,0.06),
+        rgba(56,189,248,0.16)
+      );
+      -webkit-mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+              mask-composite: exclude;
+      pointer-events: none;
+    }
+
+    .blur-orb {
+      filter: blur(70px);
+    }
+  </style>
 </head>
-<body class="min-h-screen bg-darkBg text-white">
-  <div class="fixed inset-0 -z-20 bg-[linear-gradient(to_bottom,#030712,#071225,#030712)]"></div>
+<body class="min-h-screen text-white">
+
+  <!-- Background -->
+  <div class="fixed inset-0 -z-20 bg-mainBg"></div>
   <div class="fixed inset-0 -z-10 bg-heroGlow"></div>
+  <div class="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
+    <div class="blur-orb absolute left-10 top-16 h-44 w-44 rounded-full bg-sky-400/10"></div>
+    <div class="blur-orb absolute right-16 top-28 h-56 w-56 rounded-full bg-blue-500/10"></div>
+    <div class="blur-orb absolute bottom-16 left-1/3 h-52 w-52 rounded-full bg-cyan-300/10"></div>
+  </div>
+
+  <!-- Toast Container -->
+  <div id="toastContainer" class="pointer-events-none fixed top-6 right-6 z-[100] flex w-[calc(100%-2rem)] max-w-sm flex-col gap-3 sm:w-full"></div>
 
   <div class="grid min-h-screen lg:grid-cols-2">
-    <!-- Left Side -->
+
+    <!-- Left Side Section -->
+
 
     <section class="relative hidden overflow-hidden lg:flex lg:flex-col lg:justify-between">
-      <img src="./assets/Hero.png" alt="Computer department students" class="absolute inset-0 h-full w-full object-cover opacity-30" />
-      <div class="absolute inset-0 bg-gradient-to-br from-slate-950 via-slate-950/85 to-sky-950/60"></div>
+      <img
+        src="./assets/Hero.png"
+        alt="Computer department students"
+        class="absolute inset-0 h-full w-full object-cover opacity-30"
+      />
+      <div class="absolute inset-0 bg-[linear-gradient(to_br,rgba(2,8,23,.96),rgba(2,8,23,.84),rgba(8,47,73,.58))]"></div>
 
       <div class="relative p-10 xl:p-14">
-        <a href="index.html" class="inline-flex items-center gap-3">
-          <div class="flex h-12 w-12 items-center justify-center rounded-xl border border-sky-400/20 bg-sky-400/10 text-sky-400 shadow-glow">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M12 14l9-5-9-5-9 5 9 5z" />
-              <path stroke-linecap="round" stroke-linejoin="round" d="M12 14l6.16-3.422A12.083 12.083 0 0120 17.944L12 22l-8-4.056a12.083 12.083 0 011.84-7.366L12 14z" />
-            </svg>
+        <a href="index.html" class="inline-flex items-center gap-4">
+          <div class="flex h-14 w-14 items-center justify-center rounded-2xl border border-sky-400/20 bg-sky-400/10 shadow-glow">
+            <img src="./assets/logo.png" alt="RPI Logo" class="h-9 w-9 object-contain" />
           </div>
           <div>
-            <p class="text-lg font-semibold tracking-wide">RPI Computer Department</p>
+            <p class="text-xl font-semibold tracking-wide">RPI Computer Department</p>
             <p class="text-sm text-slate-400">Rajshahi Polytechnic Institute</p>
           </div>
         </a>
       </div>
 
       <div class="relative px-10 pb-14 xl:px-14">
-        <p class="mb-4 inline-flex rounded-full border border-sky-400/20 bg-sky-400/10 px-4 py-1 text-sm text-sky-300 shadow-glow">
+        <p class="mb-5 inline-flex rounded-full border border-sky-400/20 bg-sky-400/10 px-4 py-1.5 text-sm text-sky-300 shadow-glow">
           Secure Academic Portal
         </p>
-        <h1 class="max-w-xl text-4xl font-bold leading-tight xl:text-5xl">
-          Login to access your <span class="text-sky-400">Student, Teacher, or Admin Dashboard</span>
-        </h1>
-        <p class="mt-6 max-w-xl text-base leading-8 text-slate-300 xl:text-lg">
-          Manage attendance, results, routines, notices, and department information through one modern institute portal.
-        </p>
 
-        <!-- <div class="mt-10 grid gap-4 sm:grid-cols-3">
-          <div class="rounded-2xl border border-white/10 bg-slate-900/55 p-4 backdrop-blur-md">
-            <p class="text-2xl font-bold text-sky-400">01</p>
-            <p class="mt-1 text-sm text-slate-300">Student Access</p>
-          </div>
-          <div class="rounded-2xl border border-white/10 bg-slate-900/55 p-4 backdrop-blur-md">
-            <p class="text-2xl font-bold text-sky-400">02</p>
-            <p class="mt-1 text-sm text-slate-300">Teacher Access</p>
-          </div>
-          <div class="rounded-2xl border border-white/10 bg-slate-900/55 p-4 backdrop-blur-md">
-            <p class="text-2xl font-bold text-sky-400">03</p>
-            <p class="mt-1 text-sm text-slate-300">Admin Access</p>
-          </div>
-        </div> -->
+       <h1 class="max-w-2xl text-4xl font-bold leading-tight xl:text-6xl">
+  Unlock your
+  <span class="block bg-gradient-to-r from-sky-300 via-cyan-300 to-blue-400 bg-clip-text text-transparent">
+    Smart Dashboard Experience
+  </span>
+</h1>
+
+        <p class="mt-6 max-w-xl text-base leading-8 text-slate-300 xl:text-lg">
+          Experience complete control over attendance, results, routines, and institutional updates through a polished, next-generation academic interface.
+        </p>
+         
+        
+
+        <div class="mt-10 grid gap-4 sm:grid-cols-3">
+
+  <!-- Student (young boy) -->
+  <div class="glass-border rounded-2xl border border-white/10 bg-slate-900/50 p-4 backdrop-blur-md flex items-center gap-3">
+    
+    <div class="h-10 w-10 flex items-center justify-center rounded-xl bg-sky-400/10 text-sky-400 transition hover:scale-110 hover:bg-sky-400/20">
+      <!-- young boy icon -->
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+        <circle cx="12" cy="8" r="3" />
+        <path stroke-linecap="round" stroke-linejoin="round" d="M6 20c0-3 12-3 12 0" />
+      </svg>
+    </div>
+
+    <p class="text-sm text-slate-300 font-medium">Student Access</p>
+  </div>
+
+
+  <!-- Teacher (middle age man) -->
+  <div class="glass-border rounded-2xl border border-white/10 bg-slate-900/50 p-4 backdrop-blur-md flex items-center gap-3">
+    
+    <div class="h-10 w-10 flex items-center justify-center rounded-xl bg-sky-400/10 text-sky-400 transition hover:scale-110 hover:bg-sky-400/20">
+      <!-- middle age icon -->
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+        <circle cx="12" cy="7" r="3.5" />
+        <path stroke-linecap="round" stroke-linejoin="round" d="M5 20c0-3.5 14-3.5 14 0" />
+        <path stroke-linecap="round" stroke-linejoin="round" d="M9 4c1 1 5 1 6 0" />
+      </svg>
+    </div>
+
+    <p class="text-sm text-slate-300 font-medium">Teacher Access</p>
+  </div>
+
+
+  <!-- Admin (old age man) -->
+  <div class="glass-border rounded-2xl border border-white/10 bg-slate-900/50 p-4 backdrop-blur-md flex items-center gap-3">
+    
+    <div class="h-10 w-10 flex items-center justify-center rounded-xl bg-sky-400/10 text-sky-400 transition hover:scale-110 hover:bg-sky-400/20">
+      <!-- old man icon -->
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+        <circle cx="12" cy="7" r="3.5" />
+        <path stroke-linecap="round" stroke-linejoin="round" d="M4 20c0-4 16-4 16 0" />
+        <path stroke-linecap="round" stroke-linejoin="round" d="M10 4c2 2 2 2 4 0" />
+        <path stroke-linecap="round" stroke-linejoin="round" d="M9 11c1 1 5 1 6 0" />
+      </svg>
+    </div>
+
+    <p class="text-sm text-slate-300 font-medium">Admin Access</p>
+  </div>
+
+</div>
+
+
+
       </div>
     </section>
 
-    <!-- Right Side -->
+
+    <!-- Right Side  Section-->
+
+
+
     <section class="flex items-center justify-center px-6 py-12 sm:px-10">
-      <div class="w-full max-w-md rounded-[2rem] border border-white/10 bg-panel p-8 shadow-soft backdrop-blur-xl sm:p-10">
+      <div class="glass-border w-full max-w-xl rounded-[2rem] border border-white/10 bg-panel p-8 shadow-soft backdrop-blur-2xl sm:p-10 lg:p-12">
+
+        <!-- Mobile top  -->
+
+        <a href="index.html" class="mb-8 inline-flex items-center gap-3 lg:hidden">
+          <div class="flex h-12 w-12 items-center justify-center rounded-xl border border-sky-400/20 bg-sky-400/10 shadow-glow">
+            <img src="./assets/rpi logo.jpeg" alt="RPI Logo" class="h-8 w-8 object-contain" />
+          </div>
+          <div>
+            <p class="text-lg font-semibold">CST Department</p>
+            <p class="text-xs text-slate-400">Rajshahi Polytechnic Institute</p>
+          </div>
+        </a>
+
         <div class="mb-8 text-center lg:text-left">
           <p class="text-sm uppercase tracking-[0.25em] text-sky-300">Portal Login</p>
-          <h2 class="mt-3 text-3xl font-bold">Welcome Back</h2>
-          <p class="mt-3 text-sm leading-6 text-slate-400">
-            Select your role and login to continue to your dashboard.
+          <h2 class="mt-3 text-3xl font-bold sm:text-4xl">Welcome Back</h2>
+          <p class="mt-3 text-sm leading-7 text-slate-400 sm:text-base">
+            Pick Your Role & Step Into Your Smart Dashboard Experience.
           </p>
         </div>
 
         <form id="loginForm" class="space-y-5">
           <div>
             <label for="role" class="mb-2 block text-sm font-medium text-slate-300">Login Role</label>
-            <select id="role" class="w-full rounded-xl border border-white/10 bg-slate-900/80 px-4 py-3 text-white outline-none transition focus:border-sky-400/40 focus:ring-2 focus:ring-sky-400/20">
+            <select
+              id="role"
+              class="w-full rounded-2xl border border-white/10 bg-slate-900/80 px-4 py-3.5 text-white outline-none transition focus:border-sky-400/50 focus:ring-2 focus:ring-sky-400/20"
+            >
               <option value="student">Student</option>
               <option value="teacher">Teacher</option>
               <option value="admin">Admin</option>
@@ -104,14 +255,47 @@
 
           <div>
             <label for="userId" class="mb-2 block text-sm font-medium text-slate-300">User ID</label>
-            <input id="userId" type="text" placeholder="Enter your ID" class="w-full rounded-xl border border-white/10 bg-slate-900/80 px-4 py-3 text-white placeholder:text-slate-500 outline-none transition focus:border-sky-400/40 focus:ring-2 focus:ring-sky-400/20" />
+            <input
+              id="userId"
+              type="text"
+              placeholder="Enter your ID"
+              class="w-full rounded-2xl border border-white/10 bg-slate-900/80 px-4 py-3.5 text-white placeholder:text-slate-500 outline-none transition focus:border-sky-400/50 focus:ring-2 focus:ring-sky-400/20"
+            />
           </div>
 
           <div>
             <label for="password" class="mb-2 block text-sm font-medium text-slate-300">Password</label>
             <div class="relative">
-              <input id="password" type="password" placeholder="Enter your password" class="w-full rounded-xl border border-white/10 bg-slate-900/80 px-4 py-3 pr-12 text-white placeholder:text-slate-500 outline-none transition focus:border-sky-400/40 focus:ring-2 focus:ring-sky-400/20" />
-              <button type="button" id="togglePassword" class="absolute inset-y-0 right-3 my-auto text-sm text-slate-400 transition hover:text-sky-400">Show</button>
+              <input
+                id="password"
+                type="password"
+                placeholder="Enter your password"
+                class="w-full rounded-2xl border border-white/10 bg-slate-900/80 px-4 py-3.5 pr-14 text-white placeholder:text-slate-500 outline-none transition focus:border-sky-400/50 focus:ring-2 focus:ring-sky-400/20"
+              />
+
+              <!-- Eye Toggle Button -->
+               
+              <button
+                type="button"
+                id="togglePassword"
+                aria-label="Toggle password visibility"
+                class="absolute inset-y-0 right-3 my-auto flex h-10 w-10 items-center justify-center rounded-xl text-slate-400 transition hover:bg-white/5 hover:text-sky-300"
+              >
+                <span class="relative block h-6 w-6">
+                  <!-- Eye -->
+                  <svg id="eyeOpen" xmlns="http://www.w3.org/2000/svg" class="absolute inset-0 h-6 w-6 transition duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                    <circle cx="12" cy="12" r="3"></circle>
+                  </svg>
+
+                  <!-- Eye closed/slash -->
+                  <svg id="eyeClosed" xmlns="http://www.w3.org/2000/svg" class="absolute inset-0 hidden h-6 w-6 transition duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 3l18 18"/>
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M10.584 10.587A2 2 0 0012 14a2 2 0 001.414-.586"/>
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9.88 5.09A9.77 9.77 0 0112 5c4.478 0 8.268 2.943 9.542 7a9.826 9.826 0 01-4.293 5.19M6.228 6.228A9.772 9.772 0 002.458 12c1.274 4.057 5.064 7 9.542 7a9.77 9.77 0 004.243-.965"/>
+                  </svg>
+                </span>
+              </button>
             </div>
           </div>
 
@@ -123,25 +307,26 @@
             <a href="#" class="text-sky-300 transition hover:text-sky-400">Forgot password?</a>
           </div>
 
-          <button type="submit" class="w-full rounded-xl bg-sky-400 px-4 py-3 font-semibold text-slate-950 transition hover:bg-sky-300">
+          <button
+            type="submit"
+            class="w-full rounded-2xl bg-gradient-to-r from-sky-500 to-blue-500 px-4 py-3.5 font-semibold text-white shadow-blue transition hover:scale-[1.01] hover:from-sky-400 hover:to-blue-400"
+          >
             Login to Dashboard
           </button>
         </form>
 
-        <div id="messageBox" class="mt-5 hidden rounded-xl border border-emerald-400/20 bg-emerald-400/10 px-4 py-3 text-sm text-emerald-300"></div>
-
         <div class="my-8 h-px bg-white/10"></div>
 
         <div class="grid gap-3 sm:grid-cols-3">
-          <div class="rounded-2xl border border-white/10 bg-slate-900/60 p-4 text-center">
+          <div class="glass-border rounded-2xl border border-white/10 bg-slate-900/60 p-4 text-center">
             <p class="text-sm font-medium text-white">Student</p>
             <p class="mt-1 text-xs text-slate-400">Attendance, result, routine</p>
           </div>
-          <div class="rounded-2xl border border-white/10 bg-slate-900/60 p-4 text-center">
+          <div class="glass-border rounded-2xl border border-white/10 bg-slate-900/60 p-4 text-center">
             <p class="text-sm font-medium text-white">Teacher</p>
             <p class="mt-1 text-xs text-slate-400">Classes, notices, results</p>
           </div>
-          <div class="rounded-2xl border border-white/10 bg-slate-900/60 p-4 text-center">
+          <div class="glass-border rounded-2xl border border-white/10 bg-slate-900/60 p-4 text-center">
             <p class="text-sm font-medium text-white">Admin</p>
             <p class="mt-1 text-xs text-slate-400">Control, reports, users</p>
           </div>
@@ -160,30 +345,73 @@
     const role = document.getElementById('role');
     const userId = document.getElementById('userId');
     const password = document.getElementById('password');
-    const messageBox = document.getElementById('messageBox');
     const togglePassword = document.getElementById('togglePassword');
+    const eyeOpen = document.getElementById('eyeOpen');
+    const eyeClosed = document.getElementById('eyeClosed');
+    const toastContainer = document.getElementById('toastContainer');
 
+    // Eye animation toggle
     togglePassword.addEventListener('click', () => {
       const isPassword = password.type === 'password';
+
       password.type = isPassword ? 'text' : 'password';
-      togglePassword.textContent = isPassword ? 'Hide' : 'Show';
+
+      if (isPassword) {
+        // show password -> eye open
+        eyeOpen.classList.remove('hidden');
+        eyeClosed.classList.add('hidden');
+      } else {
+        // hide password -> eye closed
+        eyeOpen.classList.add('hidden');
+        eyeClosed.classList.remove('hidden');
+      }
     });
+
+    function showToast(message, type = 'success') {
+      const toast = document.createElement('div');
+
+      const typeClasses = {
+        success: 'border-emerald-400/25 bg-emerald-400/10 text-emerald-200',
+        error: 'border-rose-400/25 bg-rose-400/10 text-rose-200',
+        info: 'border-sky-400/25 bg-sky-400/10 text-sky-200'
+      };
+
+      toast.className = `
+        pointer-events-auto rounded-2xl border px-4 py-4 shadow-soft backdrop-blur-xl
+        ${typeClasses[type]} animate-toastIn
+      `;
+
+      toast.innerHTML = `
+        <div class="flex items-start gap-3">
+          <div class="mt-0.5 text-lg">
+            ${type === 'success' ? '✅' : type === 'error' ? '⚠️' : 'ℹ️'}
+          </div>
+          <div class="flex-1">
+            <p class="text-sm font-medium">${message}</p>
+          </div>
+        </div>
+      `;
+
+      toastContainer.appendChild(toast);
+
+      setTimeout(() => {
+        toast.classList.remove('animate-toastIn');
+        toast.classList.add('animate-toastOut');
+        setTimeout(() => toast.remove(), 280);
+      }, 2600);
+    }
 
     loginForm.addEventListener('submit', function (e) {
       e.preventDefault();
 
+   
       if (!userId.value.trim() || !password.value.trim()) {
-        messageBox.classList.remove('hidden');
-        messageBox.className = 'mt-5 rounded-xl border border-rose-400/20 bg-rose-400/10 px-4 py-3 text-sm text-rose-300';
-        messageBox.textContent = 'Please enter both User ID and Password.';
+        showToast('Please enter both User ID and Password.', 'error');
         return;
       }
 
-      messageBox.classList.remove('hidden');
-      messageBox.className = 'mt-5 rounded-xl border border-emerald-400/20 bg-emerald-400/10 px-4 py-3 text-sm text-emerald-300';
-      messageBox.textContent = `Login successful as ${role.value}. Redirect logic can be connected here.`;
-
-      setTimeout(() => {
+      showToast(`Login successful as ${role.value}. Redirecting...`, 'success');
+   setTimeout(() => {
         if (role.value === 'student') {
           window.location.href = 'student-dashboard.html';
         } else if (role.value === 'teacher') {
@@ -191,7 +419,7 @@
         } else {
           window.location.href = 'admin-dashboard.html';
         }
-      }, 800);
+      }, 1100);
     });
   </script>
 </body>
