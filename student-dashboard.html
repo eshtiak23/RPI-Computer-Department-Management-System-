@@ -3,996 +3,417 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Student Dashboard - RPI Smart App</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            primary: '#38bdf8',
-            primaryDark: '#0ea5e9',
-            softBg: '#050b16',
-            card: '#0f172a',
-            cardSoft: '#111c34',
-            cardDeep: '#0b1220',
-            textDark: '#f8fafc',
-            textSoft: '#94a3b8',
-            success: '#10b981',
-            warning: '#f59e0b',
-            danger: '#ef4444',
-            line: 'rgba(255,255,255,0.08)'
-          },
-          boxShadow: {
-            soft: '0 10px 30px rgba(0,0,0,0.28)',
-            panel: '0 18px 40px rgba(0,0,0,0.38)',
-            glow: '0 10px 30px rgba(56,189,248,0.16)'
-          },
-          borderRadius: {
-            xl2: '1.4rem',
-            xl3: '1.8rem'
-          }
-        }
-      }
-    }
-  </script>
-
-  <style>
-    :root {
-      --accent: #38bdf8;
-      --accent-dark: #0ea5e9;
-      --accent-rgb: 56, 189, 248;
-      --bg-main: #050b16;
-      --bg-sidebar: #060d1a;
-      --bg-card: #0f172a;
-      --bg-card-soft: #111c34;
-      --bg-card-deep: #0b1220;
-      --text-main: #f8fafc;
-      --text-soft: #94a3b8;
-      --line: rgba(255,255,255,0.08);
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      background:
-        radial-gradient(circle at top left, rgba(var(--accent-rgb), 0.10), transparent 25%),
-        radial-gradient(circle at bottom right, rgba(var(--accent-rgb), 0.08), transparent 20%),
-        linear-gradient(to bottom, #030712, #071225, #030712);
-      color: var(--text-main);
-    }
-
-    .surface-card {
-      background: linear-gradient(to bottom, rgba(17,28,52,.95), rgba(11,18,32,.98));
-      border: 1px solid var(--line);
-      box-shadow: 0 18px 40px rgba(0,0,0,0.38);
-    }
-
-    .surface-soft {
-      background: rgba(255,255,255,0.03);
-      border: 1px solid rgba(255,255,255,0.06);
-    }
-
-    .accent-bg {
-      background-color: var(--accent);
-    }
-
-    .accent-text {
-      color: var(--accent);
-    }
-
-    .accent-border {
-      border-color: rgba(var(--accent-rgb), 0.35);
-    }
-
-    .accent-soft-bg {
-      background-color: rgba(var(--accent-rgb), 0.12);
-    }
-
-    .accent-glow {
-      box-shadow: 0 10px 30px rgba(var(--accent-rgb), 0.18);
-    }
-
-    .accent-gradient {
-      background-image: linear-gradient(to right, var(--accent-dark), var(--accent));
-    }
-
-    .hero-gradient {
-      background-image:
-        radial-gradient(circle at top left, rgba(255,255,255,.06), transparent 30%),
-        linear-gradient(135deg, rgba(14,165,233,.95), rgba(56,189,248,.85), rgba(6,182,212,.78));
-    }
-
-    .custom-scroll::-webkit-scrollbar {
-      width: 8px;
-      height: 8px;
-    }
-
-    .custom-scroll::-webkit-scrollbar-track {
-      background: rgba(255,255,255,0.04);
-    }
-
-    .custom-scroll::-webkit-scrollbar-thumb {
-      background: rgba(255,255,255,0.14);
-      border-radius: 999px;
-    }
-
-    .theme-dot {
-      transition: transform .2s ease, box-shadow .2s ease;
-    }
-
-    .theme-dot:hover {
-      transform: scale(1.08);
-    }
-  </style>
+  <title>RPI CST Student Dashboard</title>
+  <link rel="stylesheet" href="student_dash.css" />
 </head>
-<body class="bg-softBg text-textDark">
-  <div class="min-h-screen lg:flex">
+<body>
+  <svg width="0" height="0" style="position:absolute;">
+    <defs>
+      <linearGradient id="brandGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#58bdfc"></stop>
+        <stop offset="100%" stop-color="#b79bff"></stop>
+      </linearGradient>
+    </defs>
+  </svg>
 
-    <!-- Mobile Top Bar  -->
-
-    <div class="fixed left-0 right-0 top-0 z-40 flex items-center justify-between border-b border-white/10 bg-[var(--bg-sidebar)]/95 px-4 py-4 backdrop-blur lg:hidden">
-      <div class="flex items-center gap-3">
-        <div class="flex h-11 w-11 items-center justify-center rounded-2xl accent-soft-bg accent-glow">
-          <img src="./assets/rpi logo.jpeg" alt="RPI Logo" class="h-7 w-7 object-contain" />
+  <div class="dashboard-shell">
+    <aside class="sidebar" id="sidebar">
+      <div class="brand">
+        <div class="brand-logo">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.7">
+            <path d="M12 3l7 3v6c0 4.2-2.6 7.4-7 9-4.4-1.6-7-4.8-7-9V6l7-3z"></path>
+            <path d="M8 10h8"></path>
+            <path d="M9 14h6"></path>
+          </svg>
         </div>
         <div>
-          <h2 class="text-sm font-bold text-white">Student Dashboard</h2>
-          <p class="text-xs text-slate-400">RPI Smart App</p>
+          <div class="brand-title">RPI</div>
+          <div class="brand-sub">Computer Science & Technology Department</div>
         </div>
       </div>
 
-      <button
-        id="menuToggle"
-        class="rounded-2xl border border-white/10 bg-white/5 px-3 py-2 text-lg text-white transition hover:bg-white/10"
-      >
-        ☰
-      </button>
-    </div>
+      <ul class="nav-list">
+        <li><a class="nav-link active" href="#"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.9"><path d="M3 10.5L12 3l9 7.5"></path><path d="M5 9.5V21h14V9.5"></path></svg><span>Dashboard</span></a></li>
+        <li><a class="nav-link" href="./results.html" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.9"><path d="M4 19h16"></path><path d="M7 16V9"></path><path d="M12 16V5"></path><path d="M17 16v-3"></path></svg><span>Results</span></a></li>
+        <li><a class="nav-link" href="#attendance"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.9"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg><span>Attendance</span></a></li>
+        <li><a class="nav-link" href="#routine"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.9"><rect x="3" y="5" width="18" height="16" rx="2"></rect><path d="M16 3v4M8 3v4M3 10h18"></path></svg><span>Routine</span></a></li>
+        <li><a class="nav-link" href="#assignments"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.9"><path d="M9 3h6l1 2h3a1 1 0 011 1v14a1 1 0 01-1 1H5a1 1 0 01-1-1V6a1 1 0 011-1h3l1-2z"></path><path d="M8 11h8M8 15h6"></path></svg><span>Assignments</span></a></li>
+        <li><a class="nav-link" href="#notices"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.9"><path d="M6 8a6 6 0 0112 0c0 7 3 6 3 8H3c0-2 3-1 3-8"></path><path d="M10 20a2 2 0 004 0"></path></svg><span>Notices</span></a></li>
+        <li><a class="nav-link" href="teachers_list.html" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.9"><path d="M17 21v-2a4 4 0 00-4-4H7a4 4 0 00-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 00-3-3.87"></path><path d="M16 3.13a4 4 0 010 7.75"></path></svg><span>Teachers</span></a></li>
+        <li><a class="nav-link" href="#settings"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.9"><path d="M12 15.5A3.5 3.5 0 1012 8.5a3.5 3.5 0 000 7z"></path><path d="M19.4 15a1.7 1.7 0 00.34 1.87l.06.06a2 2 0 11-2.83 2.83l-.06-.06A1.7 1.7 0 0015 19.4a1.7 1.7 0 00-1 .6 1.7 1.7 0 00-.4 1.1V21a2 2 0 11-4 0v-.1a1.7 1.7 0 00-.4-1.1 1.7 1.7 0 00-1-.6 1.7 1.7 0 00-1.87.34l-.06.06a2 2 0 11-2.83-2.83l.06-.06A1.7 1.7 0 004.6 15a1.7 1.7 0 00-.6-1 1.7 1.7 0 00-1.1-.4H2.8a2 2 0 110-4h.1a1.7 1.7 0 001.1-.4 1.7 1.7 0 00.6-1 1.7 1.7 0 00-.34-1.87l-.06-.06a2 2 0 112.83-2.83l.06.06A1.7 1.7 0 009 4.6c.39 0 .76-.14 1-.4.26-.28.4-.65.4-1.1V3a2 2 0 114 0v.1c0 .45.14.82.4 1.1.24.26.61.4 1 .4a1.7 1.7 0 001.87-.34l.06-.06a2 2 0 112.83 2.83l-.06.06A1.7 1.7 0 0019.4 9c0 .39.14.76.4 1 .28.26.65.4 1.1.4h.1a2 2 0 110 4h-.1a1.7 1.7 0 00-1.1.4 1.7 1.7 0 00-.4 1z"></path></svg><span>Settings</span></a></li>
+      </ul>
 
-    <!-- Mobile Overlay -->
-    <div id="mobileOverlay" class="fixed inset-0 z-40 hidden bg-black/60 lg:hidden"></div>
-
-    <!-- Sidebar -->
-    <aside
-      id="sidebar"
-      class="fixed left-0 top-0 z-50 h-full w-72 -translate-x-full overflow-y-auto border-r border-white/5 bg-[var(--bg-sidebar)] text-white transition-transform duration-300 lg:static lg:z-auto lg:min-h-screen lg:w-72 lg:translate-x-0"
-    >
-      <!-- Mobile Sidebar Header -->
-      <div class="flex items-center justify-between border-b border-white/10 px-6 py-5 lg:hidden">
-        <div>
-          <h2 class="text-lg font-bold">Navigation</h2>
-          <p class="text-xs text-slate-400">Quick Access</p>
-        </div>
-        <button
-          id="closeMenu"
-          class="rounded-2xl border border-white/10 bg-white/5 px-3 py-2 text-white transition hover:bg-white/10"
-        >
-          ✕
-        </button>
+      <div class="sidebar-footer">
+        <h4>Need Help?</h4>
+        <p>Rajshahi Polytechnic Institute · Computer Science & Technology Department · Student Portal</p>
       </div>
-
-      <!-- Desktop Sidebar Header -->
-      <div class="hidden border-b border-white/10 px-6 py-6 lg:block">
-        <div class="flex items-center gap-4">
-          <div class="flex h-14 w-14 items-center justify-center rounded-2xl accent-soft-bg accent-glow">
-            <img src="./assets/rpi logo.jpeg" alt="RPI Logo" class="h-9 w-9 object-contain" />
-          </div>
-          <div>
-            <h1 class="text-lg font-bold tracking-wide">Student Dashboard</h1>
-            <p class="text-sm text-slate-400">Computer Science & Technology Department</p>
-          </div>
-        </div>
-      </div>
-
-      <nav class="px-4 py-6">
-        <p class="px-3 pb-3 text-xs font-semibold uppercase tracking-[0.25em] text-slate-500">Navigator</p>
-
-        <div class="space-y-2 text-sm">
-          <a href="#overview" class="nav-link flex items-center gap-3 rounded-2xl accent-gradient px-4 py-3 font-medium text-white accent-glow">🏠 Overview</a>
-          <a href="#profile" class="nav-link flex items-center gap-3 rounded-2xl px-4 py-3 text-slate-300 transition hover:bg-white/5 hover:text-white">👤 Profile</a>
-          <a href="#attendance" class="nav-link flex items-center gap-3 rounded-2xl px-4 py-3 text-slate-300 transition hover:bg-white/5 hover:text-white">📊 Attendance</a>
-          <a href="#routine" class="nav-link flex items-center gap-3 rounded-2xl px-4 py-3 text-slate-300 transition hover:bg-white/5 hover:text-white">🗓 Routine</a>
-          <a href="#results" class="nav-link flex items-center gap-3 rounded-2xl px-4 py-3 text-slate-300 transition hover:bg-white/5 hover:text-white">📘 Results</a>
-          <a href="#notices" class="nav-link flex items-center gap-3 rounded-2xl px-4 py-3 text-slate-300 transition hover:bg-white/5 hover:text-white">📢 Notices</a>
-          <a href="#teachers" class="nav-link flex items-center gap-3 rounded-2xl px-4 py-3 text-slate-300 transition hover:bg-white/5 hover:text-white">👨‍🏫 Teachers</a>
-          <a href="#leave" class="nav-link flex items-center gap-3 rounded-2xl px-4 py-3 text-slate-300 transition hover:bg-white/5 hover:text-white">📝 Leave Request</a>
-          <a href="#lostFound" class="nav-link flex items-center gap-3 rounded-2xl px-4 py-3 text-slate-300 transition hover:bg-white/5 hover:text-white">🎒 Lost & Found</a>
-        </div>
-
-        <div class="mt-8 rounded-3xl border border-white/10 bg-white/5 p-4">
-          <p class="text-xs uppercase tracking-[0.2em] text-slate-400">Status</p>
-          <p class="mt-3 text-lg font-semibold">Semester Active</p>
-          <p class="mt-1 text-sm text-slate-400">Stay updated with routine, notices and results.</p>
-        </div>
-
-        <div class="mt-8">
-          <a href="login.html" class="block rounded-2xl border border-rose-400/20 bg-rose-400/10 px-4 py-3 text-center text-sm font-medium text-rose-300 transition hover:bg-rose-400/20">
-            Logout
-          </a>
-        </div>
-      </nav>
     </aside>
 
-    <!-- Main Page Section -->
+    <main class="main">
+      <header class="topbar">
+        <button class="menu-btn mobile-only" id="openSidebar" aria-label="Open menu">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h16"></path></svg>
+        </button>
 
-    <main class="flex-1 p-4 pt-24 sm:p-6 sm:pt-24 lg:p-8 lg:pt-8">
-
-      <!-- Top action bar -->
-
-      <div class="mb-6 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-        <div>
-          <p class="text-sm uppercase tracking-[0.2em] text-slate-400">Dashboard</p>
-          <h2 class="mt-1 text-3xl font-bold">Academic Overview</h2>
+        <div class="welcome">
+          <h1>Hi, Eshtiak Ahmed 👋</h1>
+          <p>Welcome to your academic dashboard.</p>
         </div>
 
-        <div class="flex flex-wrap items-center gap-3">
-          <div class="surface-soft rounded-2xl px-4 py-3">
-            <p class="text-xs text-slate-400">Live Time</p>
-            <p id="liveTimeTop" class="text-sm font-semibold text-white">--:--</p>
+        <div class="topbar-actions">
+          <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle dark/light mode">
+            <svg id="themeIcon" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M21 12.79A9 9 0 1111.21 3c0 .34.02.67.05 1a7 7 0 009.74 8.74c.33.03.66.05 1 .05z"></path></svg>
+          </button>
+
+          <button class="icon-btn" aria-label="Notifications">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M18 8a6 6 0 10-12 0c0 7-3 6-3 8h18c0-2-3-1-3-8"></path><path d="M13.73 21a2 2 0 01-3.46 0"></path></svg>
+          </button>
+
+          <div class="profile-chip">
+            <img src="./assets/eshti_login.png" alt="Eshtiak Ahmed">
+            <div>
+              <h3>Eshtiak Ahmed</h3>
+              <span>Roll: 721491 · CST · 7th Semester</span>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <section class="grid">
+        <div class="card span-5">
+          <div class="student-card">
+            <div class="student-avatar">
+              <img src="./assets/eshti_login.png" alt="Eshtiak Ahmed profile image">
+            </div>
+            <div class="student-meta">
+              <h2>Eshtiak Ahmed <span class="badge">7th Semester</span></h2>
+              <p><strong style="color: var(--text);">Class Roll:</strong> 721491</p>
+              <p><strong style="color: var(--text);">Department:</strong> Computer Science & Technology</p>
+
+              <div class="student-contacts">
+                <div class="info-pill">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4z"></path><path d="M22 6l-10 7L2 6"></path></svg>
+                  <span>eshtiak4099@gmail.com</span>
+                </div>
+                <div class="info-pill">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.8 19.8 0 01-8.63-3.07 19.5 19.5 0 01-6-6A19.8 19.8 0 012.15 4.18 2 2 0 014.11 2h3a2 2 0 012 1.72c.12.9.33 1.8.62 2.65a2 2 0 01-.45 2.11L8 9.99a16 16 0 006 6l1.51-1.28a2 2 0 012.11-.45c.86.29 1.75.5 2.65.62A2 2 0 0122 16.92z"></path></svg>
+                  <span>01989984061</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="span-7 small-stat-grid">
+          <div class="card stat-mini">
+            <div>
+              <div class="icon-round">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"></rect><path d="M16 2v4M8 2v4M3 10h18"></path></svg>
+              </div>
+              <h4 style="margin-top: 14px;">Attendance</h4>
+              <div class="stat-value">86%</div>
+              <div class="muted">This Month</div>
+            </div>
+            <svg class="sparkline" viewBox="0 0 200 60" fill="none">
+              <path d="M8 48C20 44 30 36 44 39C57 42 72 31 88 35C104 39 119 22 136 28C152 34 167 16 192 9" stroke="url(#brandGradient)" stroke-width="4" stroke-linecap="round"></path>
+            </svg>
           </div>
 
-          <button
-            id="themeSettingsBtn"
-            class="flex items-center gap-2 rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-slate-200 transition hover:bg-white/10"
-          >
-            ⚙️ Theme
+          <div class="card stat-mini">
+            <div>
+              <div class="icon-round">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20V10"></path><path d="M18 20V4"></path><path d="M6 20v-6"></path></svg>
+              </div>
+              <h4 style="margin-top: 14px;">CGPA</h4>
+              <div class="stat-value">3.64</div>
+              <div class="muted">Out of 4.00</div>
+            </div>
+            <svg class="sparkline" viewBox="0 0 200 60" fill="none">
+              <path d="M8 46C24 41 36 29 54 35C72 41 85 22 102 29C118 36 134 19 152 24C170 29 182 18 192 10" stroke="#8d6bff" stroke-width="4" stroke-linecap="round"></path>
+            </svg>
+          </div>
+
+          <div class="card stat-mini">
+            <div>
+              <div class="icon-round">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14"></path><path d="M5 12h14"></path></svg>
+              </div>
+              <h4 style="margin-top: 14px;">Subjects</h4>
+              <div class="stat-value">18</div>
+              <div class="muted">Enrolled</div>
+            </div>
+            <svg class="sparkline" viewBox="0 0 200 60" fill="none">
+              <path d="M8 45C18 40 29 34 45 37C61 40 75 26 89 31C102 36 119 20 138 20C157 20 174 7 192 6" stroke="#40d8d0" stroke-width="4" stroke-linecap="round"></path>
+            </svg>
+          </div>
+
+          <div class="card stat-mini">
+            <div>
+              <div class="icon-round">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 2v4M16 2v4M3 10h18"></path><rect x="3" y="4" width="18" height="18" rx="2"></rect></svg>
+              </div>
+              <h4 style="margin-top: 14px;">Classes</h4>
+              <div class="stat-value">24</div>
+              <div class="muted">This Month</div>
+            </div>
+            <svg class="sparkline" viewBox="0 0 200 60" fill="none">
+              <path d="M8 47C18 38 32 28 48 33C65 38 78 22 94 29C111 36 125 18 140 22C156 26 170 18 192 6" stroke="#58bdfc" stroke-width="4" stroke-linecap="round"></path>
+            </svg>
+          </div>
+        </div>
+
+        <div class="card span-4" id="routine">
+          <div class="section-head">
+            <h3>Today’s Routine</h3>
+            <span class="muted">Wednesday</span>
+          </div>
+          <div class="routine-list">
+            <div class="routine-row">
+              <div class="time">09:00 AM<br>10:00 AM</div>
+              <div>
+                <div class="row-title">Database Systems</div>
+                <div class="mini-text">Room 505 · CST Building</div>
+              </div>
+              <span class="chip">2nd Floor</span>
+            </div>
+            <div class="routine-row">
+              <div class="time">10:00 AM<br>11:00 AM</div>
+              <div>
+                <div class="row-title">Web Development</div>
+                <div class="mini-text">Room 506 · CST Building</div>
+              </div>
+              <span class="chip">2nd Floor</span>
+            </div>
+            <div class="routine-row">
+              <div class="time">01:00 PM<br>02:00 PM</div>
+              <div>
+                <div class="row-title">Microprocessor Lab</div>
+                <div class="mini-text">Lab 307 · CST Lab</div>
+              </div>
+              <span class="chip">3rd Floor</span>
+            </div>
+            <div class="routine-row">
+              <div class="time">02:00 PM<br>03:00 PM</div>
+              <div>
+                <div class="row-title">Programming (C)</div>
+                <div class="mini-text">Room 503 · CST Building</div>
+              </div>
+              <span class="chip">2nd Floor</span>
+            </div>
+          </div>
+          <button class="wide-btn" style="margin-top:18px;">
+            <span>View Full Routine</span>
+            <span>→</span>
           </button>
         </div>
-      </div>
 
-      <!-- Theme Settings Panel -->
-
-      <div id="themePanel" class="mb-6 hidden rounded-[1.5rem] border border-white/10 bg-white/5 p-5 shadow-panel backdrop-blur-xl">
-        <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-          <div>
-            <p class="text-sm font-medium text-slate-300">Accent Color Settings</p>
-            <p class="mt-1 text-sm text-slate-400">Choose a highlight color for your dashboard interface.</p>
+        <div class="card span-4" id="notices">
+          <div class="section-head">
+            <h3>📢 Notice Board</h3>
+            <a class="ghost-link" href="#">View All</a>
           </div>
-
-          <div class="flex items-center gap-3">
-            <button class="theme-dot h-10 w-10 rounded-full bg-sky-400 shadow-lg" data-color="#38bdf8" data-dark="#0ea5e9" data-rgb="56, 189, 248" title="Blue"></button>
-            <button class="theme-dot h-10 w-10 rounded-full bg-cyan-400 shadow-lg" data-color="#22d3ee" data-dark="#06b6d4" data-rgb="34, 211, 238" title="Cyan"></button>
-            <button class="theme-dot h-10 w-10 rounded-full bg-violet-500 shadow-lg" data-color="#8b5cf6" data-dark="#7c3aed" data-rgb="139, 92, 246" title="Violet"></button>
-            <button class="theme-dot h-10 w-10 rounded-full bg-emerald-500 shadow-lg" data-color="#10b981" data-dark="#059669" data-rgb="16, 185, 129" title="Emerald"></button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Hero Section -->
-
-      <section id="overview" class="mb-6">
-        <div class="grid gap-6 xl:grid-cols-[1.4fr_.8fr]">
-          <div class="rounded-[2rem] hero-gradient p-6 text- shadow-panel sm:p-8">
-            <div class="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
+          <div class="notice-list">
+            <div class="notice-item">
+              <div class="dot"></div>
               <div>
-                <p class="text-sm uppercase tracking-[0.25em] text-blue-100">Your Dashboard</p>
-                <h2 class="mt-3 text-3xl font-bold sm:text-4xl">
-                  Your Progress At A Glance, <span id="studentNameHero" class="text-amber-400">Eshtiak</span>
-                </h2>
-                <p class="mt-4 max-w-2xl text-sm leading-7 text-blue-50 sm:text-base">
-                  Track your attendance, class routine, academic progress, notices, and student service requests from this dashboard
-                </p>
-              </div>
-
-              <div class="grid grid-cols-2 gap-3 sm:w-[320px]">
-                <div class="rounded-2xl bg-white/15 p-4 backdrop-blur-md">
-                  <p class="text-xs text-blue-100">Live Time</p>
-                  <p id="liveTime" class="mt-2 text-lg font-bold">--:--</p>
-                </div>
-                <div class="rounded-2xl bg-white/15 p-4 backdrop-blur-md">
-                  <p class="text-xs text-blue-100">Attendance</p>
-                  <p id="attendanceStatusTop" class="mt-2 text-lg font-bold">Loading...</p>
-                </div>
-                <div class="rounded-2xl bg-white/15 p-4 backdrop-blur-md">
-                  <p class="text-xs text-blue-100">Semester</p>
-                  <p id="studentSemesterTop" class="mt-2 text-lg font-bold">--</p>
-                </div>
-                <div class="rounded-2xl bg-white/15 p-4 backdrop-blur-md">
-                  <p class="text-xs text-blue-100">GPA</p>
-                  <p id="gpaHero" class="mt-2 text-lg font-bold">--</p>
-                </div>
+                <div class="row-title">Exam Schedule Updated</div>
+                <div class="mini-text">Mid-term exam routine has been published for the current semester.</div>
+                <div class="mini-text" style="margin-top:6px;">15 May 2024</div>
               </div>
             </div>
-          </div>
-
-          <div class="surface-card rounded-[2rem] p-6">
-            <p class="text-sm font-semibold text-slate-300">Today's Focus</p>
-            <h3 class="mt-2 text-2xl font-bold">Quick Snapshot</h3>
-
-            <div class="mt-6 space-y-4">
-              <div class="rounded-2xl border border-blue-400/15 bg-blue-500/10 p-4">
-                <p class="text-xs text-blue-300">Next Class</p>
-                <p id="nextClassShort" class="mt-2 text-lg font-bold text-white">--</p>
-              </div>
-
-              <div class="rounded-2xl border border-amber-400/15 bg-amber-500/10 p-4">
-                <p class="text-xs text-amber-300">Focus Subject</p>
-                <p id="weakSubjectShort" class="mt-2 text-lg font-bold text-white">--</p>
-              </div>
-
-              <div class="rounded-2xl border border-emerald-400/15 bg-emerald-500/10 p-4">
-                <p class="text-xs text-emerald-300">Unread Notices</p>
-                <p id="noticeCount" class="mt-2 text-lg font-bold text-white">--</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Profile + Stats -->
-      <section id="profile" class="grid gap-6 xl:grid-cols-[1.2fr_.8fr]">
-        <div class="surface-card rounded-[2rem] p-6">
-          <div class="flex flex-col gap-5 sm:flex-row sm:items-center">
-            <img src="./assets/eshti.jpg" alt="Student" class="h-24 w-24 rounded-3xl object-cover shadow-soft" />
-            <div>
-              <h3 id="studentName" class="text-2xl font-bold">MD Eshtiak Ahmed</h3>
-              <p class="mt-2 text-sm text-slate-400">Computer Science & Technology Department • Rajshahi Polytechnic Institute</p>
-
-              <div class="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-                <div>
-                  <p class="text-xs text-slate-400">Roll</p>
-                  <p id="studentRoll" class="mt-1 font-semibold text-white">--</p>
-                </div>
-                <div>
-                  <p class="text-xs text-slate-400">Semester</p>
-                  <p id="studentSemester" class="mt-1 font-semibold text-white">--</p>
-                </div>
-                <div>
-                  <p class="text-xs text-slate-400">Session</p>
-                  <p id="studentSession" class="mt-1 font-semibold text-white">--</p>
-                </div>
-                <div>
-                  <p class="text-xs text-slate-400">Email</p>
-                  <p id="studentEmail" class="mt-1 truncate font-semibold text-white">--</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="grid grid-cols-2 gap-4">
-          <div class="surface-card rounded-[1.5rem] p-5">
-            <p class="text-xs text-slate-400">Total Days</p>
-            <p id="totalDays" class="mt-2 text-3xl font-bold text-white">--</p>
-          </div>
-          <div class="surface-card rounded-[1.5rem] p-5">
-            <p class="text-xs text-slate-400">Present</p>
-            <p id="presentDays" class="mt-2 text-3xl font-bold text-emerald-400">--</p>
-          </div>
-          <div class="surface-card rounded-[1.5rem] p-5">
-            <p class="text-xs text-slate-400">Absent</p>
-            <p id="absentDays" class="mt-2 text-3xl font-bold text-amber-400">--</p>
-          </div>
-          <div class="surface-card rounded-[1.5rem] p-5">
-            <p class="text-xs text-slate-400">Subjects</p>
-            <p id="subjectCount" class="mt-2 text-3xl font-bold accent-text">--</p>
-          </div>
-        </div>
-      </section>
-
-      <!-- Performance -->
-      <section class="mt-6 grid gap-6 lg:grid-cols-3">
-        <div id="attendance" class="surface-card rounded-[2rem] p-6">
-          <p class="text-sm font-medium text-slate-300">Attendance Rate</p>
-          <div class="mt-4 flex items-end gap-2">
-            <h3 id="attendanceRate" class="text-5xl font-bold text-white">--</h3>
-            <span class="pb-2 text-sm text-slate-400">overall</span>
-          </div>
-
-          <div class="mt-6 h-3 w-full rounded-full bg-white/10">
-            <div id="attendanceBar" class="h-3 rounded-full accent-gradient" style="width:0%"></div>
-          </div>
-
-          <div class="mt-6 grid grid-cols-3 gap-3">
-            <div class="rounded-2xl border border-blue-400/15 bg-blue-500/10 p-4">
-              <p class="text-xs text-blue-300">Present</p>
-              <p id="presentPercent" class="mt-2 text-2xl font-bold text-white">--</p>
-            </div>
-            <div class="rounded-2xl border border-amber-400/15 bg-amber-500/10 p-4">
-              <p class="text-xs text-amber-300">Late</p>
-              <p id="latePercent" class="mt-2 text-2xl font-bold text-white">--</p>
-            </div>
-            <div class="rounded-2xl border border-emerald-400/15 bg-emerald-500/10 p-4">
-              <p class="text-xs text-emerald-300">Target</p>
-              <p class="mt-2 text-2xl font-bold text-white">80%</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="surface-card rounded-[2rem] p-6">
-          <p class="text-sm font-medium text-slate-300">Performance</p>
-          <div class="mt-4 grid gap-4">
-            <div class="rounded-2xl border border-white/5 bg-white/5 p-4">
-              <p class="text-xs text-slate-400">Current GPA</p>
-              <p id="gpaValue" class="mt-2 text-4xl font-bold text-white">--</p>
-            </div>
-            <div class="rounded-2xl border border-white/5 bg-white/5 p-4">
-              <p class="text-xs text-slate-400">Class Days</p>
-              <p id="classDays" class="mt-2 text-4xl font-bold text-white">--</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="surface-card rounded-[2rem] p-6">
-          <p class="text-sm font-medium text-slate-300">Student Summary</p>
-          <h3 class="mt-2 text-2xl font-bold text-white" id="summaryName">Student</h3>
-          <p class="mt-3 text-sm leading-7 text-slate-400">
-            Your academic snapshot is updated from recent attendance, results, and routine data.
-          </p>
-          <div class="mt-6 rounded-2xl border border-white/5 bg-gradient-to-r from-slate-950 to-slate-800 p-5 text-white">
-            <p class="text-xs text-slate-300">System Insight</p>
-            <p id="systemInsight" class="mt-2 text-lg font-semibold">Loading academic summary...</p>
-          </div>
-        </div>
-      </section>
-
-      <!-- Results + Notices -->
-
-      <section class="mt-6 grid gap-6 xl:grid-cols-[1.2fr_.8fr]">
-        <div id="results" class="surface-card rounded-[2rem] p-6">
-          <div class="flex items-center justify-between">
-            <div>
-              <p class="text-sm font-medium text-slate-300">Academic Results</p>
-              <h3 class="mt-1 text-2xl font-bold text-white">Subject Performance</h3>
-            </div>
-            <div id="resultStatus" class="rounded-2xl border border-white/5 bg-white/5 px-4 py-2 text-sm font-medium text-slate-300">Loading...</div>
-          </div>
-
-          <div class="mt-6 overflow-x-auto custom-scroll">
-            <table class="min-w-full text-left text-sm">
-              <thead>
-                <tr class="border-b border-white/10 text-slate-400">
-                  <th class="pb-3 pr-4 font-medium">Subject</th>
-                  <th class="pb-3 pr-4 font-medium">Marks</th>
-                  <th class="pb-3 pr-4 font-medium">Grade</th>
-                  <th class="pb-3 font-medium">Status</th>
-                </tr>
-              </thead>
-              <tbody id="resultTable" class="divide-y divide-white/5 text-white"></tbody>
-            </table>
-          </div>
-        </div>
-
-        <div id="notices" class="surface-card rounded-[2rem] p-6">
-          <p class="text-sm font-medium text-slate-300">Latest Notices</p>
-          <h3 class="mt-1 text-2xl font-bold text-white">Department Updates</h3>
-          <div id="noticeList" class="mt-6 space-y-4"></div>
-        </div>
-      </section>
-
-      <!-- Routine + Teachers -->
-      <section class="mt-6 grid gap-6 xl:grid-cols-[1.2fr_.8fr]">
-        <div id="routine" class="surface-card rounded-[2rem] p-6">
-          <div class="flex items-center justify-between">
-            <div>
-              <p class="text-sm font-medium text-slate-300">Routine</p>
-              <h3 class="mt-1 text-2xl font-bold text-white">Today's Classes</h3>
-            </div>
-            <div class="rounded-2xl border border-blue-400/15 bg-blue-500/10 px-4 py-2 text-sm font-medium text-blue-300">Live Schedule</div>
-          </div>
-          <div id="routineList" class="mt-6 space-y-4"></div>
-        </div>
-
-        <div id="teachers" class="surface-card rounded-[2rem] p-6">
-          <p class="text-sm font-medium text-slate-300">Teachers</p>
-          <h3 class="mt-1 text-2xl font-bold text-white">Course Instructors</h3>
-          <div id="teacherList" class="mt-6 space-y-4"></div>
-        </div>
-      </section>
-
-      <!-- Leave -->
-
-      <section id="leave" class="mt-6 surface-card rounded-[2rem] p-6">
-        <div class="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
-          <div>
-            <p class="text-sm font-medium text-slate-300">Leave Request</p>
-            <h3 class="mt-1 text-2xl font-bold text-white">Submit Leave Application</h3>
-          </div>
-          <div class="rounded-2xl border border-white/5 bg-white/5 px-4 py-2 text-sm font-medium text-slate-300">Student Self Service</div>
-        </div>
-
-        <form id="leaveForm" class="mt-6 grid gap-4 lg:grid-cols-3">
-          <input type="date" class="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-white outline-none focus:border-[var(--accent)]" required>
-          <select class="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-white outline-none focus:border-[var(--accent)]" required>
-            <option value="" class="bg-slate-900">Select reason</option>
-            <option class="bg-slate-900">Medical Reason</option>
-            <option class="bg-slate-900">Family Emergency</option>
-            <option class="bg-slate-900">Academic Program</option>
-            <option class="bg-slate-900">Personal Issue</option>
-          </select>
-          <input type="text" placeholder="Class / Subject" class="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-white placeholder:text-slate-500 outline-none focus:border-[var(--accent)]" required>
-          <textarea rows="5" placeholder="Write your leave details..." class="lg:col-span-3 rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-white placeholder:text-slate-500 outline-none focus:border-[var(--accent)]" required></textarea>
-
-          <div class="lg:col-span-3 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-            <div id="leaveMessage" class="hidden rounded-2xl border border-emerald-400/15 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-300"></div>
-            <button type="submit" class="rounded-2xl accent-gradient px-6 py-3 font-semibold text-white accent-glow transition hover:scale-[1.01]">
-              Submit Request
-            </button>
-          </div>
-        </form>
-      </section>
-
-      <!-- Lost and Found -->
-      <section id="lostFound" class="mt-6 surface-card rounded-[2rem] p-6">
-        <div class="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
-          <div>
-            <p class="text-sm font-medium text-slate-300">Lost & Found</p>
-            <h3 class="mt-1 text-2xl font-bold text-white">Report Lost Object</h3>
-            <p class="mt-2 text-sm text-slate-400">Students can submit complaints for lost items and track recently reported objects.</p>
-          </div>
-          <div class="rounded-2xl border border-amber-400/15 bg-amber-500/10 px-4 py-2 text-sm font-medium text-amber-300">
-            Complaint Desk
-          </div>
-        </div>
-
-        <div class="mt-6 grid gap-6 xl:grid-cols-[1fr_.95fr]">
-          <div class="rounded-[1.5rem] border border-white/10 bg-white/5 p-5">
-            <h4 class="text-lg font-semibold text-white">Submit Complaint</h4>
-
-            <form id="lostFoundForm" class="mt-5 grid gap-4 md:grid-cols-2">
-              <input
-                id="lostItemName"
-                type="text"
-                placeholder="Object name"
-                class="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-white placeholder:text-slate-500 outline-none focus:border-[var(--accent)]"
-                required
-              />
-
-              <select
-                id="lostItemCategory"
-                class="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-white outline-none focus:border-[var(--accent)]"
-                required
-              >
-                <option value="" class="bg-slate-900">Select category</option>
-                <option class="bg-slate-900">ID Card</option>
-                <option class="bg-slate-900">Mobile Phone</option>
-                <option class="bg-slate-900">Bag</option>
-                <option class="bg-slate-900">Book / Notebook</option>
-                <option class="bg-slate-900">Wallet</option>
-                <option class="bg-slate-900">Keys</option>
-                <option class="bg-slate-900">Other</option>
-              </select>
-
-              <input
-                id="lostItemDate"
-                type="date"
-                class="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-white outline-none focus:border-[var(--accent)]"
-                required
-              />
-
-              <input
-                id="lostItemPlace"
-                type="text"
-                placeholder="Lost or Found location (e.g. Library)"
-                class="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-white placeholder:text-slate-500 outline-none focus:border-[var(--accent)]"
-                required
-              />
-
-              <input
-                id="lostItemContact"
-                type="text"
-                placeholder="Contact number / email"
-                class="md:col-span-2 rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-white placeholder:text-slate-500 outline-none focus:border-[var(--accent)]"
-                required
-              />
-
-              <textarea
-                id="lostItemDetails"
-                rows="5"
-                placeholder="Describe the lost object in detail..."
-                class="md:col-span-2 rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-white placeholder:text-slate-500 outline-none focus:border-[var(--accent)]"
-                required
-              ></textarea>
-
-              <div class="md:col-span-2 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-                <div id="lostFoundMessage" class="hidden rounded-2xl border border-cyan-400/15 bg-cyan-500/10 px-4 py-3 text-sm text-cyan-300"></div>
-                <button
-                  type="submit"
-                  class="rounded-2xl accent-gradient px-6 py-3 font-semibold text-white accent-glow transition hover:scale-[1.01]"
-                >
-                  Submit Lost Complaint
-                </button>
-              </div>
-            </form>
-          </div>
-
-          <div class="rounded-[1.5rem] border border-white/10 bg-white/5 p-5">
-            <div class="flex items-center justify-between">
+            <div class="notice-item">
+              <div class="dot" style="background:#8d6bff;"></div>
               <div>
-                <h4 class="text-lg font-semibold text-white">Recent Lost Reports</h4>
-                <p class="mt-1 text-sm text-slate-400">Latest submitted lost item complaints.</p>
+                <div class="row-title">Workshop on AI & ML</div>
+                <div class="mini-text">Join the departmental workshop on AI and Machine Learning next week.</div>
+                <div class="mini-text" style="margin-top:6px;">12 May 2024</div>
               </div>
-              <div id="lostItemCount" class="rounded-2xl border border-white/10 bg-white/5 px-3 py-2 text-sm text-slate-300">
-                0 Items
+            </div>
+            <div class="notice-item">
+              <div class="dot" style="background:#40d8d0;"></div>
+              <div>
+                <div class="row-title">Holiday Notice</div>
+                <div class="mini-text">Institute activities will remain closed on the upcoming public holiday.</div>
+                <div class="mini-text" style="margin-top:6px;">10 May 2024</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card span-4">
+          <div class="section-head">
+            <h3>⚡ Quick Actions</h3>
+          </div>
+          <div class="quick-actions">
+            <a class="action-btn" href="result.html" target="_blank" rel="noopener noreferrer">📊 View Results</a>
+            <button class="action-btn" onclick="downloadRoutine()">⬇️ Download Routine</button>
+            <a class="action-btn" href="teachers.html" target="_blank" rel="noopener noreferrer">👨‍🏫 Contact Teacher</a>
+            <button class="action-btn">📝 Submit Assignment</button>
+          </div>
+          <button class="wide-btn">
+            <span>Academic Calendar</span>
+            <span>→</span>
+          </button>
+        </div>
+
+        <div class="card span-8" id="attendance">
+          <div class="section-head">
+            <h3>Attendance Overview</h3>
+            <span class="muted">Current Month</span>
+          </div>
+          <div class="overview-grid">
+            <div class="attendance-box">
+              <div class="attendance-inner">
+                <div class="ring-wrap">
+                  <svg viewBox="0 0 120 120">
+                    <circle cx="60" cy="60" r="48" stroke="rgba(120,140,180,0.18)" stroke-width="10" fill="none"></circle>
+                    <circle cx="60" cy="60" r="48" stroke="url(#brandGradient)" stroke-width="10" fill="none" stroke-linecap="round" stroke-dasharray="301.59" stroke-dashoffset="42"></circle>
+                  </svg>
+                  <div class="label">
+                    <div>
+                      <strong>86%</strong>
+                      <span class="muted">Present</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="legend">
+                  <div class="legend-item"><div class="legend-left"><span class="legend-color" style="background:#58bdfc"></span>Present</div><strong>22 Days</strong></div>
+                  <div class="legend-item"><div class="legend-left"><span class="legend-color" style="background:#8d6bff"></span>Absent</div><strong>4 Days</strong></div>
+                  <div class="legend-item"><div class="legend-left"><span class="legend-color" style="background:#cbd5e1"></span>Total Classes</div><strong>26 Days</strong></div>
+                </div>
               </div>
             </div>
 
-            <div id="lostFoundList" class="mt-5 space-y-4"></div>
+            <div class="attendance-box">
+              <div class="section-head" style="margin-bottom:8px;">
+                <h3 style="font-size:1.05rem;">Attendance Details</h3>
+              </div>
+              <div class="legend">
+                <div class="legend-item"><div class="legend-left"><span class="legend-color" style="background:#58bdfc"></span>Present This Month</div><strong>22 Days</strong></div>
+                <div class="legend-item"><div class="legend-left"><span class="legend-color" style="background:#8d6bff"></span>Absent This Month</div><strong>4 Days</strong></div>
+                <div class="legend-item"><div class="legend-left"><span class="legend-color" style="background:#40d8d0"></span>Attendance Rate</div><strong>86%</strong></div>
+                <div class="legend-item"><div class="legend-left"><span class="legend-color" style="background:#cbd5e1"></span>Total Classes</div><strong>26 Days</strong></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card span-4">
+          <div class="section-head">
+            <h3>Result Overview</h3>
+            <a class="ghost-link" href="result.html" target="_blank" rel="noopener noreferrer">Open Page</a>
+          </div>
+          <div class="result-box">
+            <p class="muted">Current CGPA</p>
+            <div style="font-size: 2.3rem; font-weight: 800; margin: 8px 0 4px; color: var(--blue);">3.64 <span style="font-size: 1.15rem; color: var(--text);">/ 4.00</span></div>
+            <div style="color: var(--success); font-weight: 700; margin-bottom: 18px;">Good Standing</div>
+            <div class="bars">
+              <div class="bar-item"><div class="bar" style="height: 74%;"></div><span class="mini-text">DBS</span><strong>A+</strong></div>
+              <div class="bar-item"><div class="bar" style="height: 62%; background: linear-gradient(180deg,#93c5fd,#8d6bff);"></div><span class="mini-text">Web</span><strong>A</strong></div>
+              <div class="bar-item"><div class="bar" style="height: 55%; background: linear-gradient(180deg,#b79bff,#8d6bff);"></div><span class="mini-text">Prog.</span><strong>A-</strong></div>
+              <div class="bar-item"><div class="bar" style="height: 50%; background: linear-gradient(180deg,#d1b3ff,#9f7aea);"></div><span class="mini-text">Math</span><strong>B+</strong></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card span-12" id="assignments">
+          <div class="section-head">
+            <h3>Upcoming Assignments</h3>
+            <a class="ghost-link" href="#">View All</a>
+          </div>
+          <div class="assignment-list">
+            <div class="assignment-item">
+              <div>
+                <div class="row-title">Web Development Project</div>
+                <div class="mini-text">Due: 20 May 2024</div>
+              </div>
+              <span class="chip">5 Days Left</span>
+            </div>
+            <div class="assignment-item">
+              <div>
+                <div class="row-title">Database Systems Lab Report</div>
+                <div class="mini-text">Due: 22 May 2024</div>
+              </div>
+              <span class="chip">7 Days Left</span>
+            </div>
+            <div class="assignment-item">
+              <div>
+                <div class="row-title">Programming (C) Assignment</div>
+                <div class="mini-text">Due: 25 May 2024</div>
+              </div>
+              <span class="chip">10 Days Left</span>
+            </div>
+            <div class="assignment-item">
+              <div>
+                <div class="row-title">Discrete Math Problem Set</div>
+                <div class="mini-text">Due: 28 May 2024</div>
+              </div>
+              <span class="chip">13 Days Left</span>
+            </div>
           </div>
         </div>
       </section>
+
+      <div class="footer-note">© 2026 Rajshahi Polytechnic Institute · CST Department · Student Dashboard</div>
     </main>
   </div>
 
   <script>
-    const studentData = {
-      profile: {
-        name: 'MD Eshtiak Ahmed',
-        roll: '721491',
-        semester: '7th Semester',
-        session: '2022-23',
-        email: 'eshtiak4099@gmail.com'
-      },
-      attendance: [
-        { subject: 'Cyber Security', status: 'Present', date: '2026-04-10' },
-        { subject: 'Data Communication', status: 'Present', date: '2026-04-11' },
-        { subject: 'Web Design', status: 'Late', date: '2026-04-12' },
-        { subject: 'Operating System', status: 'Present', date: '2026-04-13' },
-        { subject: 'Mathematics-IV', status: 'Absent', date: '2026-04-14' },
-        { subject: 'Database Management System', status: 'Present', date: '2026-04-15' },
-        { subject: 'Data Communication', status: 'Present', date: '2026-04-16' },
-        { subject: 'Web Design', status: 'Present', date: '2026-04-17' },
-        { subject: 'Operating System', status: 'Late', date: '2026-04-18' },
-        { subject: 'Mathematics-3', status: 'Present', date: '2026-04-19' }
-      ],
-      results: [
-        { subject: 'Database Management System', marks: 72, grade: 'A+' },
-        { subject: 'Data Communication', marks: 76, grade: 'A' },
-        { subject: 'Web Design', marks: 78, grade: 'A+' },
-        { subject: 'Operating System', marks: 71, grade: 'A-' },
-        { subject: 'Mathematics-3', marks: 67, grade: 'B+' }
-      ],
-      notices: [
-        { title: 'Mid-term exam routine has been published', type: 'Exam', priority: 'High', date: '2026-05-14' },
-        { title: 'Networking lab report submission deadline extended', type: 'Academic', priority: 'Medium', date: '2026-04-16' },
-        { title: 'Seminar on modern web development next week', type: 'Event', priority: 'General', date: '2026-04-15' }
-      ],
-      routine: [
-        { subject: 'Database Management System', time: '1:30 PM - 03:30 PM', room: 'Room 304', teacher: 'Instr. Lufi' },
-        { subject: 'Data Communication', time: '3:30 AM - 4:15 PM', room: 'Lab 2', teacher: 'Instr. Naruto' },
-        { subject: 'Web Design', time: '4:15 PM - 4:45 PM', room: 'Lab 3', teacher: 'Instr. Saitama' },
-        { subject: 'Operating System', time: '04:45 PM - 05:30 PM', room: 'Room 305', teacher: 'Instr. Mikasa' }
-      ],
-      teachers: [
-        { name: 'Instr. Lufi', subject: 'Database Management System', room: 'Room 1302' },
-        { name: 'Instr. Naruto', subject: 'Data Communication', room: 'Lab 2' },
-        { name: 'Instr. Saitama', subject: 'Web Design', room: 'Lab 2' },
-        { name: 'Instr. Mikasa', subject: 'Operating System', room: 'Room 1305' }
-      ],
-      lostItems: [
-        {
-          name: 'Student ID Card',
-          category: 'ID Card',
-          date: '2026-04-16',
-          place: 'Library',
-          contact: '01989984061',
-          details: 'RPI student ID card with name and roll number.',
-          status: 'Pending'
-        },
-        {
-          name: 'Black Backpack',
-          category: 'Bag',
-          date: '2026-04-17',
-          place: 'Lab 3',
-          contact: 'aliul@gmail.com',
-          details: 'A black backpack containing notebooks and a charger.',
-          status: 'Searching'
-        }
-      ]
-    };
-
-    function calculateAttendance(attendance) {
-      const total = attendance.length;
-      let attended = 0;
-      attendance.forEach(a => {
-        if (a.status === 'Present') attended += 1;
-        if (a.status === 'Late') attended += 0.5;
-      });
-      return Number(((attended / total) * 100).toFixed(1));
-    }
-
-    function calculateGPA(results) {
-      let total = 0;
-      results.forEach(r => {
-        if (r.marks >= 80) total += 4.0;
-        else if (r.marks >= 75) total += 3.75;
-        else if (r.marks >= 70) total += 3.5;
-        else if (r.marks >= 65) total += 3.25;
-        else total += 3.0;
-      });
-      return (total / results.length).toFixed(2);
-    }
-
-    function getWeakSubject(results) {
-      return [...results].sort((a, b) => a.marks - b.marks)[0];
-    }
-
-    function getGradeStatus(marks, weakest) {
-      if (marks === weakest) return ['Needs Focus', 'bg-amber-500/10 text-amber-300 border border-amber-400/15'];
-      if (marks >= 80) return ['Excellent', 'bg-emerald-500/10 text-emerald-300 border border-emerald-400/15'];
-      if (marks >= 70) return ['Good', 'bg-blue-500/10 text-blue-300 border border-blue-400/15'];
-      return ['Average', 'bg-white/5 text-slate-300 border border-white/10'];
-    }
-
-    function getLostStatusClass(status) {
-      if (status === 'Pending') return 'bg-rose-500/10 text-rose-300 border border-rose-400/15';
-      if (status === 'Searching') return 'bg-amber-500/10 text-amber-300 border border-amber-400/15';
-      if (status === 'Resolved') return 'bg-emerald-500/10 text-emerald-300 border border-emerald-400/15';
-      return 'bg-blue-500/10 text-blue-300 border border-blue-400/15';
-    }
-
-    function renderProfile() {
-      document.getElementById('studentName').textContent = studentData.profile.name;
-      document.getElementById('studentNameHero').textContent = studentData.profile.name.split(' ')[1] || studentData.profile.name;
-      document.getElementById('summaryName').textContent = studentData.profile.name;
-      document.getElementById('studentRoll').textContent = studentData.profile.roll;
-      document.getElementById('studentSemester').textContent = studentData.profile.semester;
-      document.getElementById('studentSemesterTop').textContent = studentData.profile.semester;
-      document.getElementById('studentSession').textContent = studentData.profile.session;
-      document.getElementById('studentEmail').textContent = studentData.profile.email;
-    }
-
-    function renderSummary() {
-      const attendanceRate = calculateAttendance(studentData.attendance);
-      const gpa = calculateGPA(studentData.results);
-      const presentDays = studentData.attendance.filter(a => a.status === 'Present').length;
-      const absentDays = studentData.attendance.filter(a => a.status === 'Absent').length;
-      const lateDays = studentData.attendance.filter(a => a.status === 'Late').length;
-      const weakSubject = getWeakSubject(studentData.results);
-      const nextClass = studentData.routine[0];
-
-      document.getElementById('totalDays').textContent = studentData.attendance.length;
-      document.getElementById('presentDays').textContent = presentDays;
-      document.getElementById('absentDays').textContent = absentDays;
-      document.getElementById('noticeCount').textContent = studentData.notices.length;
-      document.getElementById('classDays').textContent = studentData.attendance.length;
-      document.getElementById('attendanceRate').textContent = attendanceRate + '%';
-      document.getElementById('attendanceBar').style.width = attendanceRate + '%';
-      document.getElementById('presentPercent').textContent = Math.round((presentDays / studentData.attendance.length) * 100) + '%';
-      document.getElementById('latePercent').textContent = Math.round((lateDays / studentData.attendance.length) * 100) + '%';
-      document.getElementById('subjectCount').textContent = studentData.results.length;
-      document.getElementById('gpaValue').textContent = gpa;
-      document.getElementById('gpaHero').textContent = gpa;
-      document.getElementById('nextClassShort').textContent = nextClass.subject;
-      document.getElementById('weakSubjectShort').textContent = weakSubject.subject;
-      document.getElementById('attendanceStatusTop').textContent = attendanceRate < 75 ? 'Needs Work' : 'Good Standing';
-      document.getElementById('resultStatus').textContent = `Estimated GPA ${gpa}`;
-
-      document.getElementById('systemInsight').textContent =
-        attendanceRate < 75
-          ? `Your attendance is below target. Focus on ${weakSubject.subject} and maintain regular class presence.`
-          : `You are in a safe academic range. Maintain consistency and give extra focus to ${weakSubject.subject}.`;
-    }
-
-    function renderResults() {
-      const weakSubjectMarks = getWeakSubject(studentData.results).marks;
-      const tbody = document.getElementById('resultTable');
-
-      tbody.innerHTML = studentData.results.map(item => {
-        const [label, cls] = getGradeStatus(item.marks, weakSubjectMarks);
-        return `
-          <tr>
-            <td class="py-4 pr-4 font-medium">${item.subject}</td>
-            <td class="py-4 pr-4">${item.marks}</td>
-            <td class="py-4 pr-4">${item.grade}</td>
-            <td class="py-4"><span class="rounded-full px-3 py-1 text-xs font-medium ${cls}">${label}</span></td>
-          </tr>
-        `;
-      }).join('');
-    }
-
-    function renderNotices() {
-      const list = document.getElementById('noticeList');
-      list.innerHTML = studentData.notices.map(item => {
-        const cls = item.priority === 'High'
-          ? 'bg-rose-500/10 text-rose-300 border border-rose-400/15'
-          : item.priority === 'Medium'
-          ? 'bg-amber-500/10 text-amber-300 border border-amber-400/15'
-          : 'bg-blue-500/10 text-blue-300 border border-blue-400/15';
-
-        return `
-          <div class="rounded-2xl border border-white/10 bg-white/5 p-4">
-            <div class="flex items-start justify-between gap-3">
-              <div>
-                <p class="font-semibold text-white">${item.title}</p>
-                <p class="mt-1 text-xs text-slate-400">${item.date} • ${item.type}</p>
-              </div>
-              <span class="rounded-full px-3 py-1 text-xs font-medium ${cls}">${item.priority}</span>
-            </div>
-          </div>
-        `;
-      }).join('');
-    }
-
-    function renderRoutine() {
-      const list = document.getElementById('routineList');
-      list.innerHTML = studentData.routine.map(item => `
-        <div class="flex flex-col gap-3 rounded-2xl border border-white/10 bg-white/5 p-4 sm:flex-row sm:items-center sm:justify-between">
-          <div>
-            <p class="font-semibold text-white">${item.subject}</p>
-            <p class="mt-1 text-sm text-slate-400">${item.teacher}</p>
-          </div>
-          <div class="text-sm text-slate-400">${item.time}</div>
-          <div class="text-sm font-medium accent-text">${item.room}</div>
-        </div>
-      `).join('');
-    }
-
-    function renderTeachers() {
-      const list = document.getElementById('teacherList');
-      list.innerHTML = studentData.teachers.map(item => `
-        <div class="rounded-2xl border border-white/10 bg-white/5 p-4">
-          <p class="font-semibold text-white">${item.name}</p>
-          <p class="mt-1 text-sm text-slate-400">${item.subject}</p>
-          <p class="mt-1 text-xs accent-text">Room: ${item.room}</p>
-        </div>
-      `).join('');
-    }
-
-    function renderLostFound() {
-      const list = document.getElementById('lostFoundList');
-      const count = document.getElementById('lostItemCount');
-
-      count.textContent = `${studentData.lostItems.length} Items`;
-
-      if (!studentData.lostItems.length) {
-        list.innerHTML = `
-          <div class="rounded-2xl border border-dashed border-white/10 bg-white/5 p-6 text-center text-slate-400">
-            No lost item complaints submitted yet.
-          </div>
-        `;
-        return;
-      }
-
-      list.innerHTML = studentData.lostItems.map(item => `
-        <div class="rounded-2xl border border-white/10 bg-white/5 p-4">
-          <div class="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
-            <div>
-              <p class="text-lg font-semibold text-white">${item.name}</p>
-              <p class="mt-1 text-sm text-slate-400">${item.category} • Lost on ${item.date}</p>
-              <p class="mt-2 text-sm text-slate-300">📍 ${item.place}</p>
-              <p class="mt-1 text-sm text-slate-300">📞 ${item.contact}</p>
-              <p class="mt-3 text-sm leading-6 text-slate-400">${item.details}</p>
-            </div>
-            <span class="rounded-full px-3 py-1 text-xs font-medium ${getLostStatusClass(item.status)}">${item.status}</span>
-          </div>
-        </div>
-      `).join('');
-    }
-
-    function startClock() {
-      function update() {
-        const now = new Date();
-        const time = now.toLocaleTimeString([], {
-          hour: '2-digit',
-          minute: '2-digit',
-          second: '2-digit'
-        });
-        document.getElementById('liveTime').textContent = time;
-        document.getElementById('liveTimeTop').textContent = time;
-      }
-      update();
-      setInterval(update, 1000);
-    }
-
-    document.getElementById('leaveForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-      const box = document.getElementById('leaveMessage');
-      box.classList.remove('hidden');
-      box.textContent = 'Leave request submitted successfully for review.';
-      this.reset();
-    });
-
-    document.getElementById('lostFoundForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-
-      const name = document.getElementById('lostItemName').value.trim();
-      const category = document.getElementById('lostItemCategory').value;
-      const date = document.getElementById('lostItemDate').value;
-      const place = document.getElementById('lostItemPlace').value.trim();
-      const contact = document.getElementById('lostItemContact').value.trim();
-      const details = document.getElementById('lostItemDetails').value.trim();
-      const messageBox = document.getElementById('lostFoundMessage');
-
-      studentData.lostItems.unshift({
-        name,
-        category,
-        date,
-        place,
-        contact,
-        details,
-        status: 'Pending'
-      });
-
-      renderLostFound();
-
-      messageBox.classList.remove('hidden');
-      messageBox.textContent = 'Lost object complaint submitted successfully.';
-      this.reset();
-    });
-
-    // Theme settings
-    const themeSettingsBtn = document.getElementById('themeSettingsBtn');
-    const themePanel = document.getElementById('themePanel');
-    const themeDots = document.querySelectorAll('.theme-dot');
-
-    themeSettingsBtn.addEventListener('click', () => {
-      themePanel.classList.toggle('hidden');
-    });
-
-    themeDots.forEach(dot => {
-      dot.addEventListener('click', () => {
-        const color = dot.dataset.color;
-        const dark = dot.dataset.dark;
-        const rgb = dot.dataset.rgb;
-
-        document.documentElement.style.setProperty('--accent', color);
-        document.documentElement.style.setProperty('--accent-dark', dark);
-        document.documentElement.style.setProperty('--accent-rgb', rgb);
-
-        localStorage.setItem('dashboardAccent', color);
-        localStorage.setItem('dashboardAccentDark', dark);
-        localStorage.setItem('dashboardAccentRgb', rgb);
-      });
-    });
-
-    function loadSavedTheme() {
-      const savedColor = localStorage.getItem('dashboardAccent');
-      const savedDark = localStorage.getItem('dashboardAccentDark');
-      const savedRgb = localStorage.getItem('dashboardAccentRgb');
-
-      if (savedColor && savedDark && savedRgb) {
-        document.documentElement.style.setProperty('--accent', savedColor);
-        document.documentElement.style.setProperty('--accent-dark', savedDark);
-        document.documentElement.style.setProperty('--accent-rgb', savedRgb);
-      }
-    }
-
-    // Mobile menu
-    const menuToggle = document.getElementById('menuToggle');
-    const closeMenu = document.getElementById('closeMenu');
+    const body = document.body;
+    const themeToggle = document.getElementById('themeToggle');
+    const themeIcon = document.getElementById('themeIcon');
+    const savedTheme = localStorage.getItem('rpi-student-theme');
     const sidebar = document.getElementById('sidebar');
-    const mobileOverlay = document.getElementById('mobileOverlay');
-    const navLinks = document.querySelectorAll('.nav-link');
+    const openSidebar = document.getElementById('openSidebar');
 
-    function openMenu() {
-      sidebar.classList.remove('-translate-x-full');
-      mobileOverlay.classList.remove('hidden');
-      document.body.classList.add('overflow-hidden');
+    if (savedTheme === 'dark') {
+      body.classList.add('dark');
+      setThemeIcon(true);
+    } else {
+      setThemeIcon(false);
     }
 
-    function closeSidebar() {
-      sidebar.classList.add('-translate-x-full');
-      mobileOverlay.classList.add('hidden');
-      document.body.classList.remove('overflow-hidden');
-    }
-
-    menuToggle.addEventListener('click', openMenu);
-    closeMenu.addEventListener('click', closeSidebar);
-    mobileOverlay.addEventListener('click', closeSidebar);
-
-    navLinks.forEach(link => {
-      link.addEventListener('click', () => {
-        if (window.innerWidth < 1024) {
-          closeSidebar();
-        }
+    if (themeToggle) {
+      themeToggle.addEventListener('click', () => {
+        body.classList.toggle('dark');
+        const isDark = body.classList.contains('dark');
+        localStorage.setItem('rpi-student-theme', isDark ? 'dark' : 'light');
+        setThemeIcon(isDark);
       });
+    }
+
+    function setThemeIcon(isDark) {
+      if (!themeIcon) return;
+      themeIcon.innerHTML = isDark
+        ? '<circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"></path>'
+        : '<path d="M21 12.79A9 9 0 1111.21 3c0 .34.02.67.05 1a7 7 0 009.74 8.74c.33.03.66.05 1 .05z"></path>';
+    }
+
+    if (openSidebar) {
+      openSidebar.addEventListener('click', () => {
+        sidebar.classList.toggle('open');
+      });
+    }
+
+    document.addEventListener('click', (e) => {
+      if (window.innerWidth > 980 || !sidebar || !openSidebar) return;
+      if (!sidebar.contains(e.target) && !openSidebar.contains(e.target)) {
+        sidebar.classList.remove('open');
+      }
     });
 
-    loadSavedTheme();
-    renderProfile();
-    renderSummary();
-    renderResults();
-    renderNotices();
-    renderRoutine();
-    renderTeachers();
-    renderLostFound();
-    startClock();
+    function downloadRoutine() {
+      const routineText = `Rajshahi Polytechnic Institute - CST Department\nStudent: Eshtiak Ahmed\nRoll: 721491\nSemester: 7th\n\nToday's Routine:\n09:00 AM - Database Systems\n10:00 AM - Web Development\n01:00 PM - Microprocessor Lab\n02:00 PM - Programming (C)`;
+      const blob = new Blob([routineText], { type: 'text/plain' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'routine.txt';
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    }
   </script>
 </body>
 </html>
-.

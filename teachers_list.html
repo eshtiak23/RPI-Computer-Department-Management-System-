@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CST Teachers</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#ff4fa3',
+            darkBg: '#050308',
+            darkCard: 'rgba(18, 10, 22, 0.9)'
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="min-h-screen bg-darkBg text-white">
+  <div class="min-h-screen bg-[radial-gradient(circle_at_top_left,rgba(255,79,163,.2),transparent_28%),linear-gradient(to_bottom,#030205,#09040d,#030205)] px-4 py-10 sm:px-6 lg:px-8">
+    <div class="mx-auto max-w-6xl">
+      <div class="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <div>
+          <p class="text-sm uppercase tracking-[0.3em] text-pink-300">Faculty Page</p>
+          <h1 class="mt-2 text-3xl font-bold text-pink-400">CST Teachers</h1>
+        </div>
+        <a href="cst_dashboard_main.html" class="rounded-xl border border-pink-400/30 bg-pink-500/10 px-4 py-2 text-sm text-pink-300">Back to Dashboard</a>
+      </div>
+
+      <div class="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+        <div class="rounded-[2rem] border border-white/10 bg-darkCard p-6">
+          <h2 class="text-2xl font-bold">Mr. M. Hossain</h2>
+          <p class="mt-2 text-pink-300">Web Design & Lab Instructor</p>
+          <p class="mt-4 text-sm text-slate-300">Email: hossain@polytechnic.edu.bd</p>
+          <p class="mt-1 text-sm text-slate-300">Phone: +880 1712-345678</p>
+          <p class="mt-4 text-sm text-slate-400">Handles web development, lab classes and project guidance for CST students.</p>
+        </div>
+
+        <div class="rounded-[2rem] border border-white/10 bg-darkCard p-6">
+          <h2 class="text-2xl font-bold">Ms. S. Rahman</h2>
+          <p class="mt-2 text-pink-300">Database Teacher</p>
+          <p class="mt-4 text-sm text-slate-300">Email: srahman@polytechnic.edu.bd</p>
+          <p class="mt-1 text-sm text-slate-300">Phone: +880 1811-223344</p>
+          <p class="mt-4 text-sm text-slate-400">Specialized in DBMS, SQL and academic advising for semester students.</p>
+        </div>
+
+        <div class="rounded-[2rem] border border-white/10 bg-darkCard p-6">
+          <h2 class="text-2xl font-bold">Mr. A. Karim</h2>
+          <p class="mt-2 text-pink-300">Networking Teacher</p>
+          <p class="mt-4 text-sm text-slate-300">Email: akarim@polytechnic.edu.bd</p>
+          <p class="mt-1 text-sm text-slate-300">Phone: +880 1912-987654</p>
+          <p class="mt-4 text-sm text-slate-400">Teaches networking fundamentals, Cisco labs and practical communication setup.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
