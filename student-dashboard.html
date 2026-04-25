@@ -28,154 +28,145 @@
     </svg>
   </button>
 
-  <div class="dashboard-shell">
-    <aside class="sidebar" id="sidebar">
-      <div class="brand">
-        <div class="brand-logo">
-          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.7">
-            <path d="M12 3l7 3v6c0 4.2-2.6 7.4-7 9-4.4-1.6-7-4.8-7-9V6l7-3z"></path>
-            <path d="M8 10h8"></path>
-            <path d="M9 14h6"></path>
+<div class="dashboard-shell">
+  <aside class="sidebar" id="sidebar">
+    <div class="brand">
+      <div class="brand-logo">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.7">
+          <path d="M12 3l7 3v6c0 4.2-2.6 7.4-7 9-4.4-1.6-7-4.8-7-9V6l7-3z"></path>
+          <path d="M8 10h8"></path>
+          <path d="M9 14h6"></path>
+        </svg>
+      </div>
+      <div>
+        <div class="brand-title">RPI</div>
+        <div class="brand-sub">Computer Science & Technology Department</div>
+      </div>
+    </div>
+
+    <ul class="nav-list">
+      <li><a class="nav-link active" href="#"><span>Dashboard</span></a></li>
+      <li><a class="nav-link" href="./Result/result.html" target="_blank"><span>Results</span></a></li>
+      <li><a class="nav-link" href="#attendance"><span>Attendance</span></a></li>
+      <li><a class="nav-link" href="#routine"><span>Routine</span></a></li>
+      <li><a class="nav-link" href="#assignments"><span>Assignments</span></a></li>
+      <li><a class="nav-link" href="teachers_list.html" target="_blank"><span>Teachers</span></a></li>
+
+      <li>
+        <a class="nav-link" href="#" onclick="logoutStudent(); return false;">
+          <span>Log Out</span>
+        </a>
+      </li>
+    </ul>
+
+    <div class="sidebar-footer">
+      <h4>Need Help?</h4>
+      <p>Rajshahi Polytechnic Institute · CST Department · Student Portal</p>
+    </div>
+  </aside>
+
+  <main class="main">
+    <header class="topbar" style="display:flex; align-items:flex-start; justify-content:space-between; gap:16px;">
+      <div class="welcome" style="flex:1 1 auto; min-width:0;">
+        <h1 id="welcomeName">Loading...</h1>
+        <p>Welcome to your academic dashboard.</p>
+      </div>
+
+      <div class="topbar-actions" style="margin-left:auto; display:flex; align-items:center; gap:12px;">
+        <button class="icon-btn" aria-label="Notifications" type="button">
+          🔔
+        </button>
+
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" type="button">
+          <svg id="themeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 12.79A9 9 0 1111.21 3c0 .34.02.67.05 1a7 7 0 009.74 8.74c.33.03.66.05 1 .05z"></path>
           </svg>
-        </div>
-        <div>
-          <div class="brand-title">RPI</div>
-          <div class="brand-sub">Computer Science & Technology Department</div>
+        </button>
+      </div>
+    </header>
+
+    <section class="grid">
+      <div class="card span-5">
+        <div class="student-card">
+          <div class="student-avatar">
+            <img id="studentAvatar" src="./assets/eshti_login.png" alt="Student profile image">
+          </div>
+
+          <div class="student-meta">
+            <h2 id="studentName">Loading...</h2>
+
+            <p>
+              <strong style="color: var(--text);">Class Roll:</strong>
+              <span id="studentRoll">--</span>
+            </p>
+
+            <p>
+              <strong style="color: var(--text);">Department:</strong>
+              <span id="studentDepartment">--</span>
+            </p>
+
+            <p>
+              <strong style="color: var(--text);">Shift:</strong>
+              <span id="studentShift">--</span>
+            </p>
+
+            <div class="student-contacts">
+              <div class="info-pill">
+                <span>📧</span>
+                <span id="studentEmail">--</span>
+              </div>
+
+              <div class="info-pill">
+                <span>📞</span>
+                <span id="studentPhone">--</span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
-      <ul class="nav-list">
-        <li><a class="nav-link active" href="#"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.9"><path d="M3 10.5L12 3l9 7.5"></path><path d="M5 9.5V21h14V9.5"></path></svg><span>Dashboard</span></a></li>
+      <div class="span-7 small-stat-grid">
+        <div class="card stat-mini">
+          <div>
+            <div class="icon-round">📅</div>
+            <h4 style="margin-top: 14px;">Attendance</h4>
+            <div class="stat-value">86%</div>
+            <div class="muted">This Month</div>
+          </div>
+        </div>
 
-        <li><a class="nav-link" href="./Result/result.html" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.9"><path d="M4 19h16"></path><path d="M7 16V9"></path><path d="M12 16V5"></path><path d="M17 16v-3"></path></svg><span>Results</span></a></li>
+        <div class="card stat-mini">
+          <div>
+            <div class="icon-round">📊</div>
+            <h4 style="margin-top: 14px;">Marks</h4>
+            <div class="stat-value">32</div>
+            <div class="muted">Out of 40</div>
+          </div>
+        </div>
 
-        <li><a class="nav-link" href="#attendance"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.9"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg><span>Attendance</span></a></li>
-        <li><a class="nav-link" href="#routine"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.9"><rect x="3" y="5" width="18" height="16" rx="2"></rect><path d="M16 3v4M8 3v4M3 10h18"></path></svg><span>Routine</span></a></li>
-        <li><a class="nav-link" href="#assignments"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.9"><path d="M9 3h6l1 2h3a1 1 0 011 1v14a1 1 0 01-1 1H5a1 1 0 01-1-1V6a1 1 0 011-1h3l1-2z"></path><path d="M8 11h8M8 15h6"></path></svg><span>Assignments</span></a></li>
-        <li><a class="nav-link" href="teachers_list.html" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.9"><path d="M17 21v-2a4 4 0 00-4-4H7a4 4 0 00-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 00-3-3.87"></path><path d="M16 3.13a4 4 0 010 7.75"></path></svg><span>Teachers</span></a></li>
+        <div class="card stat-mini">
+          <div>
+            <div class="icon-round">📚</div>
+            <h4 style="margin-top: 14px;">Subjects</h4>
+            <div class="stat-value">7</div>
+            <div class="muted">Ongoing</div>
+          </div>
+        </div>
 
-        <li><a class="nav-link" href="login.html" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.9"><path d="M17 21v-2a4 4 0 00-4-4H7a4 4 0 00-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 00-3-3.87"></path><path d="M16 3.13a4 4 0 010 7.75"></path></svg><span>Log Out</span></a></li>
-      </ul>
-
-      <div class="sidebar-footer">
-        <h4>Need Help?</h4>
-        <p>Rajshahi Polytechnic Institute · Computer Science & Technology Department · Student Portal</p>
+        <div class="card stat-mini">
+          <div>
+            <div class="icon-round">🏫</div>
+            <h4 style="margin-top: 14px;">Classes</h4>
+            <div class="stat-value">24</div>
+            <div class="muted">This Month</div>
+          </div>
+        </div>
       </div>
-    </aside>
 
-    <main class="main">
-      <header
-        class="topbar"
-        style="display:flex; align-items:flex-start; justify-content:space-between; gap:16px; flex-wrap:nowrap;"
-      >
-        <div class="welcome" style="flex:1 1 auto; min-width:0;">
-          <h1>Hi, Eshtiak Ahmed 👋</h1>
-          <p>Welcome to your academic dashboard.</p>
-        </div>
+      <!-- keep your routine, notice, quick action, attendance, result, assignment sections as they are -->
+    </section>
 
-        <div
-          class="topbar-actions"
-          style="margin-left:auto; display:flex; align-items:center; justify-content:flex-end; gap:12px; flex:0 0 auto;"
-        >
-          <button class="icon-btn" aria-label="Notifications" type="button">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M18 8a6 6 0 10-12 0c0 7-3 6-3 8h18c0-2-3-1-3-8"></path>
-              <path d="M13.73 21a2 2 0 01-3.46 0"></path>
-            </svg>
-          </button>
-
-          <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle dark/light mode" type="button">
-            <svg id="themeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M21 12.79A9 9 0 1111.21 3c0 .34.02.67.05 1a7 7 0 009.74 8.74c.33.03.66.05 1 .05z"></path>
-            </svg>
-          </button>
-        </div>
-      </header>
-
-      <section class="grid">
-        <div class="card span-5">
-          <div class="student-card">
-            <div class="student-avatar">
-              <img src="./assets/eshti_login.png" alt="Eshtiak Ahmed profile image">
-            </div>
-            <div class="student-meta">
-              <h2>Eshtiak Ahmed <span class="badge">7th Semester</span></h2>
-              <p><strong style="color: var(--text);">Class Roll:</strong> 721491</p>
-              <p><strong style="color: var(--text);">Department:</strong> Computer Science & Technology</p>
-
-              <div class="student-contacts">
-                <div class="info-pill">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4z"></path><path d="M22 6l-10 7L2 6"></path></svg>
-                  <span>eshtiak4099@gmail.com</span>
-                </div>
-                <div class="info-pill">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.8 19.8 0 01-8.63-3.07 19.5 19.5 0 01-6-6A19.8 19.8 0 012.15 4.18 2 2 0 014.11 2h3a2 2 0 012 1.72c.12.9.33 1.8.62 2.65a2 2 0 01-.45 2.11L8 9.99a16 16 0 006 6l1.51-1.28a2 2 0 012.11-.45c.86.29 1.75.5 2.65.62A2 2 0 0122 16.92z"></path></svg>
-                  <span>01989984061</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="span-7 small-stat-grid">
-          <div class="card stat-mini">
-            <div>
-              <div class="icon-round">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"></rect><path d="M16 2v4M8 2v4M3 10h18"></path></svg>
-              </div>
-              <h4 style="margin-top: 14px;">Attendance</h4>
-              <div class="stat-value">86%</div>
-              <div class="muted">This Month</div>
-            </div>
-            <svg class="sparkline" viewBox="0 0 200 60" fill="none">
-              <path d="M8 48C20 44 30 36 44 39C57 42 72 31 88 35C104 39 119 22 136 28C152 34 167 16 192 9" stroke="url(#brandGradient)" stroke-width="4" stroke-linecap="round"></path>
-            </svg>
-          </div>
-
-          <div class="card stat-mini">
-            <div>
-              <div class="icon-round">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20V10"></path><path d="M18 20V4"></path><path d="M6 20v-6"></path></svg>
-              </div>
-              <h4 style="margin-top: 14px;">Marks</h4>
-              <div class="stat-value">32</div>
-              <div class="muted">Out of 40</div>
-            </div>
-            <svg class="sparkline" viewBox="0 0 200 60" fill="none">
-              <path d="M8 46C24 41 36 29 54 35C72 41 85 22 102 29C118 36 134 19 152 24C170 29 182 18 192 10" stroke="#8d6bff" stroke-width="4" stroke-linecap="round"></path>
-            </svg>
-          </div>
-
-          <div class="card stat-mini">
-            <div>
-              <div class="icon-round">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14"></path><path d="M5 12h14"></path></svg>
-              </div>
-              <h4 style="margin-top: 14px;">Subjects</h4>
-              <div class="stat-value">7</div>
-              <div class="muted">Ongoing</div>
-            </div>
-            <svg class="sparkline" viewBox="0 0 200 60" fill="none">
-              <path d="M8 45C18 40 29 34 45 37C61 40 75 26 89 31C102 36 119 20 138 20C157 20 174 7 192 6" stroke="#40d8d0" stroke-width="4" stroke-linecap="round"></path>
-            </svg>
-          </div>
-
-          <div class="card stat-mini">
-            <div>
-              <div class="icon-round">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 2v4M16 2v4M3 10h18"></path><rect x="3" y="4" width="18" height="18" rx="2"></rect></svg>
-              </div>
-              <h4 style="margin-top: 14px;">Classes</h4>
-              <div class="stat-value">24</div>
-              <div class="muted">This Month</div>
-            </div>
-            <svg class="sparkline" viewBox="0 0 200 60" fill="none">
-              <path d="M8 47C18 38 32 28 48 33C65 38 78 22 94 29C111 36 125 18 140 22C156 26 170 18 192 6" stroke="#58bdfc" stroke-width="4" stroke-linecap="round"></path>
-            </svg>
-          </div>
-        </div>
-
-        <div class="card span-4" id="routine">
+ <div class="card span-4" id="routine">
           <div class="section-head">
             <h3>Today’s Routine</h3>
             <span class="muted">Wednesday</span>
@@ -371,186 +362,192 @@
     </main>
   </div>
 
-  <script>
-    const body = document.body;
-    const themeToggle = document.getElementById('themeToggle');
-    const themeIcon = document.getElementById('themeIcon');
-    const savedTheme = localStorage.getItem('rpi-student-theme');
-    const sidebar = document.getElementById('sidebar');
-    const openSidebar = document.getElementById('openSidebar');
-    const navLinks = document.querySelectorAll('.nav-link');
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-    if (savedTheme === 'dark') {
-      body.classList.add('dark');
-      setThemeIcon(true);
+<script>
+  const SUPABASE_URL = "https://cdeulhheleboruiffbtg.supabase.co";
+  const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNkZXVsaGhlbGVib3J1aWZmYnRnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYzNzc3MTcsImV4cCI6MjA5MTk1MzcxN30.5_dNfxHPSKP86kYXQLmTmcjQu_YQT2zu9ScLJ_Lwn5E";
+  const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+  let currentStudent = null;
+
+  async function loadLoggedStudent() {
+    const { data: authData, error: authError } = await supabaseClient.auth.getUser();
+
+    if (authError || !authData.user) {
+      window.location.href = "login.html";
+      return;
+    }
+
+    const { data: student, error } = await supabaseClient
+      .from("students")
+      .select("*")
+      .eq("auth_user_id", authData.user.id)
+      .single();
+
+    if (error || !student) {
+      alert("Student profile not found.");
+      await supabaseClient.auth.signOut();
+      window.location.href = "login.html";
+      return;
+    }
+
+    currentStudent = student;
+
+    document.getElementById("welcomeName").textContent = `Hi, ${student["Full Name"]} 👋`;
+    document.getElementById("studentName").innerHTML = `${student["Full Name"]} <span class="badge">${student["Semester"]} Semester</span>`;
+    document.getElementById("studentRoll").textContent = student["Student Roll"];
+    document.getElementById("studentDepartment").textContent = student["Department"];
+    document.getElementById("studentEmail").textContent = student["Email"];
+    document.getElementById("studentPhone").textContent = student["Phone Number"];
+
+    const photo = student["Photo URL"];
+    if (photo && photo !== "#") {
+      document.getElementById("studentAvatar").src = photo;
+    }
+  }
+
+  async function logoutStudent() {
+    await supabaseClient.auth.signOut();
+    window.location.href = "login.html";
+  }
+
+  const body = document.body;
+  const themeToggle = document.getElementById("themeToggle");
+  const themeIcon = document.getElementById("themeIcon");
+  const savedTheme = localStorage.getItem("rpi-student-theme");
+  const sidebar = document.getElementById("sidebar");
+  const openSidebar = document.getElementById("openSidebar");
+  const navLinks = document.querySelectorAll(".nav-link");
+
+  if (savedTheme === "dark") {
+    body.classList.add("dark");
+    setThemeIcon(true);
+  } else {
+    setThemeIcon(false);
+  }
+
+  if (themeToggle) {
+    themeToggle.addEventListener("click", () => {
+      body.classList.toggle("dark");
+      const isDark = body.classList.contains("dark");
+      localStorage.setItem("rpi-student-theme", isDark ? "dark" : "light");
+      setThemeIcon(isDark);
+    });
+  }
+
+  function setThemeIcon(isDark) {
+    if (!themeIcon) return;
+    themeIcon.innerHTML = isDark
+      ? '<circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"></path>'
+      : '<path d="M21 12.79A9 9 0 1111.21 3c0 .34.02.67.05 1a7 7 0 009.74 8.74c.33.03.66.05 1 .05z"></path>';
+  }
+
+  function openMenu() {
+    if (!sidebar) return;
+    sidebar.classList.add("open");
+    openSidebar?.setAttribute("aria-expanded", "true");
+  }
+
+  function closeMenu() {
+    if (!sidebar) return;
+    sidebar.classList.remove("open");
+    openSidebar?.setAttribute("aria-expanded", "false");
+  }
+
+  function toggleMenu(event) {
+    event.stopPropagation();
+    if (!sidebar) return;
+    sidebar.classList.contains("open") ? closeMenu() : openMenu();
+  }
+
+  if (openSidebar) {
+    openSidebar.addEventListener("click", toggleMenu);
+  }
+
+  function handleMobileMenuButton() {
+    if (!openSidebar) return;
+    if (window.innerWidth <= 980) {
+      openSidebar.style.display = "flex";
     } else {
-      setThemeIcon(false);
+      openSidebar.style.display = "none";
+      closeMenu();
     }
+  }
 
-    if (themeToggle) {
-      themeToggle.addEventListener('click', () => {
-        body.classList.toggle('dark');
-        const isDark = body.classList.contains('dark');
-        localStorage.setItem('rpi-student-theme', isDark ? 'dark' : 'light');
-        setThemeIcon(isDark);
-      });
+  function fixTopbarActions() {
+    const topbar = document.querySelector(".topbar");
+    const actions = document.querySelector(".topbar-actions");
+    if (!topbar || !actions) return;
+
+    if (window.innerWidth <= 980) {
+      topbar.style.flexDirection = "column";
+      topbar.style.alignItems = "stretch";
+      actions.style.width = "100%";
+      actions.style.justifyContent = "flex-end";
+      actions.style.marginLeft = "0";
+      actions.style.marginTop = "12px";
+    } else {
+      topbar.style.flexDirection = "row";
+      topbar.style.alignItems = "flex-start";
+      actions.style.width = "auto";
+      actions.style.marginLeft = "auto";
+      actions.style.marginTop = "0";
     }
+  }
 
-    function setThemeIcon(isDark) {
-      if (!themeIcon) return;
-      themeIcon.innerHTML = isDark
-        ? '<circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"></path>'
-        : '<path d="M21 12.79A9 9 0 1111.21 3c0 .34.02.67.05 1a7 7 0 009.74 8.74c.33.03.66.05 1 .05z"></path>';
-    }
+  handleMobileMenuButton();
+  fixTopbarActions();
+  loadLoggedStudent();
 
-    function openMenu() {
-      if (!sidebar) return;
-      sidebar.classList.add('open');
-      openSidebar?.setAttribute('aria-expanded', 'true');
-    }
-
-    function closeMenu() {
-      if (!sidebar) return;
-      sidebar.classList.remove('open');
-      openSidebar?.setAttribute('aria-expanded', 'false');
-    }
-
-    function toggleMenu(event) {
-      event.stopPropagation();
-      if (!sidebar) return;
-      const isOpen = sidebar.classList.contains('open');
-      if (isOpen) {
-        closeMenu();
-      } else {
-        openMenu();
-      }
-    }
-
-    if (openSidebar) {
-      openSidebar.addEventListener('click', toggleMenu);
-
-      openSidebar.style.position = 'fixed';
-      openSidebar.style.top = '16px';
-      openSidebar.style.left = '16px';
-      openSidebar.style.zIndex = '9999';
-      openSidebar.style.width = '48px';
-      openSidebar.style.height = '48px';
-      openSidebar.style.padding = '0';
-      openSidebar.style.border = 'none';
-      openSidebar.style.outline = 'none';
-      openSidebar.style.borderRadius = '14px';
-      openSidebar.style.cursor = 'pointer';
-      openSidebar.style.display = 'none';
-      openSidebar.style.alignItems = 'center';
-      openSidebar.style.justifyContent = 'center';
-      openSidebar.style.boxShadow = '0 10px 25px rgba(0,0,0,0.16)';
-      openSidebar.style.background = 'rgba(255,255,255,0.92)';
-      openSidebar.style.backdropFilter = 'blur(10px)';
-      openSidebar.style.webkitBackdropFilter = 'blur(10px)';
-      openSidebar.style.color = '#0f172a';
-
-      const menuSvg = openSidebar.querySelector('svg');
-      if (menuSvg) {
-        menuSvg.style.width = '22px';
-        menuSvg.style.height = '22px';
-        menuSvg.style.display = 'block';
-        menuSvg.style.flexShrink = '0';
-        menuSvg.style.pointerEvents = 'none';
-      }
-    }
-
-    function handleMobileMenuButton() {
-      if (!openSidebar) return;
-      if (window.innerWidth <= 980) {
-        openSidebar.style.display = 'flex';
-      } else {
-        openSidebar.style.display = 'none';
-        closeMenu();
-      }
-    }
-
-    function fixTopbarActions() {
-      const topbar = document.querySelector('.topbar');
-      const actions = document.querySelector('.topbar-actions');
-      if (!topbar || !actions) return;
-
-      if (window.innerWidth <= 980) {
-        topbar.style.display = 'flex';
-        topbar.style.flexDirection = 'column';
-        topbar.style.alignItems = 'stretch';
-        topbar.style.justifyContent = 'flex-start';
-
-        actions.style.width = '100%';
-        actions.style.display = 'flex';
-        actions.style.justifyContent = 'flex-end';
-        actions.style.alignItems = 'center';
-        actions.style.marginLeft = '0';
-        actions.style.marginTop = '12px';
-      } else {
-        topbar.style.display = 'flex';
-        topbar.style.flexDirection = 'row';
-        topbar.style.alignItems = 'flex-start';
-        topbar.style.justifyContent = 'space-between';
-
-        actions.style.width = 'auto';
-        actions.style.display = 'flex';
-        actions.style.justifyContent = 'flex-end';
-        actions.style.alignItems = 'center';
-        actions.style.marginLeft = 'auto';
-        actions.style.marginTop = '0';
-      }
-    }
-
+  window.addEventListener("resize", () => {
     handleMobileMenuButton();
     fixTopbarActions();
+  });
 
-    window.addEventListener('resize', () => {
-      handleMobileMenuButton();
-      fixTopbarActions();
+  navLinks.forEach(link => {
+    link.addEventListener("click", () => {
+      if (window.innerWidth <= 980) closeMenu();
     });
+  });
 
-    navLinks.forEach(link => {
-      link.addEventListener('click', () => {
-        if (window.innerWidth <= 980) {
-          closeMenu();
-        }
-      });
-    });
+  document.addEventListener("click", (e) => {
+    if (window.innerWidth > 980 || !sidebar || !openSidebar) return;
+    if (!sidebar.contains(e.target) && !openSidebar.contains(e.target)) {
+      closeMenu();
+    }
+  });
 
-    document.addEventListener('click', (e) => {
-      if (window.innerWidth > 980 || !sidebar || !openSidebar) return;
-      if (!sidebar.contains(e.target) && !openSidebar.contains(e.target)) {
-        closeMenu();
-      }
-    });
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") closeMenu();
+  });
 
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') {
-        closeMenu();
-      }
-    });
+  function downloadRoutine() {
+    const name = currentStudent?.["Full Name"] || "Student";
+    const roll = currentStudent?.["Student Roll"] || "--";
+    const semester = currentStudent?.["Semester"] || "--";
 
-    function downloadRoutine() {
-      const routineText = `Rajshahi Polytechnic Institute - CST Department
-Student: Eshtiak Ahmed
-Roll: 721491
-Semester: 7th
+    const routineText = `Rajshahi Polytechnic Institute - CST Department
+Student: ${name}
+Roll: ${roll}
+Semester: ${semester}
 
 Today's Routine:
 1:30 PM - Database Management Systems
 10:00 AM - Web Development Using Java
 01:00 PM - Microprocessor
 02:00 PM - Programming (C)`;
-      const blob = new Blob([routineText], { type: 'text/plain' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'routine.txt';
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-      URL.revokeObjectURL(url);
-    }
-  </script>
+
+    const blob = new Blob([routineText], { type: "text/plain" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "routine.txt";
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+  }
+</script>
 </body>
 </html>
