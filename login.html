@@ -251,7 +251,7 @@
       <form id="loginForm">
         <div id="userBox" class="input-box">
           <span>📧</span>
-          <input type="email" id="email" placeholder="Email">
+          <input type="email" id="email" placeholder="Email or Username">
         </div>
 
         <div id="passBox" class="input-box">
@@ -267,7 +267,7 @@
       <!-- CREATE ACCOUNT -->
       <div class="create-account">
         Don’t have an account?
-        <a href="./create_acount.html">Create Account</a>
+        <a href="./create_acount.html" target="_blank">Create Account</a>
       </div>
 
       <p style="margin-top:10px; text-align:center; color:#777;">
@@ -279,17 +279,19 @@
 
 </div>
 
+<!-- eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNkZXVsaGhlbGVib3J1aWZmYnRnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYzNzc3MTcsImV4cCI6MjA5MTk1MzcxN30.5_dNfxHPSKP86kYXQLmTmcjQu_YQT2zu9ScLJ_Lwn5E' -->
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-  const SUPABASE_URL = 'https://cdeulhheleboruiffbtg.supabase.co';
-  const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNkZXVsaGhlbGVib3J1aWZmYnRnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYzNzc3MTcsImV4cCI6MjA5MTk1MzcxN30.5_dNfxHPSKP86kYXQLmTmcjQu_YQT2zu9ScLJ_Lwn5E';
+  const SUPABASE_URL = "https://cdeulhheleboruiffbtg.supabase.co";
+  const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNkZXVsaGhlbGVib3J1aWZmYnRnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYzNzc3MTcsImV4cCI6MjA5MTk1MzcxN30.5_dNfxHPSKP86kYXQLmTmcjQu_YQT2zu9ScLJ_Lwn5E";
 
   const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
   const form = document.getElementById("loginForm");
   const userBox = document.getElementById("userBox");
   const passBox = document.getElementById("passBox");
-  const email = document.getElementById("email");
+  const loginInput = document.getElementById("email"); // email OR username input
   const password = document.getElementById("password");
   const loginBtn = document.getElementById("loginBtn");
   const statusMessage = document.getElementById("statusMessage");
@@ -306,9 +308,16 @@
 
     if (type === "error") {
       statusMessage.classList.add("status-error");
-    } else if (type === "success") {
+    }
+
+    if (type === "success") {
       statusMessage.classList.add("status-success");
     }
+  }
+
+  function resetButton() {
+    loginBtn.disabled = false;
+    loginBtn.textContent = "Log In";
   }
 
   form.addEventListener("submit", async (e) => {
@@ -318,14 +327,17 @@
     passBox.style.borderColor = "rgba(255,255,255,0.2)";
     showStatus("");
 
-    if (!email.value.trim()) {
+    const inputValue = loginInput.value.trim();
+    const userPassword = password.value.trim();
+
+    if (!inputValue) {
       userBox.style.borderColor = "#f87171";
       shake(userBox);
-      showStatus("Please enter your email.", "error");
+      showStatus("Please enter your email or username.", "error");
       return;
     }
 
-    if (!password.value.trim()) {
+    if (!userPassword) {
       passBox.style.borderColor = "#f87171";
       shake(passBox);
       showStatus("Please enter your password.", "error");
@@ -335,26 +347,51 @@
     loginBtn.disabled = true;
     loginBtn.textContent = "Logging in...";
 
-    const { data, error } = await supabaseClient.auth.signInWithPassword({
-      email: email.value.trim(),
-      password: password.value
-    });
+    try {
+      let loginEmail = inputValue;
 
-    if (error) {
+      // If input is username, find matching email from students table
+
+      if (!inputValue.includes("@")) {
+        const { data: studentData, error: usernameError } = await supabaseClient
+          .from("students")
+          .select('"Email"')
+          .eq("username", inputValue)
+          .maybeSingle();
+
+        if (usernameError) {
+          throw usernameError;
+        }
+
+        if (!studentData) {
+          throw new Error("Username not found.");
+        }
+
+        loginEmail = studentData["Email"];
+      }
+
+      const { error: loginError } = await supabaseClient.auth.signInWithPassword({
+        email: loginEmail,
+        password: userPassword
+      });
+
+      if (loginError) {
+        throw loginError;
+      }
+
+      showStatus("Login successful. Redirecting...", "success");
+
+      setTimeout(() => {
+        window.location.href = "student-dashboard.html";
+      }, 900);
+
+    } catch (error) {
       console.error("Login Error:", error);
       passBox.style.borderColor = "#f87171";
       shake(passBox);
       showStatus(error.message || "Login failed.", "error");
-      loginBtn.disabled = false;
-      loginBtn.textContent = "Log In";
-      return;
+      resetButton();
     }
-
-    showStatus("Login successful. Redirecting...", "success");
-
-    setTimeout(() => {
-      window.location.href = "student-dashboard.html";
-    }, 1000);
   });
 </script>
 

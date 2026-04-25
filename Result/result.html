@@ -1,0 +1,1168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CST Result Page</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <style>
+    .result-page-root {
+      --bg: #f5f8ff;
+      --bg-soft: #eef4ff;
+      --panel: rgba(255, 255, 255, 0.92);
+      --panel-strong: #ffffff;
+      --text: #162033;
+      --muted: #6e7b96;
+      --line: rgba(106, 125, 171, 0.18);
+      --primary: #4aa7ff;
+      --primary-2: #7b5cff;
+      --accent: linear-gradient(135deg, #52b6ff, #7b5cff);
+      --shadow: 0 14px 40px rgba(68, 92, 146, 0.12);
+      --table-head: #edf5ff;
+      --chip: rgba(82, 182, 255, 0.1);
+      --chip-border: rgba(82, 182, 255, 0.22);
+      --danger: #ef4444;
+      --success: #10b981;
+      --sidebar-width: 250px;
+    }
+
+    .result-page-root.dark {
+      --bg: #071120;
+      --bg-soft: #0b1730;
+      --panel: rgba(10, 18, 38, 0.92);
+      --panel-strong: #0d1931;
+      --text: #ecf3ff;
+      --muted: #9fb0d0;
+      --line: rgba(119, 145, 199, 0.18);
+      --primary: #59b8ff;
+      --primary-2: #8d67ff;
+      --accent: linear-gradient(135deg, #3aa8ff, #8c5eff);
+      --shadow: 0 18px 45px rgba(0, 0, 0, 0.35);
+      --table-head: #102143;
+      --chip: rgba(89, 184, 255, 0.12);
+      --chip-border: rgba(89, 184, 255, 0.2);
+      --danger: #f87171;
+      --success: #34d399;
+    }
+
+    .result-page-root,
+    .result-page-root * {
+      box-sizing: border-box;
+    }
+
+    .result-page-root {
+      min-height: 100vh;
+      width: 100%;
+      margin: 0;
+      padding: 0;
+      font-family: Inter, "Segoe UI", Arial, sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(84, 176, 255, 0.14), transparent 24%),
+        radial-gradient(circle at top right, rgba(123, 92, 255, 0.12), transparent 22%),
+        var(--bg);
+      color: var(--text);
+      transition: background 0.25s ease, color 0.25s ease;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    .result-page-root a,
+    .result-page-root button,
+    .result-page-root input,
+    .result-page-root table,
+    .result-page-root div,
+    .result-page-root section,
+    .result-page-root main,
+    .result-page-root aside,
+    .result-page-root header,
+    .result-page-root nav {
+      margin: 0;
+    }
+
+    .result-page-root .page-shell {
+      display: flex !important;
+      align-items: stretch !important;
+      justify-content: flex-start !important;
+      min-height: 100vh;
+      width: 100%;
+    }
+
+    .result-page-root .sidebar {
+      width: var(--sidebar-width);
+      min-width: var(--sidebar-width);
+      background: var(--accent);
+      color: #fff;
+      padding: 24px 18px;
+      position: fixed;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+      z-index: 20;
+    }
+
+    .result-page-root .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 8px 6px;
+    }
+
+    .result-page-root .brand-logo {
+      width: 46px;
+      height: 46px;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.18);
+      border: 1px solid rgba(255,255,255,0.28);
+      display: grid;
+      place-items: center;
+      font-size: 22px;
+      backdrop-filter: blur(10px);
+      flex-shrink: 0;
+    }
+
+    .result-page-root .brand h2 {
+      margin: 0;
+      font-size: 1.1rem;
+      line-height: 1.2;
+    }
+
+    .result-page-root .brand p {
+      margin: 2px 0 0;
+      font-size: 0.85rem;
+      opacity: 0.9;
+    }
+
+    .result-page-root .nav-menu {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .result-page-root .nav-link {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 16px;
+      border-radius: 16px;
+      color: #fff;
+      text-decoration: none;
+      background: rgba(255,255,255,0.09);
+      border: 1px solid rgba(255,255,255,0.14);
+      font-weight: 600;
+    }
+
+    .result-page-root .content-area {
+      flex: 1;
+      min-width: 0;
+      margin-left: var(--sidebar-width);
+      width: calc(100% - var(--sidebar-width));
+    }
+
+    .result-page-root .mobile-topbar {
+      display: none;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 16px;
+      background: var(--panel);
+      border-bottom: 1px solid var(--line);
+      position: sticky;
+      top: 0;
+      z-index: 70;
+      backdrop-filter: blur(12px);
+    }
+
+    .result-page-root .mobile-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+    }
+
+    .result-page-root .mobile-brand .brand-logo {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      font-size: 19px;
+      background: var(--accent);
+      border: none;
+      color: #fff;
+    }
+
+    .result-page-root .menu-btn,
+    .result-page-root .theme-btn {
+      border: 1px solid var(--line);
+      background: var(--panel-strong);
+      color: var(--text);
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      cursor: pointer;
+      font-size: 18px;
+      box-shadow: var(--shadow);
+    }
+
+    .result-page-root .main {
+      display: block !important;
+      width: 100%;
+      min-width: 0;
+      padding: 30px;
+    }
+
+    .result-page-root .topbar {
+      display: flex !important;
+      justify-content: space-between !important;
+      align-items: center !important;
+      gap: 16px;
+      margin-bottom: 24px;
+      width: 100%;
+    }
+
+    .result-page-root .page-title {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .result-page-root .page-title h1 {
+      margin: 0;
+      font-size: clamp(1.7rem, 2.7vw, 2.3rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+
+    .result-page-root .page-title p {
+      margin: 8px 0 0;
+      color: var(--muted);
+      font-size: 0.98rem;
+    }
+
+    .result-page-root .top-actions {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 14px;
+      flex-wrap: wrap;
+      flex-shrink: 0;
+    }
+
+    .result-page-root .theme-switch {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 6px;
+      box-shadow: var(--shadow);
+    }
+
+    .result-page-root .theme-switch button {
+      border: none;
+      background: transparent;
+      color: var(--text);
+      padding: 10px 14px;
+      border-radius: 12px;
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    .result-page-root .theme-switch button.active {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .result-page-root .profile-mini {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 10px 14px;
+      box-shadow: var(--shadow);
+    }
+
+    .result-page-root .avatar {
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      background: var(--accent);
+      display: grid;
+      place-items: center;
+      color: white;
+      font-weight: 800;
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+
+    .result-page-root .profile-mini h4 {
+      margin: 0;
+      font-size: 0.96rem;
+    }
+
+    .result-page-root .profile-mini p {
+      margin: 3px 0 0;
+      color: var(--muted);
+      font-size: 0.84rem;
+    }
+
+    .result-page-root .student-card,
+    .result-page-root .result-card,
+    .result-page-root .note-box,
+    .result-page-root .status-box {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(14px);
+    }
+
+    .result-page-root .student-card {
+      border-radius: 28px;
+      padding: 22px;
+      display: grid !important;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 20px;
+      margin-bottom: 24px;
+      width: 100%;
+    }
+
+    .result-page-root .student-main {
+      display: flex;
+      gap: 18px;
+      align-items: center;
+      min-width: 0;
+    }
+
+    .result-page-root .big-avatar {
+      width: 82px;
+      height: 82px;
+      border-radius: 24px;
+      background: var(--accent);
+      display: grid;
+      place-items: center;
+      color: #fff;
+      font-size: 2rem;
+      box-shadow: var(--shadow);
+      flex-shrink: 0;
+      font-weight: 800;
+    }
+
+    .result-page-root .student-info h2 {
+      margin: 0 0 8px;
+      font-size: 1.45rem;
+      word-break: break-word;
+    }
+
+    .result-page-root .student-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .result-page-root .chip {
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: var(--chip);
+      border: 1px solid var(--chip-border);
+      color: var(--text);
+      font-size: 0.88rem;
+      font-weight: 600;
+    }
+
+    .result-page-root .stats {
+      display: grid !important;
+      grid-template-columns: repeat(2, minmax(120px, 1fr));
+      gap: 14px;
+    }
+
+    .result-page-root .stat-box {
+      background: var(--panel-strong);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 16px;
+    }
+
+    .result-page-root .stat-box small {
+      display: block;
+      color: var(--muted);
+      margin-bottom: 8px;
+      font-size: 0.82rem;
+    }
+
+    .result-page-root .stat-box strong {
+      font-size: 1.02rem;
+      word-break: break-word;
+    }
+
+    .result-page-root .section-grid {
+      display: grid !important;
+      grid-template-columns: 1fr !important;
+      gap: 22px;
+      width: 100%;
+    }
+
+    .result-page-root .result-card {
+      border-radius: 26px;
+      padding: 22px;
+      overflow: hidden;
+      width: 100%;
+    }
+
+    .result-page-root .card-head {
+      display: flex !important;
+      align-items: center !important;
+      justify-content: space-between !important;
+      gap: 16px;
+      margin-bottom: 18px;
+      flex-wrap: wrap;
+    }
+
+    .result-page-root .card-title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .result-page-root .icon-wrap {
+      width: 46px;
+      height: 46px;
+      border-radius: 16px;
+      background: var(--accent);
+      display: grid;
+      place-items: center;
+      color: #fff;
+      font-size: 1.2rem;
+      box-shadow: var(--shadow);
+      flex-shrink: 0;
+    }
+
+    .result-page-root .card-title h3 {
+      margin: 0;
+      font-size: 1.3rem;
+    }
+
+    .result-page-root .card-title p {
+      margin: 5px 0 0;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .result-page-root .summary-badge {
+      padding: 10px 14px;
+      border-radius: 14px;
+      background: var(--chip);
+      border: 1px solid var(--chip-border);
+      font-weight: 700;
+      font-size: 0.9rem;
+    }
+
+    .result-page-root .table-wrap {
+      width: 100%;
+      overflow-x: auto;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+    }
+
+    .result-page-root table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 720px;
+      background: var(--panel-strong);
+    }
+
+    .result-page-root thead th {
+      background: var(--table-head);
+      color: var(--text);
+      text-align: left;
+      padding: 15px 16px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      border-bottom: 1px solid var(--line);
+      white-space: nowrap;
+    }
+
+    .result-page-root tbody td {
+      padding: 15px 16px;
+      border-bottom: 1px solid var(--line);
+      color: var(--text);
+      font-size: 0.95rem;
+      vertical-align: middle;
+    }
+
+    .result-page-root tbody tr:hover {
+      background: rgba(91, 153, 255, 0.05);
+    }
+
+    .result-page-root tbody tr:last-child td {
+      border-bottom: none;
+    }
+
+    .result-page-root .mark {
+      font-weight: 800;
+      color: var(--primary-2);
+    }
+
+    .result-page-root .question-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      padding: 10px 12px;
+      border-radius: 12px;
+      background: rgba(123, 92, 255, 0.1);
+      color: var(--primary-2);
+      font-weight: 700;
+      border: 1px solid rgba(123, 92, 255, 0.16);
+      white-space: nowrap;
+    }
+
+    .result-page-root .status-box {
+      border-radius: 20px;
+      padding: 18px;
+      margin-bottom: 18px;
+      display: none;
+      width: 100%;
+    }
+
+    .result-page-root .status-box.show {
+      display: block;
+    }
+
+    .result-page-root .status-box.loading {
+      border-left: 5px solid var(--primary);
+    }
+
+    .result-page-root .status-box.error {
+      border-left: 5px solid var(--danger);
+    }
+
+    .result-page-root .status-box.success {
+      border-left: 5px solid var(--success);
+    }
+
+    .result-page-root .status-box h4 {
+      margin: 0 0 6px;
+      font-size: 1rem;
+    }
+
+    .result-page-root .status-box p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .result-page-root .note-box {
+      margin-top: 22px;
+      border-radius: 22px;
+      padding: 16px 18px;
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      width: 100%;
+    }
+
+    .result-page-root .note-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 12px;
+      background: var(--chip);
+      border: 1px solid var(--chip-border);
+      display: grid;
+      place-items: center;
+      font-size: 1.1rem;
+      color: var(--primary);
+      flex-shrink: 0;
+    }
+
+    .result-page-root .note-box p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .result-page-root .mobile-sidebar {
+      position: fixed;
+      inset: 0 auto 0 0;
+      width: 260px;
+      transform: translateX(-100%);
+      transition: transform 0.25s ease;
+      z-index: 100;
+    }
+
+    .result-page-root .mobile-sidebar.open {
+      transform: translateX(0);
+    }
+
+    .result-page-root .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.35);
+      opacity: 0;
+      visibility: hidden;
+      transition: 0.25s ease;
+      z-index: 90;
+    }
+
+    .result-page-root .overlay.show {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    @media (max-width: 1100px) {
+      .result-page-root .student-card {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 900px) {
+      .result-page-root .sidebar.desktop-sidebar {
+        display: none;
+      }
+
+      .result-page-root .content-area {
+        margin-left: 0;
+        width: 100%;
+      }
+
+      .result-page-root .mobile-topbar {
+        display: flex;
+      }
+
+      .result-page-root .main {
+        padding: 18px;
+      }
+
+      .result-page-root .topbar {
+        display: none !important;
+      }
+
+      .result-page-root .student-main {
+        align-items: flex-start;
+      }
+    }
+
+    @media (max-width: 680px) {
+      .result-page-root .student-main {
+        flex-direction: column;
+      }
+
+      .result-page-root .stats {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .result-page-root .result-card,
+      .result-page-root .student-card {
+        border-radius: 22px;
+        padding: 18px;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .result-page-root .stats {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="result-page-root" id="resultPageRoot">
+    <div class="mobile-topbar">
+      <button class="menu-btn" id="menuBtn">☰</button>
+
+      <div class="mobile-brand">
+        <div class="brand-logo">🎓</div>
+        <span>CST Result</span>
+      </div>
+
+      <button class="theme-btn" id="mobileThemeBtn">🌙</button>
+    </div>
+
+    <div class="overlay" id="overlay"></div>
+
+    <div class="page-shell">
+      <aside class="sidebar desktop-sidebar">
+        <div class="brand">
+          <div class="brand-logo">🎓</div>
+          <div>
+            <h2>CST Result</h2>
+            <p>Polytechnic Portal</p>
+          </div>
+        </div>
+
+        <nav class="nav-menu">
+          <a href="#" class="nav-link">
+            <span>📊</span>
+            <span>Dashboard</span>
+          </a>
+        </nav>
+      </aside>
+
+      <aside class="sidebar mobile-sidebar" id="mobileSidebar">
+        <div class="brand">
+          <div class="brand-logo">🎓</div>
+          <div>
+            <h2>CST Result</h2>
+            <p>Polytechnic Portal</p>
+          </div>
+        </div>
+
+        <nav class="nav-menu">
+          <a href="#" class="nav-link">
+            <span>📊</span>
+            <span>Dashboard</span>
+          </a>
+        </nav>
+      </aside>
+
+      <div class="content-area">
+        <main class="main">
+          <header class="topbar">
+            <div class="page-title">
+              <h1>Result Page</h1>
+              <p>Live result data from Supabase students and results tables.</p>
+            </div>
+
+            <div class="top-actions">
+              <div class="theme-switch">
+                <button class="theme-option active" data-theme="light">☀ Light</button>
+                <button class="theme-option" data-theme="dark">🌙 Dark</button>
+              </div>
+
+              <div class="profile-mini">
+                <div class="avatar" id="topAvatar">S</div>
+                <div>
+                  <h4 id="topStudentName">Student</h4>
+                  <p>Student</p>
+                </div>
+              </div>
+            </div>
+          </header>
+
+          <div class="status-box loading show" id="statusBox">
+            <h4 id="statusTitle">Loading data</h4>
+            <p id="statusText">Fetching student and result data from Supabase...</p>
+          </div>
+
+          <section class="student-card">
+            <div class="student-main">
+              <div class="big-avatar" id="studentAvatar">S</div>
+
+              <div class="student-info">
+                <h2 id="studentName">Student Name</h2>
+                <div class="student-meta">
+                  <span class="chip" id="studentRollChip">Roll: --</span>
+                  <span class="chip" id="deptChip">Department: --</span>
+                  <span class="chip" id="genderChip">Gender: --</span>
+                  <span class="chip" id="studentCodeChip">Student Code: --</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="stats">
+              <div class="stat-box">
+                <small>Student Roll</small>
+                <strong id="studentRollText">--</strong>
+              </div>
+              <div class="stat-box">
+                <small>Department</small>
+                <strong id="departmentText">--</strong>
+              </div>
+              <div class="stat-box">
+                <small>Gender</small>
+                <strong id="genderText">--</strong>
+              </div>
+              <div class="stat-box">
+                <small>Class Test Count</small>
+                <strong id="classCountText">0</strong>
+              </div>
+            </div>
+          </section>
+
+          <section class="section-grid">
+            <div class="result-card">
+              <div class="card-head">
+                <div class="card-title">
+                  <div class="icon-wrap">📝</div>
+                  <div>
+                    <h3>Mid Term Results</h3>
+                    <p>Exam date, subject, subject code, full marks and marks.</p>
+                  </div>
+                </div>
+
+                <div class="summary-badge" id="midSummary">Average: --</div>
+              </div>
+
+              <div class="table-wrap">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Exam Date</th>
+                      <th>Subject</th>
+                      <th>Subject Code</th>
+                      <th>Full Marks</th>
+                      <th>Marks</th>
+                    </tr>
+                  </thead>
+                  <tbody id="midTermBody">
+                    <tr><td colspan="5">Loading...</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="result-card">
+              <div class="card-head">
+                <div class="card-title">
+                  <div class="icon-wrap">📚</div>
+                  <div>
+                    <h3>Class Test Results</h3>
+                    <p>Includes teacher name and question upload link.</p>
+                  </div>
+                </div>
+
+                <div class="summary-badge" id="classSummary">Average: --</div>
+              </div>
+
+              <div class="table-wrap">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Exam Date</th>
+                      <th>Subject</th>
+                      <th>Subject Code</th>
+                      <th>Full Marks</th>
+                      <th>Marks</th>
+                      <th>Teacher Name</th>
+                      <th>Question</th>
+                    </tr>
+                  </thead>
+                  <tbody id="classTestBody">
+                    <tr><td colspan="7">Loading...</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </section>
+
+          <div class="note-box">
+            <div class="note-icon">ℹ</div>
+            <p>
+              This page reads the student using <strong>Student Roll</strong> from the
+              <strong>students</strong> table and matches it with <strong>student_roll</strong>
+              in the <strong>results</strong> table.
+            </p>
+          </div>
+        </main>
+      </div>
+    </div>
+  </div>
+
+<script>
+  const SUPABASE_URL = "https://cdeulhheleboruiffbtg.supabase.co";
+  const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNkZXVsaGhlbGVib3J1aWZmYnRnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYzNzc3MTcsImV4cCI6MjA5MTk1MzcxN30.5_dNfxHPSKP86kYXQLmTmcjQu_YQT2zu9ScLJ_Lwn5E";
+
+  if (!window.supabase) {
+    throw new Error("Supabase library failed to load.");
+  }
+
+  const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+  const urlParams = new URLSearchParams(window.location.search);
+  const studentRoll = (urlParams.get("roll") || "721491").trim();
+
+  const root = document.getElementById("resultPageRoot");
+  const statusBox = document.getElementById("statusBox");
+  const statusTitle = document.getElementById("statusTitle");
+  const statusText = document.getElementById("statusText");
+
+  const studentName = document.getElementById("studentName");
+  const topStudentName = document.getElementById("topStudentName");
+  const studentAvatar = document.getElementById("studentAvatar");
+  const topAvatar = document.getElementById("topAvatar");
+
+  const studentRollChip = document.getElementById("studentRollChip");
+  const deptChip = document.getElementById("deptChip");
+  const genderChip = document.getElementById("genderChip");
+  const studentCodeChip = document.getElementById("studentCodeChip");
+
+  const studentRollText = document.getElementById("studentRollText");
+  const departmentText = document.getElementById("departmentText");
+  const genderText = document.getElementById("genderText");
+  const classCountText = document.getElementById("classCountText");
+
+  const midTermBody = document.getElementById("midTermBody");
+  const classTestBody = document.getElementById("classTestBody");
+  const midSummary = document.getElementById("midSummary");
+  const classSummary = document.getElementById("classSummary");
+
+  function showStatus(type, title, text) {
+    statusBox.className = `status-box show ${type}`;
+    statusTitle.textContent = title;
+    statusText.textContent = text;
+  }
+
+  function hideStatus() {
+    statusBox.className = "status-box";
+  }
+
+  function formatDate(dateString) {
+    if (!dateString) return "--";
+    const date = new Date(dateString);
+    if (Number.isNaN(date.getTime())) return dateString;
+    return date.toLocaleDateString("en-GB", {
+      day: "2-digit",
+      month: "short",
+      year: "numeric"
+    });
+  }
+
+  function averageMarks(data) {
+    if (!data.length) return "--";
+    const total = data.reduce((sum, row) => sum + Number(row.marks || 0), 0);
+    return (total / data.length).toFixed(2);
+  }
+
+  function getInitial(name) {
+    return name && name.trim() ? name.trim().charAt(0).toUpperCase() : "S";
+  }
+
+  function normalizeStudent(student) {
+    return {
+      roll: student["Student Roll"] ?? "--",
+      fullName: student["Full Name"] ?? "Student",
+      gender: student["Gender"] ?? "--",
+      department: student["Department"] ?? "--",
+      studentCode: student["Student Code"] ?? student["Student Roll"] ?? "--"
+    };
+  }
+
+  function setStudentInfo(studentRow, classTests) {
+    const student = normalizeStudent(studentRow);
+    const initial = getInitial(student.fullName);
+
+    studentName.textContent = student.fullName;
+    topStudentName.textContent = student.fullName;
+    studentAvatar.textContent = initial;
+    topAvatar.textContent = initial;
+
+    studentRollChip.textContent = `Roll: ${student.roll}`;
+    deptChip.textContent = `Department: ${student.department}`;
+    genderChip.textContent = `Gender: ${student.gender}`;
+    studentCodeChip.textContent = `Student Code: ${student.studentCode}`;
+
+    studentRollText.textContent = student.roll;
+    departmentText.textContent = student.department;
+    genderText.textContent = student.gender;
+    classCountText.textContent = classTests.length;
+  }
+
+  function renderMidTermTable(rows) {
+    midTermBody.innerHTML = "";
+
+    if (!rows.length) {
+      midTermBody.innerHTML = `
+        <tr>
+          <td colspan="5">No mid term results found.</td>
+        </tr>
+      `;
+      midSummary.textContent = "Average: --";
+      return;
+    }
+
+    rows.forEach((row) => {
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td>${formatDate(row.exam_date)}</td>
+        <td>${row.subject || "--"}</td>
+        <td>${row.subject_code || "--"}</td>
+        <td>${row.full_marks ?? "--"}</td>
+        <td class="mark">${row.marks ?? "--"}</td>
+      `;
+      midTermBody.appendChild(tr);
+    });
+
+    midSummary.textContent = `Average: ${averageMarks(rows)}`;
+  }
+
+  function renderClassTestTable(rows) {
+    classTestBody.innerHTML = "";
+
+    if (!rows.length) {
+      classTestBody.innerHTML = `
+        <tr>
+          <td colspan="7">No class test results found.</td>
+        </tr>
+      `;
+      classSummary.textContent = "Average: --";
+      return;
+    }
+
+    rows.forEach((row) => {
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td>${formatDate(row.exam_date)}</td>
+        <td>${row.subject || "--"}</td>
+        <td>${row.subject_code || "--"}</td>
+        <td>${row.full_marks ?? "--"}</td>
+        <td class="mark">${row.marks ?? "--"}</td>
+        <td>${row.teacher_name || "--"}</td>
+        <td>
+          ${
+            row.question_file_url
+              ? `<a href="${row.question_file_url}" class="question-link" target="_blank" rel="noopener noreferrer">📄 View</a>`
+              : "-"
+          }
+        </td>
+      `;
+      classTestBody.appendChild(tr);
+    });
+
+    classSummary.textContent = `Average: ${averageMarks(rows)}`;
+  }
+
+  function setErrorTables() {
+    midTermBody.innerHTML = `
+      <tr>
+        <td colspan="5">Unable to load mid term results.</td>
+      </tr>
+    `;
+
+    classTestBody.innerHTML = `
+      <tr>
+        <td colspan="7">Unable to load class test results.</td>
+      </tr>
+    `;
+
+    midSummary.textContent = "Average: --";
+    classSummary.textContent = "Average: --";
+  }
+
+  async function fetchStudentByRoll(roll) {
+    const { data, error } = await supabaseClient
+      .from("students")
+      .select("*")
+      .eq("Student Roll", roll);
+
+    console.log("student query roll:", roll);
+    console.log("student query data:", data);
+    console.log("student query error:", error);
+
+    if (error) {
+      throw new Error(`Student fetch failed: ${error.message}`);
+    }
+
+    if (!data || data.length === 0) {
+      throw new Error(`No student found for roll ${roll}. If the row exists in SQL editor, check RLS policy for anon select.`);
+    }
+
+    if (data.length > 1) {
+      throw new Error(`Multiple students found for roll ${roll}. Make "Student Roll" unique.`);
+    }
+
+    return data[0];
+  }
+
+  async function fetchResultsByRoll(roll) {
+    const { data, error } = await supabaseClient
+      .from("results")
+      .select("id, student_roll, exam_type, exam_date, subject, subject_code, full_marks, marks, teacher_name, question_file_url")
+      .eq("student_roll", roll)
+      .order("exam_date", { ascending: true });
+
+    console.log("results query roll:", roll);
+    console.log("results query data:", data);
+    console.log("results query error:", error);
+
+    if (error) {
+      throw new Error(`Result fetch failed: ${error.message}`);
+    }
+
+    return Array.isArray(data) ? data : [];
+  }
+
+  async function loadPageData() {
+    try {
+      showStatus("loading", "Loading data", "Fetching student and result data from Supabase...");
+
+      const studentRow = await fetchStudentByRoll(studentRoll);
+      const resultRows = await fetchResultsByRoll(studentRoll);
+
+      const midTerms = resultRows.filter((row) => row.exam_type === "mid_term");
+      const classTests = resultRows.filter((row) => row.exam_type === "class_test");
+
+      setStudentInfo(studentRow, classTests);
+      renderMidTermTable(midTerms);
+      renderClassTestTable(classTests);
+
+      showStatus("success", "Data loaded", "Student and result data loaded successfully.");
+      setTimeout(hideStatus, 1500);
+    } catch (error) {
+      console.error("LOAD PAGE ERROR:", error);
+      showStatus("error", "Failed to load data", error.message || "Unknown error occurred.");
+      setErrorTables();
+    }
+  }
+
+  const themeOptions = document.querySelectorAll(".theme-option");
+  const mobileThemeBtn = document.getElementById("mobileThemeBtn");
+
+  function applyTheme(theme) {
+    if (theme === "dark") {
+      root.classList.add("dark");
+      mobileThemeBtn.textContent = "☀";
+    } else {
+      root.classList.remove("dark");
+      mobileThemeBtn.textContent = "🌙";
+    }
+
+    themeOptions.forEach((btn) => {
+      btn.classList.toggle("active", btn.dataset.theme === theme);
+    });
+
+    localStorage.setItem("resultTheme", theme);
+  }
+
+  themeOptions.forEach((btn) => {
+    btn.addEventListener("click", () => applyTheme(btn.dataset.theme));
+  });
+
+  mobileThemeBtn.addEventListener("click", () => {
+    const isDark = root.classList.contains("dark");
+    applyTheme(isDark ? "light" : "dark");
+  });
+
+  const savedTheme = localStorage.getItem("resultTheme") || "light";
+  applyTheme(savedTheme);
+
+  const menuBtn = document.getElementById("menuBtn");
+  const mobileSidebar = document.getElementById("mobileSidebar");
+  const overlay = document.getElementById("overlay");
+
+  function openSidebar() {
+    mobileSidebar.classList.add("open");
+    overlay.classList.add("show");
+  }
+
+  function closeSidebar() {
+    mobileSidebar.classList.remove("open");
+    overlay.classList.remove("show");
+  }
+
+  if (menuBtn && mobileSidebar && overlay) {
+    menuBtn.addEventListener("click", openSidebar);
+    overlay.addEventListener("click", closeSidebar);
+  }
+
+  loadPageData();
+</script>
+
+
+</body>
+</html>
